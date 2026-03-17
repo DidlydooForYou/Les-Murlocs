@@ -26,7 +26,7 @@ enum Page
     public function url(): string{
         return match($this){
             Page::Menu => '/',
-            Page::Inventaire => '/inventaire.php',
+            Page::Vitrine => '/.php',
         };
     }
 }
