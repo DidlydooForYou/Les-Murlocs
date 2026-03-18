@@ -103,5 +103,18 @@ function ajouter_joueur($nom, $prenom, $email, $mdp, $photoProfil, $alias)
     return false;
 
 }
+function administrateur($id){
+    $sql = "select administrateur from joueursinfo where JoueursJeu_idJoueur = ?";
+    try {
+        $pdo = get_pdo();
+        $stmt = $pdo ->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    catch(Exception $e){
+        return false;
+    }
+
+}
 
 ?>

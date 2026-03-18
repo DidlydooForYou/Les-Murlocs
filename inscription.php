@@ -104,28 +104,16 @@ if (isset($validite)){
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <?php include "includes/header.php" ?>
-    </header>
-    <nav>
-        <?php include "includes/nav.php" ?>
-    </nav>
-    <main>
+<?php include 'include/html_setup.php' ?>
+<title>Connexion</title>
+<?php 
+    include 'include/header.php';
+    include 'include/nav.php'; 
+?>
+    <main class="main" style="padding-left: 4px; ">
         <h3>S'inscrire à Darquest</h3>
         <form action="inscription.php" enctype="multipart/form-data" method="POST"
             onsubmit="return validationInscription()">
-            <fieldset style="width : 40%">
                 <label for="prenom"> Prénom :</label>
                 <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="25">
                 <br>
@@ -151,15 +139,12 @@ if (isset($validite)){
                 <br>
                 <input type="submit" value="S'inscrire">
                 <span id="erreur" style="color: red;"></span>
-            </fieldset>
         </form>
         <p>Déjà membre de Darquest ?</p>
         <a href="connexion.php">Se connecter</a>
     </main>
-    <footer>
-        <?php include "includes/footer.php" ?>
-    </footer>
-</body>
+   <?php include 'include/footer.php' ?>
+
 <script src="scripts/inscriptionValidation.js"></script>
 
 </html>
