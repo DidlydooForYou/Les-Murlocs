@@ -3,7 +3,7 @@ require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
 require_once 'source/Page.php';
 
-const ACTIVE_PAGE = Page::Inventaire;
+const ACTIVE_PAGE = Page::Details;
 
 ?>
 
@@ -16,8 +16,8 @@ const ACTIVE_PAGE = Page::Inventaire;
     include "include/nav.php";
 ?>
 <main>
-    <h1 class="py-3 mt-3">Inventaire</h1>
-    <?php include_once INCLUDE_FILE . '/inventory.php'; ?>
+    <h1 class="py-3 mt-3">Details</h1>
+    <?php include_once INCLUDE_FILE . '/detail.php'; ?>
 </main>
 
 <?php include_once INCLUDE_FILE . '/footer.php'; ?>
