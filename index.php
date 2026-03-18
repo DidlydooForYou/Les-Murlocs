@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darquest</title>
-</head>
-<body>
-<p>Allo</p>
-</body>
-</html>
+<?php include 'include/html_setup.php' ?>
+
+<title>Vitrine</title>
+
+<?php 
+    include 'include/header.php';
+    include 'include/nav.php'; 
+?>
+
+<main class="main">
+    <br>
+    <fieldset>
+        <legend>  Vitrine goes brr  </legend>
+        <br><br><br><br><br><br><br><br>
+        <div>Très beau produit trust</div>
+    </fieldset>
+    <br>
+</main>
+
+<?php include 'include/footer.php' ?>
