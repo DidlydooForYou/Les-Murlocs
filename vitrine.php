@@ -17,13 +17,8 @@ const ACTIVE_PAGE = Page::Vitrine;
             <?php include_once TEMPLATE . '/header.php'; ?>
 
             <main>
-<<<<<<< HEAD
-                <h1 class="py-3 mt-3">Inventaire</h1>
-                <?php include_once TEMPLATE . '/showcase.php'; ?>
-=======
                 <h1 class="py-3 mt-3">Vitrine</h1>
                 <?php include_once TEMPLATE . '/vitrine.php'; ?>
->>>>>>> 4ba2b35801dba318d7416390b35c195522f26297
             </main>
 
             <?php include_once TEMPLATE . '/footer.php'; ?>
