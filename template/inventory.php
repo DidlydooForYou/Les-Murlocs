@@ -21,13 +21,13 @@ require_once CORE . '/Database.php';
                 <img src="<?= INVENTAIRE_IMG . '/' . $product['image'] ?>" class="card-img-top" alt="<?= $product['alt']?>">
 
                 <!--Description de l'item-->
-                <p class="card-text"></p>
+                <p class="card-text"><?= $product['description']?></p>
 
                 <!--Efficacité de l'item-->
-                <p class="card-text"></p>
+                <p class="card-text"><?= $product['efficacite']?></p>
 
                 <!--Type de l'item (une main, deux mains, ect...)-->
-                <p class="card-text"></p>
+                <p class="card-text"><?= $product['type']?></p>
 
                 <div class="mt-auto">
                     <?php if(!IS_ADMIN) : ?>

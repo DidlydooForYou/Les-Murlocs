@@ -26,7 +26,7 @@ $dbConfig = [
 ];
 
 const CSS = URL_ROOT . 'css';
-const INVENTAIRE_IMG = URL_ROOT . 'items_img';
+const INVENTAIRE_IMG = URL_ROOT . 'upload';
 
 define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));
