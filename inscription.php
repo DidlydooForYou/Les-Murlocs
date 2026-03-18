@@ -1,0 +1,153 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $validite = true;
+    if (
+        isset($_POST['alias']) &&
+        isset($_POST['nom']) &&
+        isset($_POST['prenom']) &&
+        isset($_POST['email']) &&
+        isset($_POST['mdp'])
+    ) {
+        if (strlen($_POST['alias']) >= 2 && strlen($_POST['alias']) <= 50) {
+            $alias = $_POST['alias'];
+        } else {
+            $validite = false;
+        }
+        if (strlen($_POST['nom']) >= 2 && strlen($_POST['nom']) <= 25) {
+            $nom = $_POST['nom'];
+        } else {
+            $validite = false;
+        }
+        if (strlen($_POST['prenom']) >= 2 && strlen($_POST['prenom']) <= 25) {
+            $prenom = $_POST['prenom'];
+        } else {
+            $validite = false;
+        }
+        if (strlen($_POST['email']) >= 6 && strlen($_POST['email']) <= 254) {
+            $email = $_POST['email'];
+        } else {
+            $validite = false;
+        }
+        if (strlen($_POST['mdp']) >= 8 && strlen($_POST['mdp']) <= 50) {
+            $mdp = $_POST['mdp'];
+        } else {
+            $validite = false;
+        }
+    }
+    if (isset($_FILES['url'])) {
+        if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+            $chemin = "lorem.png";
+        } else if (
+            $_FILES['url']['type'] == "image/jpeg" ||
+            $_FILES['url']['type'] == "image/png" ||
+            $_FILES['url']['type'] == "image/jpg" ||
+            $_FILES['url']['type'] == "image/webp"
+        ) {
+
+            $repertoire = 'images/';
+            $chemin = $repertoire . $_FILES['url']['name'];
+            $extension = $_FILES['url']['type'];
+
+            if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+
+                switch ($extension) {
+                    case 'image/jpeg':
+                    case 'image/jpg':
+                        $image = imagecreatefromjpeg($chemin);
+                        break;
+                    case 'image/png':
+                        $image = imagecreatefrompng($chemin);
+                        break;
+                    case 'image/webp':
+                        $image = imagecreatefromwebp($chemin);
+                        break;
+                }
+
+
+                $image = imagescale($image, 640);
+
+                switch ($extension) {
+                    case 'image/jpeg':
+                    case 'image/jpg':
+                        imagejpeg($image, $chemin, 90);
+                        break;
+                    case 'image/png':
+                        imagepng($image, $chemin);
+                        break;
+                    case 'image/webp':
+                        imagewebp($image, $chemin, 90);
+                        break;
+                }
+            } else {
+                $validite = false;
+            }
+        } else {
+            $validite = false;
+        }
+
+    }
+}
+if (isset($validite)){
+    if ($validite){
+       // ajouter_joueur($nom,$prenom,$mdp,$alias,$email,$chemin);
+        header('Location:connexion.php');
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <?php include "includes/header.php" ?>
+    </header>
+    <nav>
+        <?php include "includes/nav.php" ?>
+    </nav>
+    <main>
+        <h3>S'inscrire à Darquest</h3>
+        <form action="inscription.php" enctype="multipart/form-data" method="POST"
+            onsubmit="return validationInscription()">
+            <fieldset style="width : 40%">
+                <label for="prenom"> Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="25">
+                <br>
+                <label for="nom"> Nom :</label>
+                <input type="text" id="nom" name="nom" required minlength="2" maxlength="25">
+                <br>
+                <label for="email">Adresse courriel : </label>
+                <input type="email" id="email" name="email" required minlength="6" maxlength="254">
+                <br>
+                <label for="alias">Alias :</label>
+                <input type="text" name="alias" id="alias" required minlength="2" maxlength="50">
+                <br>
+                <label for="mdp">Mot de passe : </label>
+                <input type="password" name="mdp" id="mdp" required minlength="8" maxlength="50">
+                <br>
+                <label for="mdpConfirm">Confirmer le mot de passe :</label>
+                <input type="password" name="mdpConfirm" id="mdpConfirm" required minlength="8" maxlength="50">
+                <br>
+                <label for="url">Image :</label>
+                <br>
+                <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
+                <input type="file" id="url" name="url" accept="image/*">
+                <br>
+                <input type="submit" value="S'inscrire">
+                <span id="erreur" style="color: red;"></span>
+            </fieldset>
+        </form>
+    </main>
+    <footer>
+        <?php include "includes/footer.php" ?>
+    </footer>
+</body>
+<script src="scripts/inscriptionValidation.js"></script>
+
+</html>
