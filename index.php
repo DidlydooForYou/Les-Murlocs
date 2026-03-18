@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,5 +10,13 @@
 </head>
 <body>
 <p>Allo</p>
+<?php
+if (isset($_SESSION["id"]))
+    {
+        $id = $_SESSION["id"];
+        echo "<p>$id</p>";
+    }
+?>
+
 </body>
 </html>
