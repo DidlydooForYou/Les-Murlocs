@@ -33,8 +33,8 @@ $erreur = false;
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header><?php include "includes/header.php" ?></header>
-    <nav><?php include "includes/nav.php" ?></nav>
+    <header><?php include "include/header.php" ?></header>
+    <nav><?php include "include/nav.php" ?></nav>
     <main>
     <form action="connexion.php" method="POST" onsubmit="return connexionValidation()">
         <fieldset  style="width : 40%">
@@ -53,7 +53,7 @@ $erreur = false;
     <p>Vous n'avez pas de compte ?</p>
     <a href="inscription.php">S'inscrire</a>
     </main>
-    <footer><?php include "includes/footer.php" ?></footer>
+    <footer><?php include "include/footer.php" ?></footer>
     <script src="scripts/connexionValidation"></script>
 </body>
 </html>
