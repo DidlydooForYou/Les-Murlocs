@@ -3,7 +3,7 @@ require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
 require_once 'source/Page.php';
 
-const ACTIVE_PAGE = Page::Inventaire;
+const ACTIVE_PAGE = Page::Vitrine;
 
 ?>
 
@@ -17,8 +17,8 @@ const ACTIVE_PAGE = Page::Inventaire;
             <?php include_once TEMPLATE . '/header.php'; ?>
 
             <main>
-                <h1 class="py-3 mt-3">Inventaire</h1>
-                <?php include_once TEMPLATE . '/inventory.php'; ?>
+                <h1 class="py-3 mt-3">Vitrine</h1>
+                <?php include_once TEMPLATE . '/vitrine.php'; ?>
             </main>
 
             <?php include_once TEMPLATE . '/footer.php'; ?>
