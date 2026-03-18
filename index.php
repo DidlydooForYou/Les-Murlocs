@@ -9,7 +9,8 @@
     include "include/nav.php";
 ?>
 <main class="mainContainer">
-    Vitrine ici
+    <h1 class="py-3 mt-3">Vitrine</h1>
+    <?php include_once TEMPLATE . '/vitrine.php'; ?>               
 </main>
 
 <?php 
