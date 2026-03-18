@@ -3,7 +3,7 @@ require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
 require_once 'source/Page.php';
 
-const ACTIVE_PAGE = Page::Inventaire;
+const ACTIVE_PAGE = Page::Vitrine;
 
 ?>
 
