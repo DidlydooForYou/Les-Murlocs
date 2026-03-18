@@ -1,4 +1,12 @@
 <?php
+session_start();
+require "sql/bd.php";
+if (isset($_SESSION["connexion"])){
+if ($_SESSION["connexion"]){
+    header('Location:accesRefuse.php');
+    exit;
+}
+}
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $validite = true;
     if (
@@ -29,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $validite = false;
         }
         if (strlen($_POST['mdp']) >= 8 && strlen($_POST['mdp']) <= 50) {
-            $mdp = $_POST['mdp'];
+            $mdp = password_hash($_POST['mdp'],PASSWORD_DEFAULT);
+           
         } else {
             $validite = false;
         }
@@ -89,8 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 if (isset($validite)){
     if ($validite){
-       // ajouter_joueur($nom,$prenom,$mdp,$alias,$email,$chemin);
+       ajouter_joueur($nom,$prenom,$email,$mdp,$chemin,$alias);
         header('Location:connexion.php');
+        exit;
     }
 }
 ?>
@@ -143,6 +153,8 @@ if (isset($validite)){
                 <span id="erreur" style="color: red;"></span>
             </fieldset>
         </form>
+        <p>Déjà membre de Darquest ?</p>
+        <a href="connexion.php">Se connecter</a>
     </main>
     <footer>
         <?php include "includes/footer.php" ?>
