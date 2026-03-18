@@ -4,6 +4,10 @@
     </span>
 
     <span class="navLinkContainer">
+        <a class="navElement navLink" href="connexion.php">Panier</a>
+    </span>
+
+    <span class="navLinkContainer">
         <a class="navElement navLink" href="inventaire.php">Inventaire</a>
     </span>
 
