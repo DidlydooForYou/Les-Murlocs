@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <?php include 'include/html_setup.php' ?>
 
 <title>Vitrine</title>
