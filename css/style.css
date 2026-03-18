@@ -5,6 +5,10 @@ body{
     min-width: 900px;
 }
 
+form *{
+  margin-bottom: 10px;
+}
+
 /* Header */
 .headerContainer{
     background-image: linear-gradient(#f8f8f8 0%,#355872 95%);
@@ -116,3 +120,4 @@ body{
     text-align: center;
 }
 /* end footer */
+
