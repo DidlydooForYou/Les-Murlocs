@@ -104,4 +104,8 @@ function ajouter_joueur($nom, $prenom, $email, $mdp, $photoProfil, $alias)
 
 }
 
+function obtenir_panier(): bool|PDOStatement {
+    $sql = "SELECT ";
+}
+
 ?>
