@@ -4,7 +4,7 @@
     </span>
 
     <span class="navLinkContainer">
-        <a class="navElement navLink" href="connexion.php">Panier</a>
+        <a class="navElement navLink" href="panier.php">Panier</a>
     </span>
 
     <span class="navLinkContainer">

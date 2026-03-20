@@ -1,0 +1,44 @@
+
+.panier-Container{
+    border: 1px solid black;
+    margin: 10px;   
+}
+
+.panier-row{
+    gap: 1px;
+    background-color: black;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: repeat(18, auto);
+}
+
+.panier-content{
+    background-color: #f7f8f0;
+    padding: 20px;
+    margin: 1px;
+    
+    text-align: center;
+}
+
+.panier-image-box{
+    background-color: #f7f8f0;
+    text-align: center;
+    margin: 1px;
+}
+
+.panier-image{
+    height: 60px;
+}
+
+.panier-nom{
+    grid-column: span 11;
+    text-align:left;
+}
+
+.panier-quantite{
+    grid-column: span 3;
+}
+
+.panier-prix{
+    grid-column: span 3;
+}

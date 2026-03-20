@@ -9,7 +9,7 @@ const ACTIVE_PAGE = Page::Menu;
 include "include/html_setup.php";
 ?>
 
-<title>Vitrine</title>
+<title>DarQuest - Vitrine</title>
 
 <?php 
     include 'include/header.php';

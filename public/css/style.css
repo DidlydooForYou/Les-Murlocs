@@ -5,6 +5,11 @@ body{
     min-width: 900px;
 }
 
+h1{
+    margin:0;
+    padding:10px;
+}
+
 form *{
   margin-bottom: 10px;
 }
