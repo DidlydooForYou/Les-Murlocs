@@ -10,18 +10,18 @@ const ACTIVE_PAGE = Page::Vitrine;
 <!DOCTYPE html>
 <html lang="fr">
 
-<?php include_once TEMPLATE . '/head.php'; ?>
+<?php include_once INCLUDE_FILE . '/head.php'; ?>
 
     <body>
         <div class="container">
-            <?php include_once TEMPLATE . '/header.php'; ?>
+            <?php include_once INCLUDE_FILE . '/header.php'; ?>
 
             <main>
                 <h1 class="py-3 mt-3">Vitrine</h1>
-                <?php include_once TEMPLATE . '/vitrine.php'; ?>
+                <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
             </main>
 
-            <?php include_once TEMPLATE . '/footer.php'; ?>
+            <?php include_once INCLUDE_FILE . '/footer.php'; ?>
 
         </div>
     </body>

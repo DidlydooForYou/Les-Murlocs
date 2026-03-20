@@ -127,3 +127,8 @@ form *{
     text-align: center;
 }
 /* end footer */
+
+.testBorder{
+    border-width:1px;
+    border-color:black;
+}

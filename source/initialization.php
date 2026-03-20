@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 define('ROOT', dirname(__DIR__));
 
-const TEMPLATE = ROOT . '/template';
+const INCLUDE_FILE = ROOT . '/include';
 const CORE = ROOT . '/core';
 const SOURCE = ROOT . '/source';
 
@@ -14,9 +14,10 @@ const URL_ROOT = '/';
 
 $dbConfig = [
     "dbHost" => "127.0.0.1",
-    "dbName" => "darquestgud",
+    "dbName" => "DbDarquest",
     "dbUser" => "root",
     "dbPass" => "",
+    "dbPort" => 3307,
     "dbParams" => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_CASE => PDO::CASE_NATURAL,
@@ -26,7 +27,7 @@ $dbConfig = [
 ];
 
 const CSS = URL_ROOT . 'css';
-const INVENTAIRE_IMG = URL_ROOT . 'upload';
+const VITRINE_IMG = URL_ROOT . 'upload';
 
 define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));
