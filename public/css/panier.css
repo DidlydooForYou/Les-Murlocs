@@ -9,7 +9,7 @@
     background-color: black;
     display: grid;
     grid-auto-rows: auto;
-    grid-template-columns: repeat(18, auto);
+    grid-template-columns: repeat(17, auto);
 }
 
 .panier-content{
@@ -31,12 +31,31 @@
 }
 
 .panier-nom{
-    grid-column: span 11;
+    grid-column: span 12;
     text-align:left;
 }
 
 .panier-quantite{
-    grid-column: span 3;
+    grid-column: span 1;
+
+    display: grid;
+    grid-template-columns:repeat(6,1fr);
+}
+
+.qte-element{
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+.btn-circular{
+    border: none;
+    /*background: none;*/
+    border-radius: 50%;
+}
+
+.btn-circular:hover{
+    background-color: #b3b3b3;
 }
 
 .panier-prix{

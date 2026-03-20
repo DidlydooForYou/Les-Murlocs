@@ -1,5 +1,18 @@
-<?php include 'include/html_setup.php' ?>
-<link rel="stylesheet" href="css/panier.css">
+<?php 
+    include 'include/html_setup.php';
+
+    $pdo = get_pdo();
+    
+    if($pdo === false){
+        $erreur = "<p>Erreur : impossible d'ouvrir <strong> la base de données </strong></p>"; 
+    } else {
+        $tableau = array();
+
+        $donnees = obtenir_panier();
+    }
+
+?>
+<link rel="stylesheet" href="public/css/panier.css">
 
 <title>DarQuest - Panier</title>
 
@@ -21,8 +34,14 @@
                  Épée fuckall :speaking_head: 
                 </div>
             <div class="panier-content panier-quantite">
-                <span> + </span><span> 2 </span><span> - </span><span> x </span>
+                <div></div>
+                <button class="qte-element btn-circular"> + </button>
+                <input type="text" class="qte-element" value="2">
+                <button class="qte-element btn-circular"> - </button>
+                <div></div>
+                <button class="qte-element btn-circular">×</button>
             </div>
+                
             <div class="panier-content panier-prix">
                 {nb * prix unitaire}
             </div>

@@ -1,4 +1,5 @@
--- MySQL Workbench Forward Engineering
+create database DBDarquest;
+use DBDarquest;
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -57,7 +58,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `DbDarquest`.`Item` (
   `nomItem` VARCHAR(80) NOT NULL,
   `photoItem` VARCHAR(80) NOT NULL,
-  `prix` INT NULL DEFAULT 0,
+  `prixOr` INT NOT NULL ,
+  `prixArgent` INT NOT NULL,
+  `prixBronze` INT NOT NULL,
   `description` VARCHAR(80) NOT NULL,
   `idItem` INT NOT NULL AUTO_INCREMENT,
   UNIQUE INDEX `nomItem_UNIQUE` (`nomItem` ASC) ,
@@ -274,6 +277,9 @@ CREATE TABLE IF NOT EXISTS `DbDarquest`.`marche` (
 ENGINE = InnoDB;
 
 
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
