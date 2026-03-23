@@ -116,10 +116,10 @@ if (isset($validite)){
 
 <body>
     <header>
-        <?php include "includes/header.php" ?>
+        <?php include "include/header.php" ?>
     </header>
     <nav>
-        <?php include "includes/nav.php" ?>
+        <?php include "include/nav.php" ?>
     </nav>
     <main>
         <h3>S'inscrire à Darquest</h3>
@@ -157,7 +157,7 @@ if (isset($validite)){
         <a href="connexion.php">Se connecter</a>
     </main>
     <footer>
-        <?php include "includes/footer.php" ?>
+        <?php include "include/footer.php" ?>
     </footer>
 </body>
 <script src="scripts/inscriptionValidation.js"></script>
