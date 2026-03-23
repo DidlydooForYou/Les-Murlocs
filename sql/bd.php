@@ -84,6 +84,24 @@ function email_pris($email)
         //exit;
     }
 }
+function nom_pris($nom){
+    $sql = "select nomItem from item where nomItem =?";
+    try {
+        $pdo = get_pdo();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$nom]);
+
+        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        //echo $e->getMessage();
+        //exit;
+    }
+ }
+
 
 
 function ajouter_joueur($nom, $prenom, $email, $mdp, $photoProfil, $alias)
@@ -114,7 +132,27 @@ function administrateur($id){
     catch(Exception $e){
         return false;
     }
+}
+function ajouter_arme($nom,$prixOr,$prixArgent,$prixBronze,$description,$efficacite,$genre,$quantite,$chemin){
+    if (!nom_pris($nom)){
+        $retour = true;
+    
+     try {
+            $pdo = get_pdo();
+            $stmt = $pdo->prepare("CALL Ajouter_Item_Arme(?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+            $stmt->execute([$nom, $chemin,$nom,$prixOr,$prixArgent, $prixBronze,$quantite,$description,$efficacite,$genre]);
+            $stmt->closeCursor();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            $retour = false;
+        }
+        return $retour;
+    }
+    return false;
 
 }
+
+
+
 
 ?>

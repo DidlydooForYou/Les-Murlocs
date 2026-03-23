@@ -12,11 +12,139 @@ if (!isset($_SESSION["admin"])) {
         exit;
     }
 }
+function conversion($prix){
+    $conversion = array();
+    if (strlen($prix) == 4){
+        $conversion[0] = (int) substr($prix,0,2);
+        $conversion[1] = (int) substr($prix,2,1); 
+        $conversion[2] = (int) substr($prix,3,1);
+    }
+    elseif (strlen($prix) == 3){
+        $conversion[0] = (int) substr($prix,0,1);
+        $conversion[1] = (int) substr($prix,1,1);
+        $conversion[2] = (int) substr($prix,3,1);
+
+    }
+    elseif(strlen($prix) == 2){
+        $conversion[0] = 0;
+        $conversion[1] = (int) substr($prix,0,1);
+        $conversion[2] = (int) substr($prix,1,1);
+    }
+    elseif(strlen($prix) == 1){
+        $conversion[0] = 0;
+        $conversion[1] = 0;
+        $conversion[2] = $prix;
+    }
+    return $conversion;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $validite = true;
+    if (
+        isset($_POST['nom']) &&
+        isset($_POST['prix']) &&
+        isset($_POST['description']) &&
+        isset($_POST['quantite']) &&
+        isset($_POST['type'])
+    ) {
+        if (isset($_FILES['url'])) {
+            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+                $chemin = "lorem.png";
+            } else if (
+                $_FILES['url']['type'] == "image/jpeg" ||
+                $_FILES['url']['type'] == "image/png" ||
+                $_FILES['url']['type'] == "image/jpg" ||
+                $_FILES['url']['type'] == "image/webp"
+            ) {
+
+                $repertoire = 'images/';
+                $chemin = $repertoire . $_FILES['url']['name'];
+                $extension = $_FILES['url']['type'];
+
+                if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+
+                    switch ($extension) {
+                        case 'image/jpeg':
+                        case 'image/jpg':
+                            $image = imagecreatefromjpeg($chemin);
+                            break;
+                        case 'image/png':
+                            $image = imagecreatefrompng($chemin);
+                            break;
+                        case 'image/webp':
+                            $image = imagecreatefromwebp($chemin);
+                            break;
+                    }
+
+
+                    $image = imagescale($image, 640);
+
+                    switch ($extension) {
+                        case 'image/jpeg':
+                        case 'image/jpg':
+                            imagejpeg($image, $chemin, 90);
+                            break;
+                        case 'image/png':
+                            imagepng($image, $chemin);
+                            break;
+                        case 'image/webp':
+                            imagewebp($image, $chemin, 90);
+                            break;
+                    }
+                } else {
+                    $validite = false;
+                }
+            } else {
+                $validite = false;
+            }
+
+        }
+        if (strlen($_POST['nom']) <= 80 && strlen($_POST['nom']) >= 1) {
+            $nom = $_POST['nom'];
+        }
+        if (strlen($_POST['prix']) <= 5000 && strlen($_POST['prix']) >= 1) {
+            $prix = $_POST['prix'];
+            $prixSc = conversion($prix);
+            $prixOr = $prixSc[0];
+            $prixArgent = $prixSc[1];
+            $prixBronze = $prixSc[2];
+        }
+        if (strlen($_POST['description']) <= 80 && strlen($_POST['description']) >= 1) {
+            $description = $_POST['description'];
+        }
+        if (strlen($_POST['quantite']) <= 20 && strlen($_POST['quantite']) >= 1) {
+            $quantite = (int)$_POST['quantite'];
+        }
+
+        switch ($_POST['type']) {
+            case "formArme":
+                if (
+                    isset($_POST['efficacite']) &&
+                    isset($_POST['genre'])
+                ) {
+                    if (strlen($_POST['efficacite']) <= 10 && strlen($_POST['efficacite']) >= 1) {
+                        $efficacite = (int)$_POST['efficacite'];
+                    }
+                    $genre = $_POST['genre'];
+                    ajouter_arme($nom,$prixOr,$prixArgent,$prixBronze, $description,$efficacite,$genre,$quantite,$chemin);
+                }
+                break;
+            case "fortArmure":
+                break;
+            case "formPotion":
+                break;
+            case "formSort":
+                break;
+        }
+
+    }
+
+}
 ?>
 
 <?php include 'include/html_setup.php' ?>
 
-<title>Vitrine</title>
+<title>Ajout</title>
 
 <?php
 include 'include/header.php';
@@ -32,12 +160,14 @@ include 'include/nav.php';
         <option value="potion">Potion</option>
         <option value="sort">Sort</option>
     </select>
-    <form action="" method="POST" id="formArme" enctype="multipart/form-data" style="display: none; padding: 4px;">
+    <form action="ajout.php" method="POST" id="formArme" enctype="multipart/form-data"
+        style="display: none; padding: 4px;">
+        <input type="hidden" name="type" value="formArme">
         <h2>Ajouter une arme</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" minlength="1" maxlength="80" required><br>
-        <label for="prix">Prix : </label>
-        <input type="number" id="prix" required min="1" max="5000" value="1"> <br>
+        <label for="prix">Prix : </label> en bronze
+        <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
@@ -51,17 +181,18 @@ include 'include/nav.php';
         <label for="quantite">Quantité à ajouter : </label>
         <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
         <label for="image">Image :</label><br>
-        <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
-        <input type="file" id="image" name="imgage" accept="image/*"><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="50000000" >
+        <input type="file" id="image" name="url" accept="image/*" ><br>
         <input type="submit" value="Ajouter">
 
     </form>
-    <form action="" method="POST" id="formArmure" style="display: none;padding: 4px;">
+    <form action="ajout.php" method="POST" id="formArmure" style="display: none;padding: 4px;">
+        <input type="hidden" name="type" value="formArmure">
         <h2>Ajouter une armure</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" minlength="1" maxlength="80" required><br>
-        <label for="prix">Prix : </label>
-        <input type="number" id="prix" required min="1" max="5000" value="1"> <br>
+        <label for="prix">Prix : </label> en bronze
+        <input type="number" id="prix"name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
@@ -72,15 +203,16 @@ include 'include/nav.php';
         <label for="quantite">Quantité à ajouter : </label>
         <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
         <label for="image">Image :</label><br>
-        <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
-        <input type="file" id="image" name="imgage" accept="image/*"><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
+        <input type="file" id="image" name="url" accept="image/*" required><br>
     </form>
-    <form action="" method="POST" id="formPotion" style="display: none;padding: 4px;">
+    <form action="ajout.php" method="POST" id="formPotion" style="display: none;padding: 4px;">
+        <input type="hidden" name="type" value="formPotion">
         <h2>Ajouter une potion</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" required><br>
         <label for="prix">Prix : </label>
-        <input type="number" id="prix" required min="1" max="5000" value="1"> <br>
+        <input type="number" id="prix"name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
@@ -91,15 +223,16 @@ include 'include/nav.php';
         <label for="quantite">Quantité à ajouter : </label>
         <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
         <label for="image">Image :</label><br>
-        <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
-        <input type="file" id="image" name="imgage" accept="image/*"><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
+        <input type="file" id="image" name="url" accept="image/*" required><br>
     </form>
-    <form action="" method="POST" id="formSort" style="display: none; padding: 4px;" ;>
+    <form action="ajout.php" method="POST" id="formSort" style="display: none; padding: 4px;" ;>
+        <input type="hidden" name="type" value="formSort">
         <h2>Ajouter un sort</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" required><br>
         <label for="prix">Prix : </label>
-        <input type="number" id="prix" required min="1" max="5000" value="1"> <br>
+        <input type="number" id="prix"name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
@@ -113,8 +246,8 @@ include 'include/nav.php';
         <label for="quantite">Quantité à ajouter : </label>
         <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
         <label for="image">Image :</label><br>
-        <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
-        <input type="file" id="image" name="imgage" accept="image/*"><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
+        <input type="file" id="image" name="url" accept="image/*" required><br>
     </form>
 
 
