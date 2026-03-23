@@ -8,7 +8,23 @@
     } else {
         $tableau = array();
 
-        $donnees = obtenir_panier();
+        $donnees = obtenir_panier($_SESSION['idJoueur']);
+
+        if($donnees){
+            foreach ($donnees as $itemPanier) {
+                if(!empty($itemPanier)){
+                    $ligne = array(
+                        "Image" => ($itemPanier['photoItem']),
+                        "Nom" => ($itemPanier['nomItem']),
+                        "Quantite" => ($itemPanier['qtPanier']),
+                        "Or" => ($itemPanier['prixOr']),
+                        "Argent" => $itemPanier(['prixArgent']),
+                        "Bronze" => $itemPanier(['prixBronze'])
+                    );
+                    $tableau[] = $ligne;
+                }
+            }
+        }
     }
 
 ?>

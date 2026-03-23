@@ -104,8 +104,22 @@ function ajouter_joueur($nom, $prenom, $email, $mdp, $photoProfil, $alias)
 
 }
 
-function obtenir_panier(): bool|PDOStatement {
-    $sql = "SELECT ";
+function obtenir_panier($idJoueur): bool|PDOStatement {
+    $sql = "SELECT photoItem, nomItem, qtPanier, prixOr, prixArgent, prixBronze
+    FROM Panier p INNER JOIN Item i ON p.Item_idItem = i.idItem 
+    WHERE p.JoueursJeu_idJoueur = ?' 
+    ORDER BY nomItem";
+
+    try{
+        $pdo = get_pdo();
+        $stmt = $pdo->query($sql);
+        $stmt -> execute([$idJoueur]);
+        $retour = $stmt;
+    } catch(Exception $e){
+        $retour = false;
+    }
+    
+    return $retour;
 }
 
 ?>
