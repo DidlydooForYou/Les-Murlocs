@@ -1,31 +1,20 @@
 <?php 
     include 'include/html_setup.php';
 
-    $pdo = get_pdo();
-    
-    if($pdo === false){
-        $erreur = "<p>Erreur : impossible d'ouvrir <strong> la base de données </strong></p>"; 
-    } else {
-        $tableau = array();
+    require_once 'source/initialization.php';
+    require_once 'core/Database.php';
+    require_once 'source/PanierDAL.php';
 
-        $donnees = obtenir_panier($_SESSION['idJoueur']);
+    $connexion = Database::getConnexion($dbConfig);
 
-        if($donnees){
-            foreach ($donnees as $itemPanier) {
-                if(!empty($itemPanier)){
-                    $ligne = array(
-                        "Image" => ($itemPanier['photoItem']),
-                        "Nom" => ($itemPanier['nomItem']),
-                        "Quantite" => ($itemPanier['qtPanier']),
-                        "Or" => ($itemPanier['prixOr']),
-                        "Argent" => $itemPanier(['prixArgent']),
-                        "Bronze" => $itemPanier(['prixBronze'])
-                    );
-                    $tableau[] = $ligne;
-                }
-            }
+    if(!isset ($_SESSION["connexion"])){
+        if($_SESSION["connexion"]){
+            header('Location:accesRefuse.php');
+            exit;
         }
     }
+
+    $products = PanierDAL::selectByUser($connexion, $_SESSION["id"]);
 
 ?>
 <link rel="stylesheet" href="public/css/panier.css">
@@ -42,26 +31,28 @@
 
     <div class="panier-Container">
 
+    <?php foreach($products as $product) : ?>
         <div class="panier-row">
             <div class="panier-image-box"> 
-                <img class="panier-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMA41rkfY1mp-2Mrv3kNtSvP4kBIaMCIu0A&s" alt="mama mia"> 
+                <img class="panier-image" src="<?$product['photoItem']?>" alt="<?$product['photoItem']?>"> 
             </div>
             <div class="panier-content panier-nom">
-                 Épée fuckall :speaking_head: 
+                <?$product['nomItem']?> 
                 </div>
             <div class="panier-content panier-quantite">
                 <div></div>
                 <button class="qte-element btn-circular"> + </button>
-                <input type="text" class="qte-element" value="2">
+                <input type="text" class="qte-element" value="<?$product['qtPanier']?> ">
                 <button class="qte-element btn-circular"> - </button>
                 <div></div>
                 <button class="qte-element btn-circular">×</button>
             </div>
                 
             <div class="panier-content panier-prix">
-                {nb * prix unitaire}
+                
             </div>
         </div>
+        <?php endforeach ?>
     </div>
 
 </main>

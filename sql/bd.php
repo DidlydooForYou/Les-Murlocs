@@ -46,7 +46,6 @@ function obtenir_joueur($email, $mdp)
         //exit;
     }
     }
-    
 }
 function alias_pris($alias)
 {
@@ -103,23 +102,4 @@ function ajouter_joueur($nom, $prenom, $email, $mdp, $photoProfil, $alias)
     return false;
 
 }
-
-function obtenir_panier($idJoueur): bool|PDOStatement {
-    $sql = "SELECT photoItem, nomItem, qtPanier, prixOr, prixArgent, prixBronze
-    FROM Panier p INNER JOIN Item i ON p.Item_idItem = i.idItem 
-    WHERE p.JoueursJeu_idJoueur = ?' 
-    ORDER BY nomItem";
-
-    try{
-        $pdo = get_pdo();
-        $stmt = $pdo->query($sql);
-        $stmt -> execute([$idJoueur]);
-        $retour = $stmt;
-    } catch(Exception $e){
-        $retour = false;
-    }
-    
-    return $retour;
-}
-
 ?>
