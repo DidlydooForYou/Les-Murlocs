@@ -108,10 +108,9 @@ form *{
 
 /* Footer */
 #buttonBackUp{
-    border: none;
-    outline: none;
-
+    display: block;
     width: 100%;
+    text-decoration: none;
     background-color: #7aaace;
     color:#f8f8f8;
     text-align: center;

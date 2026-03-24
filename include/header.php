@@ -1,3 +1,3 @@
-<header class="headerContainer">
+<header id="top" class="headerContainer">
     <img class="bannerLogo" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
 </header>
