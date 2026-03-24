@@ -19,13 +19,6 @@ include "include/html_setup.php";
 <main class="main">
     <h1 class="py-3 mt-3">Vitrine</h1>
     <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
-    <br>
-    <fieldset>
-        <legend>  Vitrine goes brr  </legend>
-        <br><br><br><br><br><br><br><br>
-        <div>Très beau produit trust</div>
-    </fieldset>
-    <br>
 </main>
 
 <?php include 'include/footer.php' ?>

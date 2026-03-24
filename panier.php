@@ -7,18 +7,17 @@
 
     $connexion = Database::getConnexion($dbConfig);
 
-    if(!isset ($_SESSION["connexion"])){
-        if($_SESSION["connexion"]){
+    if(isset ($_SESSION["connexion"])){
+        if(!$_SESSION["connexion"]){
             header('Location:accesRefuse.php');
             exit;
         }
     }
 
-    $products = PanierDAL::selectByUser($connexion, $_SESSION["id"]);
+    $products = PanierDAL::selectByUser($connexion/*, $_SESSION["id"]*/);
 
 ?>
 <link rel="stylesheet" href="public/css/panier.css">
-
 <title>DarQuest - Panier</title>
 
 <?php 
@@ -34,27 +33,25 @@
     <?php foreach($products as $product) : ?>
         <div class="panier-row">
             <div class="panier-image-box"> 
-                <img class="panier-image" src="<?$product['photoItem']?>" alt="<?$product['photoItem']?>"> 
+                <img class="panier-image" src="<?=$product['photoItem']?>" alt="<?=$product['photoItem']?>"> 
             </div>
             <div class="panier-content panier-nom">
-                <?$product['nomItem']?> 
+                <?=$product['nomItem']?> 
                 </div>
             <div class="panier-content panier-quantite">
-                <div></div>
                 <button class="qte-element btn-circular"> + </button>
-                <input type="text" class="qte-element" value="<?$product['qtPanier']?> ">
+                <input type="text" class="qte-element" value="<?=$product['qtPanier']?> ">
                 <button class="qte-element btn-circular"> - </button>
-                <div></div>
                 <button class="qte-element btn-circular">×</button>
             </div>
                 
             <div class="panier-content panier-prix">
-                
+                <?=$product['prixOr']?> <?=$product['prixArgent']?> <?=$product['prixBronze']?>
             </div>
         </div>
         <?php endforeach ?>
     </div>
-
+    
 </main>
 
 <?php include 'include/footer.php' ?>
