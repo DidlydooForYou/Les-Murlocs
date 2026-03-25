@@ -12,25 +12,23 @@ if (!isset($_SESSION["admin"])) {
         exit;
     }
 }
-function conversion($prix){
+function conversion($prix)
+{
     $conversion = array();
-    if (strlen($prix) == 4){
-        $conversion[0] = (int) substr($prix,0,2);
-        $conversion[1] = (int) substr($prix,2,1); 
-        $conversion[2] = (int) substr($prix,3,1);
-    }
-    elseif (strlen($prix) == 3){
-        $conversion[0] = (int) substr($prix,0,1);
-        $conversion[1] = (int) substr($prix,1,1);
-        $conversion[2] = (int) substr($prix,3,1);
+    if (strlen($prix) == 4) {
+        $conversion[0] = (int) substr($prix, 0, 2);
+        $conversion[1] = (int) substr($prix, 2, 1);
+        $conversion[2] = (int) substr($prix, 3, 1);
+    } elseif (strlen($prix) == 3) {
+        $conversion[0] = (int) substr($prix, 0, 1);
+        $conversion[1] = (int) substr($prix, 1, 1);
+        $conversion[2] = (int) substr($prix, 2, 1);
 
-    }
-    elseif(strlen($prix) == 2){
+    } elseif (strlen($prix) == 2) {
         $conversion[0] = 0;
-        $conversion[1] = (int) substr($prix,0,1);
-        $conversion[2] = (int) substr($prix,1,1);
-    }
-    elseif(strlen($prix) == 1){
+        $conversion[1] = (int) substr($prix, 0, 1);
+        $conversion[2] = (int) substr($prix, 1, 1);
+    } elseif (strlen($prix) == 1) {
         $conversion[0] = 0;
         $conversion[1] = 0;
         $conversion[2] = $prix;
@@ -99,21 +97,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
 
         }
-        if (strlen($_POST['nom']) <= 80 && strlen($_POST['nom']) >= 1) {
+        if (
+            strlen($_POST['nom']) <= 80 && strlen($_POST['nom']) >= 1 &&
+            $_POST['prix'] <= 5000 && $_POST['prix'] >= 1 &&
+            strlen($_POST['description']) <= 80 && strlen($_POST['description']) >= 1 &&
+            $_POST['quantite'] <= 20 && $_POST['quantite'] >= 1
+        ) {
             $nom = $_POST['nom'];
-        }
-        if (strlen($_POST['prix']) <= 5000 && strlen($_POST['prix']) >= 1) {
             $prix = $_POST['prix'];
             $prixSc = conversion($prix);
             $prixOr = $prixSc[0];
             $prixArgent = $prixSc[1];
             $prixBronze = $prixSc[2];
-        }
-        if (strlen($_POST['description']) <= 80 && strlen($_POST['description']) >= 1) {
             $description = $_POST['description'];
-        }
-        if (strlen($_POST['quantite']) <= 20 && strlen($_POST['quantite']) >= 1) {
-            $quantite = (int)$_POST['quantite'];
+            $quantite = (int) $_POST['quantite'];
+        } else {
+            $validite = false;
         }
 
         switch ($_POST['type']) {
@@ -122,21 +121,91 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     isset($_POST['efficacite']) &&
                     isset($_POST['genre'])
                 ) {
-                    if (strlen($_POST['efficacite']) <= 10 && strlen($_POST['efficacite']) >= 1) {
-                        $efficacite = (int)$_POST['efficacite'];
+                    if ($_POST['efficacite'] <= 10 && $_POST['efficacite'] >= 1) {
+                        $efficacite = (int) $_POST['efficacite'];
+                    } else {
+                        $validite = false;
                     }
-                    $genre = $_POST['genre'];
-                    ajouter_arme($nom,$prixOr,$prixArgent,$prixBronze, $description,$efficacite,$genre,$quantite,$chemin);
+                    if ($validite) {
+                        $genre = $_POST['genre'];
+                        ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin);
+                        header('Location:index.php');
+                        exit;
+                    }
                 }
                 break;
-            case "fortArmure":
+            case "formArmure":
+                if (
+                    isset($_POST['matiere']) &&
+                    isset($_POST['taille'])
+                ) {
+                    if (
+                        strlen($_POST['matiere']) <= 40 && strlen($_POST['matiere']) >= 1 &&
+                        $_POST['taille'] <= 60 && $_POST['taille'] >= 1
+                    ) {
+                        $matiere = $_POST['matiere'];
+                        $taille = $_POST['taille'];
+                    } else {
+                        $validite = false;
+                    }
+                    if ($validite) {
+                        $erreur = ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $chemin);
+                        header('Location:index.php');
+                        exit;
+                    }
+                }
                 break;
             case "formPotion":
+                if (
+                    isset($_POST['effet']) &&
+                    isset($_POST['duree'])
+                ) {
+                    if (
+                        strlen($_POST['effet']) <= 60 && strlen($_POST['effet']) >= 1 &&
+                        $_POST['duree'] <= 600 && $_POST['duree'] >= 1
+                    ) {
+                        $effet = $_POST['effet'];
+                        $duree = $_POST['duree'];
+
+                    } else {
+                        $validite = false;
+                    }
+                    if ($validite) {
+                        $erreur = ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $chemin);
+                        header('Location:index.php');
+                        exit;
+                    }
+
+                } else {
+                    $validite = false;
+                }
                 break;
             case "formSort":
+                if (
+                    isset($_POST['instantane']) &&
+                    isset($_POST['dommage'])
+                ){
+                    if (
+                        $_POST['dommage'] >= 1  && $_POST['dommage'] <= 100
+                    ){
+                        $dommage = $_POST['dommage'];
+                        $instantane = $_POST['instantane'];
+                    }
+                    else{
+                        $validite = false;
+                    }
+                    if ($validite){
+                        $erreur = ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $chemin);
+                    }
+                }
+                else{
+                    $validite = false;
+                }
                 break;
         }
 
+    } else {
+        $validite = false;
     }
 
 }
@@ -174,25 +243,26 @@ include 'include/nav.php';
         <label for="efficacite">Efficacité : </label>
         <input type="number" id="efficacite" name="efficacite" min="1" max="10" value="1" required> <br>
         <p>Quel est le genre de l'arme ?</p>
-        <input type="radio" id="uneMain" name="genre" value="une main">
+        <input type="radio" id="uneMain" name="genre" value="une main" checked>
         <label for="uneMain"> Une main</label>
         <input type="radio" id="deuxMains" name="genre" value="deux mains">
         <label for="deuxMains">Deux mains</label> <br>
         <label for="quantite">Quantité à ajouter : </label>
         <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
         <label for="image">Image :</label><br>
-        <input type="hidden" name="MAX_FILE_SIZE" value="50000000" >
-        <input type="file" id="image" name="url" accept="image/*" ><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
+        <input type="file" id="image" name="url" accept="image/*"><br>
         <input type="submit" value="Ajouter">
 
     </form>
-    <form action="ajout.php" method="POST" id="formArmure" style="display: none;padding: 4px;">
+    <form action="ajout.php" method="POST" id="formArmure" style="display: none;padding: 4px;"
+        enctype="multipart/form-data">
         <input type="hidden" name="type" value="formArmure">
         <h2>Ajouter une armure</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" minlength="1" maxlength="80" required><br>
         <label for="prix">Prix : </label> en bronze
-        <input type="number" id="prix"name="prix" required min="1" max="5000" value="1"> <br>
+        <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
@@ -205,41 +275,45 @@ include 'include/nav.php';
         <label for="image">Image :</label><br>
         <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
         <input type="file" id="image" name="url" accept="image/*" required><br>
+        <input type="submit" value="Ajouter">
     </form>
-    <form action="ajout.php" method="POST" id="formPotion" style="display: none;padding: 4px;">
+    <form action="ajout.php" method="POST" id="formPotion" style="display: none;padding: 4px;"
+        enctype="multipart/form-data">
         <input type="hidden" name="type" value="formPotion">
         <h2>Ajouter une potion</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" required><br>
         <label for="prix">Prix : </label>
-        <input type="number" id="prix"name="prix" required min="1" max="5000" value="1"> <br>
+        <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
         <label for="effet">Effet : </label>
         <input type="text" name="effet" id="effet" required minlength="1" maxlength="60"> <br>
         <label for="duree">Durée en secondes : </label>
-        <input type="number" id="duree" name="idee" required min="1" max="600"> secondes <br>
+        <input type="number" id="duree" name="duree" required min="1" max="600"> secondes <br>
         <label for="quantite">Quantité à ajouter : </label>
         <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
         <label for="image">Image :</label><br>
         <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
         <input type="file" id="image" name="url" accept="image/*" required><br>
+        <input type="submit" value="Ajouter">
     </form>
-    <form action="ajout.php" method="POST" id="formSort" style="display: none; padding: 4px;" ;>
+    <form action="ajout.php" method="POST" id="formSort" style="display: none; padding: 4px;"
+        enctype="multipart/form-data">
         <input type="hidden" name="type" value="formSort">
         <h2>Ajouter un sort</h2>
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" required><br>
         <label for="prix">Prix : </label>
-        <input type="number" id="prix"name="prix" required min="1" max="5000" value="1"> <br>
+        <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
         <label for="description">Description : </label> <br>
         <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
             minlength="1" maxlength="80"></textarea><br>
         <p>Est-ce que le sort est instantané ?</p>
-        <input type="radio" id="oui" name="instantane" value="oui">
+        <input type="radio" id="oui" name="instantane" value="1" checked>
         <label for="oui"> Oui</label>
-        <input type="radio" id="non" name="instantane" value="non">
+        <input type="radio" id="non" name="instantane" value="0">
         <label for="non">Non</label> <br>
         <label for="dommage">Dommage du sort : </label>
         <input type="number" id="dommage" name="dommage" required min="1" max="100"> points de vie<br>
@@ -248,8 +322,15 @@ include 'include/nav.php';
         <label for="image">Image :</label><br>
         <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
         <input type="file" id="image" name="url" accept="image/*" required><br>
+        <input type="submit" value="Ajouter">
     </form>
-
+    <?php
+    if (isset($erreur)) {
+        if (!$erreur) {
+            echo "<span style='color:red'> Erreur dans les données </span>";
+        }
+    }
+    ?>
 
 </main>
 
