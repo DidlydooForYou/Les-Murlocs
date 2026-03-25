@@ -23,21 +23,18 @@ $erreur = false;
     }
  }
 ?>
+<?php include 'include/html_setup.php' ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <header><?php include "include/header.php" ?></header>
-    <nav><?php include "include/nav.php" ?></nav>
-    <main>
+<title>Connexion</title>
+
+<?php 
+    include 'include/header.php';
+    include 'include/nav.php'; 
+?>
+    <main class="main" style="padding-left: 4px;">
+        <h3>Se connecter</h3>
     <form action="connexion.php" method="POST" onsubmit="return connexionValidation()">
-        <fieldset  style="width : 40%">
+    
             <label for="email">Adresse courriel : </label>
             <input type="email" name="email" id="email"><br>
             <label for="password">Mot de passe : </label>
@@ -45,15 +42,13 @@ $erreur = false;
             <input type="submit" value="Se connecter">
             <span id="erreur" style="color: red;"></span>
 
-        </fieldset>
-
 
     </form>
     <?php if (isset($erreur))  if ($erreur == true) echo "<p style= 'color: red'>Courriel et/ou mot de passe incorrect </p>"; ?>
     <p>Vous n'avez pas de compte ?</p>
     <a href="inscription.php">S'inscrire</a>
     </main>
-    <footer><?php include "include/footer.php" ?></footer>
+   <?php include 'include/footer.php' ?>
     <script src="scripts/connexionValidation"></script>
-</body>
+
 </html>
