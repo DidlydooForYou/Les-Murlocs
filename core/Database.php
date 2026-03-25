@@ -6,7 +6,7 @@ class Database
         
         try {
         
-            return new PDO("mysql:host=".$dbConfig["dbHost"].";dbname=".$dbConfig["dbName"], $dbConfig["dbUser"], $dbConfig["dbPass"], $dbConfig["dbParams"]);
+            return new PDO("mysql:host=".$dbConfig["dbHost"].";port=".$dbConfig["dbPort"].";dbname=".$dbConfig["dbName"], $dbConfig["dbUser"], $dbConfig["dbPass"], $dbConfig["dbParams"]);
         
         } catch(PDOException $e) {
 

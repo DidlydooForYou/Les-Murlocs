@@ -1,7 +1,11 @@
 <?php
-require_once CORE . '/Database.php';
+require_once 'source/initialization.php';
+require_once 'core/Database.php';
+require_once 'source/InventoryDAL.php';
 
 
+$connexion = DataBase::getConnexion($dbConfig);
+$products = InventoryDAL::selectAll($connexion);
 ?>
 
 <div class="row">
@@ -18,7 +22,7 @@ require_once CORE . '/Database.php';
                 <p class="card-text">x</p>
 
                 <!--Image de l'item-->
-                <img src="<?= INVENTAIRE_IMG . '/' . $product['image'] ?>" class="card-img-top" alt="<?= $product['alt']?>">
+                <img src="<?= VITRINE_IMG . '/' . $product['image'] ?>" class="card-img-top" alt="<?= $product['alt']?>">
 
                 <!--Description de l'item-->
                 <p class="card-text"><?= $product['description']?></p>
@@ -38,5 +42,5 @@ require_once CORE . '/Database.php';
         </div>
     </div>
 
-    <? endforeach; ?>
+    <?php endforeach; ?>
 </div>
