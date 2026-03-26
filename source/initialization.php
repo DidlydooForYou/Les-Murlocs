@@ -32,9 +32,15 @@ const VITRINE_IMG = URL_ROOT . 'upload';
 define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));
 define('IS_ADMIN', IS_AUTH && $_SESSION['role'] === 1);
-function accesRefuseConnection(){
+function doitEtreDeco(){
     if (IS_AUTH){
         header('Location:accesRefuse.php');
+        exit;
+    }
+}
+function doitEtreCo(){
+    if (!IS_AUTH){
+        header('Location:connexion.php');
         exit;
     }
 }

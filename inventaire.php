@@ -4,7 +4,7 @@ require_once 'source/initialization.php';
 require_once 'source/Page.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
-
+doitEtreCo();
 ?>
 
 <?php 

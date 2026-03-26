@@ -1,7 +1,7 @@
 <?php
 require "sql/bd.php";
 require "source/initialization.php";
-accesRefuseConnection();
+doitEtreDeco();
 if (isset($_SESSION["connexion"])){
 if ($_SESSION["connexion"]){
     header('Location:accesRefuse.php');

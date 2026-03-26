@@ -2,11 +2,6 @@
 session_start();
 require "sql/bd.php";
 require_once "source/initialization.php";
-if (!$_SESSION["connexion"]) {
-    header('Location:accesRefuse.php');
-    exit;
-}
-
 if (!IS_ADMIN){
     header('Location:accesRefuse.php');
         exit;
