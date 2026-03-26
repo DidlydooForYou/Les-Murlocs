@@ -1,6 +1,7 @@
 <?php
-session_start();
 require "sql/bd.php";
+require "source/initialization.php";
+accesRefuseConnection();
 if (isset($_SESSION["connexion"])){
 if ($_SESSION["connexion"]){
     header('Location:accesRefuse.php');
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $_FILES['url']['type'] == "image/webp"
         ) {
 
-            $repertoire = 'images/';
+            $repertoire = 'public/images/';
             $chemin = $repertoire . $_FILES['url']['name'];
             $extension = $_FILES['url']['type'];
 
@@ -71,22 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $image = imagecreatefromwebp($chemin);
                         break;
                 }
-
-
-                $image = imagescale($image, 640);
-
-                switch ($extension) {
-                    case 'image/jpeg':
-                    case 'image/jpg':
-                        imagejpeg($image, $chemin, 90);
-                        break;
-                    case 'image/png':
-                        imagepng($image, $chemin);
-                        break;
-                    case 'image/webp':
-                        imagewebp($image, $chemin, 90);
-                        break;
-                }
+                
+               $image = imagescale($image, 640);
+               $cheminAvif = pathinfo($chemin,PATHINFO_DIRNAME) . "/" . pathinfo($chemin,PATHINFO_FILENAME) . ".avif";
+               imageavif($image,$cheminAvif,90);
+               unlink($chemin);
+                
             } else {
                 $validite = false;
             }
@@ -98,9 +89,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 if (isset($validite)){
     if ($validite){
-       ajouter_joueur($nom,$prenom,$email,$mdp,$chemin,$alias);
+       $erreur = ajouter_joueur($nom,$prenom,$email,$mdp,$cheminAvif,$alias);
+       if ($erreur){
         header('Location:connexion.php');
         exit;
+       }
+       else{
+        unlink($cheminAvif);
+       }
     }
 }
 ?>
@@ -142,6 +138,13 @@ if (isset($validite)){
         </form>
         <p>Déjà membre de Darquest ?</p>
         <a href="connexion.php">Se connecter</a>
+        <?php
+    if (isset($erreur)) {
+        if (!$erreur) {
+            echo "<span style='color:red'> Erreur dans les données </span>";
+        }
+    }
+    ?>
     </main>
    <?php include 'include/footer.php' ?>
 
