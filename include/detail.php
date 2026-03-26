@@ -22,13 +22,37 @@ if(!empty($_GET['id'])){
 
     <div class="col-lg-3 d-flex align-items-stretch">
 
-            <div class="card mt-4 w-100 d-flex flex-column">
+            <div class="card mt-4 w-100 d-flex flex-column backgroundDetails">
                 <!--Image de l'item-->
                 <img src="<?=$product['photoItem'] ?>" class="card-img-top" alt="<?= $product['photoAlt']?>">
 
                 <div class="card-body d-flex flex-column text-center">
                     <!--Nom de l'item-->
                 <h5 class="card-title"><?= $product['nomItem']?></h5>
+
+                <!--Moyenne des reviews de l'item-->
+                <?php
+                        $avg = number_format($product['moyenne_etoiles'] ?? 0, 1);
+                        $starPercentage = ($avg / 5) * 100;
+
+                        if ($avg >= 4) {
+                            $color = "rating-good";     
+                        } elseif ($avg >= 2) {
+                            $color = "rating-average";   
+                        } else {
+                            $color = "rating-bad";       
+                        } 
+                        if($product['nb_reviews'] == 0){
+                            $color = "rating";
+                        }
+                    ?>
+                    <div class="stars">
+                        <div class="stars-inner" style="width: <?= $starPercentage ?>%;"></div>
+                    </div>
+                    <p class="rating-number <?= $color ?>"><?= $avg ?>/5</p>
+
+                <!--Nombre de review de l'item-->
+                <!--<a href="" class="reviews">--><p class="card-text"><?= $product['nb_reviews'] ?? 0 ?> reviews</p><!--</a>-->
 
                 <!--Prix de l'item-->
                 <p class="card-text"><?= $product['prix']?>$</p>

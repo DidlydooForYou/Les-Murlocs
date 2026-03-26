@@ -32,13 +32,33 @@ else {
         <?php foreach($products as $product) : ?>
 
         <div class="col-lg-3 d-flex align-items-stretch">
-            <div class="card mt-4 w-100">
+            <div class="card mt-4 w-100 backgroundImage">
                 <a href="details.php?id=<?= $product['idItem'] ?>">
                     <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['photoAlt'] ?>">
                 </a>
 
-                <div class="card-body d-flex flex-column text-center">
-                    <h5 class="card-title"><?= $product['nomItem'] ?></h5>
+                <div class="card-body d-flex flex-column text-center backgroundColor">
+                        <h5 class="card-title"><?= $product['nomItem'] ?></h5>
+                     <?php
+                        $avg = number_format($product['moyenne_etoiles'] ?? 0, 1);
+                        $starPercentage = ($avg / 5) * 100;
+
+                        if ($avg >= 4) {
+                            $color = "rating-good";     
+                        } elseif ($avg >= 2) {
+                            $color = "rating-average";   
+                        } else {
+                            $color = "rating-bad";       
+                        } 
+                        if($product['nb_reviews'] == 0){
+                            $color = "rating";
+                        }
+                    ?>
+                    <div class="stars">
+                        <div class="stars-inner" style="width: <?= $starPercentage ?>%;"></div>
+                    </div>
+                    <p class="rating-number <?= $color ?>"><?= $avg ?>/5</p>
+
                     <p class="card-text"><?= $product['prix'] ?>$</p>
                     <a href="" class="btn btn-boot mt-auto">Ajouter au panier</a>
                 </div>
