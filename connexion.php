@@ -1,7 +1,7 @@
 <?php
 require "sql/bd.php";
 require "source/initialization.php";
-accesRefuseConnection();
+doitEtreDeco();
 $erreur = false;
  if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];

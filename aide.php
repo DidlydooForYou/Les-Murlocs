@@ -1,6 +1,8 @@
 
 <?php
-session_start();
+require "source/initialization.php";
+doitEtreCo();
+
 ?>
 <?php include 'include/html_setup.php' ?>
 
