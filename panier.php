@@ -7,17 +7,22 @@
 
     $connexion = Database::getConnexion($dbConfig);
 
-    if(!isset ($_SESSION["connexion"])){
+    if(isset ($_SESSION["connexion"])){
         if($_SESSION["connexion"]){
             header('Location:accesRefuse.php');
             exit;
         }
-    }
+    } /*else{
+        header('Location:accesRefuse.php');
+        exit;
+    }*/
 
-    $products = PanierDAL::selectByUser($connexion, $_SESSION["id"]);
+    $products = PanierDAL::selectByUser($connexion/*, $_SESSION["id"]*/);
+
 
 ?>
 <link rel="stylesheet" href="public/css/panier.css">
+<script src="scripts/fonctionsPanier.js"></script>
 
 <title>DarQuest - Panier</title>
 
@@ -29,32 +34,98 @@
 <main class="main">
     <h1> Panier </h1>
 
-    <div class="panier-Container">
+    <?php if($products == null) : ?>
+    <div> Vous n'avez pas d'item dans votre panier </div>
 
-    <?php foreach($products as $product) : ?>
-        <div class="panier-row">
-            <div class="panier-image-box"> 
-                <img class="panier-image" src="<?$product['photoItem']?>" alt="<?$product['photoItem']?>"> 
-            </div>
-            <div class="panier-content panier-nom">
-                <?$product['nomItem']?> 
+    <?php else : ?>
+    <div class="panier-Container">
+        <?php foreach($products as $product) : ?>
+            <div class="panier-row">
+                <div class="panier-image-box"> 
+                    <img class="panier-image" src="<?=$product['photoItem']?>" alt="<?=$product['photoItem']?>"> 
                 </div>
-            <div class="panier-content panier-quantite">
-                <div></div>
-                <button class="qte-element btn-circular"> + </button>
-                <input type="text" class="qte-element" value="<?$product['qtPanier']?> ">
-                <button class="qte-element btn-circular"> - </button>
-                <div></div>
-                <button class="qte-element btn-circular">×</button>
+                <div class="panier-content panier-nom">
+                    <?=$product['nomItem']?> 
+                    </div>
+                <div class="panier-content panier-quantite">
+                    <button class="qte-element btn-circular"> + </button>
+                    <input  class="qte-element qte-amount" type="text" value="<?=$product['qtPanier']?> ">
+                    <button class="qte-element btn-circular"> - </button>
+                    <button class="qte-element btn-circular">×</button>
+                </div>
+                    
+                <div class="panier-content panier-prix">
+
+                    <div class="coins-container">
+                        <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                        <span class="coin-amount"><?=$product['prixOr']?></span>
+
+                        <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                        <span class="coin-amount"><?=$product['prixArgent']?></span>
+
+                        <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                        <span class="coin-amount"><?=$product['prixBronze']?></span>
+                    </div>
+
+                </div>
             </div>
-                
-            <div class="panier-content panier-prix">
-                
-            </div>
-        </div>
         <?php endforeach ?>
     </div>
+    <div style="display: flex; justify-content: flex-end;">
+        <div class="confirm-container">
+            <h3 style="text-align:right">Total : </h3>
 
+            <div class="coins-container">
+                <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                <span class="coin-amount">3</span>
+
+                <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                <span class="coin-amount">2</span>
+
+                <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                <span class="coin-amount">1</span>
+            </div>
+
+            <div></div>
+            <button class="button" onclick="openPanel()"> Acheter </button>
+        </div>
+    </div>
+
+    <div id="confirmation-panel" class="confirmation-panel">
+        <h2 style="text-align: center;">Confirmation d'achats</h2>
+        <div class="panel-list-container">
+            <?php foreach($products as $product) : ?>
+                <div>
+                    <?=$product['nomItem']?> ×<?=$product['qtPanier']?>
+                </div>
+                <hr>
+            <?php endforeach ?>
+        </div>
+
+        <div class="panel-bottom">
+
+            <div class="coins-container" style="margin:auto;">
+                <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                <span class="coin-amount">3</span>
+
+                <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                <span class="coin-amount">2</span>
+
+                <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+                <span class="coin-amount">1</span>
+            </div>
+
+            <div class="panel-button">
+                <button class="button btn-cancel" onclick="closePanel()">Annuler</button>
+            </div>
+
+            <div class="panel-button">
+                <button class="button">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <?php endif ?>
 </main>
 
 <?php include 'include/footer.php' ?>
