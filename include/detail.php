@@ -15,29 +15,32 @@ if(!empty($_GET['id'])){
 
 ?>
 
-<div class="row">
+<div class="container text-center">
+    <div class="row justify-content-center">
 
     <?php foreach($products as $product) : ?>
 
-    <div class="col-lg-4 d-flex align-items-stretch">
-        <div class="card mt-4">
-            <div class="card-body d-flex flex-column">
+    <div class="col-lg-3 d-flex align-items-stretch">
+
+            <div class="card mt-4 w-100 d-flex flex-column">
                 <!--Image de l'item-->
                 <img src="<?=$product['photoItem'] ?>" class="card-img-top" alt="<?= $product['photoAlt']?>">
 
-                <!--Nom de l'item-->
+                <div class="card-body d-flex flex-column text-center">
+                    <!--Nom de l'item-->
                 <h5 class="card-title"><?= $product['nomItem']?></h5>
 
                 <!--Prix de l'item-->
-                <p class="card-text"><?= $product['prix']?></p>
+                <p class="card-text"><?= $product['prix']?>$</p>
 
                 <!--Description de l'item-->
                 <p class="card-text"><?= $product['description']?></p>
 
                 <div class="mt-auto">
                     <?php if(!IS_ADMIN) : ?>
-                        <a href="" class="btn btn-primary mt-auto align-self-start">Ajouter au panier</a>
+                        <a href="" class="btn btn-boot mt-auto">Ajouter au panier</a>
                     <?php endif; ?>
+                </div>
                 </div>
             </div>
         </div>

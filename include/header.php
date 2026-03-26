@@ -1,3 +1,3 @@
 <header class="headerContainer">
-    <img class="bannerLogo" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
+    <a href="index.php"><img class="bannerLogo" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png"></a>
 </header>

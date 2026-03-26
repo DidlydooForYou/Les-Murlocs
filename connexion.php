@@ -30,11 +30,11 @@ $erreur = false;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
-    <header><?php include "includes/header.php" ?></header>
-    <nav><?php include "includes/nav.php" ?></nav>
+    <header><?php include "include/header.php" ?></header>
+    <nav><?php include "include/nav.php" ?></nav>
     <main>
     <form action="connexion.php" method="POST" onsubmit="return connexionValidation()">
         <fieldset  style="width : 40%">
@@ -53,7 +53,7 @@ $erreur = false;
     <p>Vous n'avez pas de compte ?</p>
     <a href="inscription.php">S'inscrire</a>
     </main>
-    <footer><?php include "includes/footer.php" ?></footer>
+    <footer><?php include "include/footer.php" ?></footer>
     <script src="scripts/connexionValidation"></script>
 </body>
 </html>

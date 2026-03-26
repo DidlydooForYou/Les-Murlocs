@@ -5,31 +5,42 @@ require_once 'source/VitrineDAL.php';
 
 $connexion = Database::getConnexion($dbConfig);
 
-if(!empty($_GET['research'])){
-    $search = "%" .strtolower($_GET['research']). "%";
+if (!empty($_GET['sortAlphabete'])) {
+    $sort = $_GET['sortAlphabete'];
+    $products = VitrineDAL::selectByAlphabete($connexion, $sort);
+}
+else if (!empty($_GET['sortCatego'])){
+    $sort = $_GET['sortCatego'];
+    $products = VitrineDAL::selectByCategory($connexion, $sort);
+}
+else if (!empty($_GET['sortPrice'])) {
+    $sort = $_GET['sortPrice'];
+    $products = VitrineDAL::selectByPrice($connexion, $sort);
+}
+else if (!empty($_GET['research'])) {
+    $search = "%" . strtolower($_GET['research']) . "%";
     $products = VitrineDAL::selectByTitle($connexion, $search);
 }
-else{
+else {
     $products = VitrineDAL::selectAll($connexion);
 }
 ?>
 
-<div class="container">
-    <div class="row">
+<div class="container text-center">
+    <div class="row justify-content-center">
 
         <?php foreach($products as $product) : ?>
 
-        <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="card mt-4">
+        <div class="col-lg-3 d-flex align-items-stretch">
+            <div class="card mt-4 w-100">
                 <a href="details.php?id=<?= $product['idItem'] ?>">
                     <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['photoAlt'] ?>">
                 </a>
 
                 <div class="card-body d-flex flex-column text-center">
-                    <h5 class="card-title mt-3"><?= $product['nomItem'] ?></h5>
-                    <p class="card-text"><?= $product['prix'] ?></p>
-                    <p class="card-text"><?= $product['description'] ?></p>
-                    <a href="" class="btn btn-primary mt-auto">Ajouter au panier</a>
+                    <h5 class="card-title"><?= $product['nomItem'] ?></h5>
+                    <p class="card-text"><?= $product['prix'] ?>$</p>
+                    <a href="" class="btn btn-boot mt-auto">Ajouter au panier</a>
                 </div>
             </div>
         </div>

@@ -5,24 +5,17 @@ require_once 'source/Page.php';
 
 const ACTIVE_PAGE = Page::Vitrine;
 
+include "include/header.php"; 
+include "include/nav.php";
+include "include/html_setup.php";
+
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
+<main class="main">
+    <br>
+        <h1 class="py-3 mt-3">Vitrine</h1>
+        <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
+    <br>
+</main>
 
-<?php include_once INCLUDE_FILE . '/head.php'; ?>
-
-    <body>
-        <div class="container">
-            <?php include_once INCLUDE_FILE . '/header.php'; ?>
-
-            <main>
-                <h1 class="py-3 mt-3">Vitrine</h1>
-                <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
-            </main>
-
-            <?php include_once INCLUDE_FILE . '/footer.php'; ?>
-
-        </div>
-    </body>
-</html>
+<?php include_once INCLUDE_FILE . '/footer.php'; ?>
