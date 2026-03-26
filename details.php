@@ -18,7 +18,7 @@ const ACTIVE_PAGE = Page::Details;
 <main class="main">
     <br>
     <fieldset>
-        <legend><h1 class="py-3 mt-3">Details</h1></legend>
+        <legend><h1 class="py-3 mt-3">Détails</h1></legend>
         <?php include_once INCLUDE_FILE . '/detail.php'; ?>
     </fieldset>
     <br>

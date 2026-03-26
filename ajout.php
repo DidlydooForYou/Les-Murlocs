@@ -1,16 +1,15 @@
 <?php
 session_start();
 require "sql/bd.php";
+require_once "source/initialization.php";
 if (!$_SESSION["connexion"]) {
     header('Location:accesRefuse.php');
     exit;
 }
-if (!isset($_SESSION["admin"])) {
-    $admin = administrateur($_SESSION["id"])["administrateur"];
-    if ($admin == 0) {
-        header('Location:accesRefuse.php');
+
+if (!IS_ADMIN){
+    header('Location:accesRefuse.php');
         exit;
-    }
 }
 function conversion($prix)
 {
@@ -55,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $_FILES['url']['type'] == "image/webp"
             ) {
 
-                $repertoire = 'images/';
+                $repertoire = 'public/images/';
                 $chemin = $repertoire . $_FILES['url']['name'];
                 $extension = $_FILES['url']['type'];
 
@@ -76,19 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
                     $image = imagescale($image, 640);
+                    $cheminAvif = pathinfo($chemin, PATHINFO_DIRNAME) . "/" . pathinfo($chemin, PATHINFO_FILENAME) . ".avif";
+                    imageavif($image, $cheminAvif, 90);
+                    unlink($chemin);
 
-                    switch ($extension) {
-                        case 'image/jpeg':
-                        case 'image/jpg':
-                            imagejpeg($image, $chemin, 90);
-                            break;
-                        case 'image/png':
-                            imagepng($image, $chemin);
-                            break;
-                        case 'image/webp':
-                            imagewebp($image, $chemin, 90);
-                            break;
-                    }
+
                 } else {
                     $validite = false;
                 }
@@ -128,9 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                     if ($validite) {
                         $genre = $_POST['genre'];
-                        ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin);
-                        header('Location:index.php');
-                        exit;
+                        $erreur = ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $cheminAvif);
+                        if ($erreur) {
+                            header('Location:index.php');
+                            exit;
+                        }
+                        else {
+                            unlink($cheminAvif);
+                        }
                     }
                 }
                 break;
@@ -149,9 +145,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $chemin);
-                        header('Location:index.php');
-                        exit;
+                        $erreur = ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $cheminAvif);
+                        if ($erreur) {
+                            header('Location:index.php');
+                            exit;
+                        }
+                        else {
+                            unlink($cheminAvif);
+                        }
                     }
                 }
                 break;
@@ -171,9 +172,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $chemin);
-                        header('Location:index.php');
-                        exit;
+                        $erreur = ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $cheminAvif);
+                        if ($erreur) {
+                            header('Location:index.php');
+                            exit;
+                        }
+                        else {
+                            unlink($cheminAvif);
+                        }
                     }
 
                 } else {
@@ -184,21 +190,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (
                     isset($_POST['instantane']) &&
                     isset($_POST['dommage'])
-                ){
+                ) {
                     if (
-                        $_POST['dommage'] >= 1  && $_POST['dommage'] <= 100
-                    ){
+                        $_POST['dommage'] >= 1 && $_POST['dommage'] <= 100
+                    ) {
                         $dommage = $_POST['dommage'];
                         $instantane = $_POST['instantane'];
-                    }
-                    else{
+                    } else {
                         $validite = false;
                     }
-                    if ($validite){
-                        $erreur = ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $chemin);
+                    if ($validite) {
+                        $erreur = ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $cheminAvif);
+                        if ($erreur) {
+                            header('Location:index.php');
+                            exit;
+                        } else {
+                            unlink($cheminAvif);
+                        }
                     }
-                }
-                else{
+                } else {
                     $validite = false;
                 }
                 break;

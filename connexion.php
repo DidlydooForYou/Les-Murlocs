@@ -1,12 +1,7 @@
 <?php
 require "sql/bd.php";
-session_start();
-if (isset($_SESSION["connexion"])){
-if ($_SESSION["connexion"]){
-    header('Location:accesRefuse.php');
-    exit;
-}
-}
+require "source/initialization.php";
+accesRefuseConnection();
 $erreur = false;
  if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
@@ -15,6 +10,7 @@ $erreur = false;
     if (obtenir_joueur($email, $mdp)){
          $_SESSION["connexion"] = true;
          $_SESSION["id"] = obtenir_id($email)["JoueursJeu_idJoueur"];
+         $_SESSION['role'] = administrateur($_SESSION["id"])["administrateur"];
         header('Location:index.php');
          exit;
     }
