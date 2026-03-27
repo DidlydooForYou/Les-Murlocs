@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     if (isset($_FILES['url'])) {
         if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-            $chemin = "lorem.png";
+            $chemin = "public/images/profilBase.webp";
         } else if (
             $_FILES['url']['type'] == "image/jpeg" ||
             $_FILES['url']['type'] == "image/png" ||
@@ -77,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                $cheminAvif = pathinfo($chemin,PATHINFO_DIRNAME) . "/" . pathinfo($chemin,PATHINFO_FILENAME) . ".avif";
                imageavif($image,$cheminAvif,90);
                unlink($chemin);
+               $chemin = $cheminAvif;
                 
             } else {
                 $validite = false;
@@ -89,13 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 if (isset($validite)){
     if ($validite){
-       $erreur = ajouter_joueur($nom,$prenom,$email,$mdp,$cheminAvif,$alias);
+       $erreur = ajouter_joueur($nom,$prenom,$email,$mdp,$chemin,$alias);
        if ($erreur){
         header('Location:connexion.php');
         exit;
        }
        else{
-        unlink($cheminAvif);
+        if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE){
+        
+        }
+        else{
+            unlink($chemin);
+        }
        }
     }
 }

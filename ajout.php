@@ -2,9 +2,9 @@
 session_start();
 require "sql/bd.php";
 require_once "source/initialization.php";
-if (!IS_ADMIN){
+if (!IS_ADMIN) {
     header('Location:accesRefuse.php');
-        exit;
+    exit;
 }
 function conversion($prix)
 {
@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $cheminAvif = pathinfo($chemin, PATHINFO_DIRNAME) . "/" . pathinfo($chemin, PATHINFO_FILENAME) . ".avif";
                     imageavif($image, $cheminAvif, 90);
                     unlink($chemin);
+                    $chemin = $cheminAvif;
 
 
                 } else {
@@ -118,9 +119,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        }
-                        else {
-                            unlink($cheminAvif);
+                        } else {
+                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+
+                            } else {
+                                unlink($chemin);
+                            }
                         }
                     }
                 }
@@ -144,9 +148,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        }
-                        else {
-                            unlink($cheminAvif);
+                        } else {
+                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+
+                            } else {
+                                unlink($chemin);
+                            }
                         }
                     }
                 }
@@ -171,9 +178,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        }
-                        else {
-                            unlink($cheminAvif);
+                        } else {
+                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+
+                            } else {
+                                unlink($chemin);
+                            }
                         }
                     }
 
@@ -200,7 +210,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             header('Location:index.php');
                             exit;
                         } else {
-                            unlink($cheminAvif);
+                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+
+                            } else {
+                                unlink($chemin);
+                            }
                         }
                     }
                 } else {
