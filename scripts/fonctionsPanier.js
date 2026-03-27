@@ -12,8 +12,12 @@ function closePanel(){
 
 function changeItemQuantite(idJoueur, idItem, nouvelleQuantite, nomItem){
     if(nouvelleQuantite <= 0){
-        return
+        nouvelleQuantite = 1;
     }
+    if(nouvelleQuantite >= 100){
+        nouvelleQuantite = 99;
+    }
+
     document.getElementById(nomItem + "PanierQte").value = nouvelleQuantite;
     document.getElementById(nomItem + "OverviewQte").textContent = nouvelleQuantite;
 

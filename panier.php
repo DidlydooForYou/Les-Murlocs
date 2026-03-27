@@ -58,17 +58,19 @@
                     
                     <button class="qte-element btn-circular">×</button>
                 </div>
-                    
+                
+                <?php $prixCalcule = PanierDAL::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']) ?>
                 <div class="panier-content panier-prix">
+                    
                     <div class="coins-container">
                         <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
-                        <span class="coin-amount"><?=$product['prixOr']?></span>
+                        <span class="coin-amount"><?=$prixCalcule['Or']?></span>
 
                         <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
-                        <span class="coin-amount"><?=$product['prixArgent']?></span>
+                        <span class="coin-amount"><?=$prixCalcule['Argent']?></span>
 
                         <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
-                        <span class="coin-amount"><?=$product['prixBronze']?></span>
+                        <span class="coin-amount"><?=$prixCalcule['Bronze']?></span>
                     </div>
                 </div>
 

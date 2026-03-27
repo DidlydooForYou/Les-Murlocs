@@ -18,7 +18,7 @@ class PanierDAL{
     }
 
     public static function selectByUserItem(PDO $connexion, int $idJoueur, int $idItem): array {
-        
+
         $sql = "SELECT photoItem, nomItem, p.Item_idItem as idItem, qtPanier, prixOr, prixArgent, prixBronze
                 FROM Panier p INNER JOIN Item i ON p.Item_idItem = i.idItem
                 WHERE p.JoueursJeu_idJoueur = :idJoueur AND p.Item_idItem = :idItem";
@@ -39,9 +39,9 @@ class PanierDAL{
         $prixUnitaireBronze = ($prixOr * 100) + ($prixArgent * 10) + $prixBronze;
         $prixTotal = $prixUnitaireBronze * $amount;
 
-        $prixBronzeFinal = $prixTotal % 10; // Enlève les unités
-        $prixArgentFinal = intdiv($prixTotal,10) % 10; // Met les dizaines aux unités puis les enlèves
-        $prixOrFinal = intdiv($prixTotal,100);
+        $prixBronzeFinal = $prixTotal % 10;             // Enlève les unités
+        $prixArgentFinal = intdiv($prixTotal,10) % 10;  // Met les dizaines aux unités puis les enlèves
+        $prixOrFinal = intdiv($prixTotal,100);          // Transfert le reste aux unités
 
         return [
             "Or" => $prixOrFinal,
