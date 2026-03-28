@@ -24,7 +24,7 @@ if(!empty($_GET['id'])){
 
             <div class="card mt-4 w-100 d-flex flex-column backgroundDetails">
                 <!--Image de l'item-->
-                <img src="<?=$product['photoItem'] ?>" class="card-img-top" alt="<?= $product['photoAlt']?>">
+                <img src="<?=$product['photoItem'] ?>" class="card-img-top image-wrapper" alt="<?= $product['photoAlt']?>">
 
                 <div class="card-body d-flex flex-column text-center">
                     <!--Nom de l'item-->

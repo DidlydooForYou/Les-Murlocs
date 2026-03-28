@@ -15,7 +15,6 @@ include "include/html_setup.php";
 
 <main class="main">
     <br>
-        <h1 class="py-3 mt-3">Vitrine</h1>
         <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
     <br>
 </main>

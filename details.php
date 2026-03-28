@@ -7,6 +7,8 @@ const ACTIVE_PAGE = Page::Details;
 
 ?>
 
+<Title>DarQuest - Détails</Title>
+
 <?php 
     include "include/html_setup.php";
 ?>

@@ -47,7 +47,7 @@
 
             <div id="Tableau_<?=$product['idItem']?>" class="panier-row">
                 <div class="panier-image-box"> 
-                    <img class="panier-image" src="<?=$product['photoItem']?>" alt="<?=$product['photoItem']?>"> 
+                    <img class="panier-image" src="<?=$product['photoItem']?>" alt="<?=$product['nomItem']?>"> 
                 </div>
 
                 <div class="panier-content panier-nom">
