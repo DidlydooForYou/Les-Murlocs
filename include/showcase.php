@@ -68,4 +68,7 @@ else {
         <?php endforeach; ?>
 
     </div>
+
+    <div id="hand-zone"></div>
+
 </div>
