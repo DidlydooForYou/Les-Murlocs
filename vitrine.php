@@ -11,6 +11,8 @@ include "include/html_setup.php";
 
 ?>
 
+<Title>Vitrine</Title>
+
 <main class="main">
     <br>
         <h1 class="py-3 mt-3">Vitrine</h1>
