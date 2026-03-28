@@ -97,9 +97,12 @@ if ($idJoueur !== null) {
                     </div>
                     <?php if (!$isInCart): ?>
 
-    <a href="ajouter.php?id=<?= $product['idItem'] ?>" class="btn btn-boot mt-auto">
-        Ajouter au panier
-    </a>
+                         <?php 
+             if(IS_AUTH) : ?>
+                        <button onclick="ajouter_panier(<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
+                    <?php endif; ?>
+        
+    
 
 <?php else: ?>
 
@@ -113,7 +116,7 @@ if ($idJoueur !== null) {
             onchange="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
             class="quantity-input"
         >
-
+       
         <button class="btn btn-plus" onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
     </div>
 
@@ -127,6 +130,7 @@ if ($idJoueur !== null) {
     </div>
 </div>
 <script src="scripts/fonctionsPanier.js"> </script>
+
 
     <div id="hand-zone"></div>
 

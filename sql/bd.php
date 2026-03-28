@@ -6,7 +6,7 @@ function get_pdo()
         "dbName" => "dbdarquest",
         "dbUser" => "root",
         "dbPass" => "",
-        "dbPort" => 3307,
+        "dbPort" => 3306,
         "dbParams" => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_CASE => PDO::CASE_NATURAL,
