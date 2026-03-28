@@ -2,6 +2,7 @@
 require_once 'source/initialization.php';
 require_once 'core/Database.php';
 require_once 'source/VitrineDAL.php';
+require_once 'sql/bd.php';
 
 $connexion = Database::getConnexion($dbConfig);
 
@@ -60,7 +61,7 @@ else {
                     <p class="rating-number <?= $color ?>"><?= $avg ?>/5</p>
 
                     <p class="card-text"><?= $product['prix'] ?>$</p>
-                    <a href="" class="btn btn-boot mt-auto">Ajouter au panier</a>
+                    <button onclick="ajouter_panier(<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -69,3 +70,4 @@ else {
 
     </div>
 </div>
+<script src="scripts/fonctionsPanier.js"> </script>

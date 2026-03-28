@@ -115,7 +115,29 @@ function nom_pris($nom)
         //exit;
     }
 }
-
+function item_deja_panier($idItem){
+    $sql = "select 1 from panier where JoueursJeu_idJoueur = ? and Item_idItem = ?";
+    try {
+        $pdo = get_pdo();
+         if (!isset($_SESSION['id'])) {
+            return false;
+        }
+        $idJoueur = $_SESSION['id'];
+         $stmt = $pdo->prepare($sql);
+        $stmt->execute([$idJoueur,$idItem]);
+        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+     catch (Exception $e) {
+        //echo $e->getMessage();
+        //exit;
+    }
+        
+    
+}
 
 
 function ajouter_joueur($nom, $prenom, $email, $mdp, $photoProfil, $alias)
@@ -223,6 +245,7 @@ function ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $in
     return false;
 
 }
+
 
 
 
