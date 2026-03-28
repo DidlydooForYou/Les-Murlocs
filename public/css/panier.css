@@ -53,10 +53,17 @@
 }
 
 .qte-amount{
-    
+    -moz-appearance: textfield;
+    appearance: textfield;
 
     height: 20px;
-    width: 20px;
+    width: 25px;
+}
+
+.qte-amount::-webkit-outer-spin-button,
+.qte-amount::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .btn-circular{
@@ -99,7 +106,7 @@
     background-color: white;
     border: 3px solid black;
 
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 

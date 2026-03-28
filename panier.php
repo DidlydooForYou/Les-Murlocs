@@ -8,16 +8,16 @@
     $connexion = Database::getConnexion($dbConfig);
 
     if(isset ($_SESSION["connexion"])){
-        if($_SESSION["connexion"]){
+        if(!$_SESSION["connexion"]){
             header('Location:accesRefuse.php');
             exit;
         }
-    } /*else{
+    } else{
         header('Location:accesRefuse.php');
         exit;
-    }*/
+    }
 
-    $products = PanierDAL::selectByUser($connexion/*, $_SESSION["id"]*/);
+    $products = PanierDAL::selectByUser($connexion, 1 /*$_SESSION["id"]*/);
 
 
 ?>
@@ -44,30 +44,36 @@
                 <div class="panier-image-box"> 
                     <img class="panier-image" src="<?=$product['photoItem']?>" alt="<?=$product['photoItem']?>"> 
                 </div>
+
                 <div class="panier-content panier-nom">
                     <?=$product['nomItem']?> 
-                    </div>
+                </div>
+
                 <div class="panier-content panier-quantite">
-                    <button class="qte-element btn-circular"> + </button>
-                    <input  class="qte-element qte-amount" type="text" value="<?=$product['qtPanier']?> ">
-                    <button class="qte-element btn-circular"> - </button>
+                    <button class="qte-element btn-circular" onclick="addingItemQuantite(1, <?=$product['idItem']?>, 1,'<?=$product['nomItem']?>')">+</button>
+                    
+                    <input id="<?=$product['nomItem']?>PanierQte" class="qte-element qte-amount" type="number" value="<?=$product['qtPanier']?>" onblur="changeItemQuantite(1, <?=$product['idItem']?>, this.value,'<?=$product['nomItem']?>')">
+                    
+                    <button class="qte-element btn-circular" onclick="addingItemQuantite(1, <?=$product['idItem']?>, -1,'<?=$product['nomItem']?>')">-</button>
+                    
                     <button class="qte-element btn-circular">×</button>
                 </div>
-                    
+                
+                <?php $prixCalcule = PanierDAL::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']) ?>
                 <div class="panier-content panier-prix">
-
+                    
                     <div class="coins-container">
                         <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
-                        <span class="coin-amount"><?=$product['prixOr']?></span>
+                        <span class="coin-amount"><?=$prixCalcule['Or']?></span>
 
                         <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
-                        <span class="coin-amount"><?=$product['prixArgent']?></span>
+                        <span class="coin-amount"><?=$prixCalcule['Argent']?></span>
 
                         <img class="coin-image" src="public/images/LogoDarQuest.png" alt="LogoDarQuest.png">
-                        <span class="coin-amount"><?=$product['prixBronze']?></span>
+                        <span class="coin-amount"><?=$prixCalcule['Bronze']?></span>
                     </div>
-
                 </div>
+
             </div>
         <?php endforeach ?>
     </div>
@@ -96,7 +102,7 @@
         <div class="panel-list-container">
             <?php foreach($products as $product) : ?>
                 <div>
-                    <?=$product['nomItem']?> ×<?=$product['qtPanier']?>
+                    <span><?=$product['nomItem']?></span> ×<span id="<?=$product['nomItem']?>OverviewQte"><?=$product['qtPanier']?></span>
                 </div>
                 <hr>
             <?php endforeach ?>
@@ -129,3 +135,11 @@
 </main>
 
 <?php include 'include/footer.php' ?>
+
+
+            <!--
+Warning: Undefined array key "p.Item_idItem" in C:\wamp64\www\Les-Murlocs\panier.php on line 52
+Call Stack #TimeMemoryFunctionLocation 10.0012462160{main}( )...\panier.php
+:
+0 , 1, 
+            -->

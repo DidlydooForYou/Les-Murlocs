@@ -5,5 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="public/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="public/css/style.css">
-    <script src="public/assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js" defer></script>  
+    <script src="public/assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js" defer></script>
+    <script
+        src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+        crossorigin="anonymous">
+    </script>
 </head>
