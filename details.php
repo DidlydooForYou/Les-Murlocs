@@ -7,6 +7,8 @@ const ACTIVE_PAGE = Page::Details;
 
 ?>
 
+<Title>DarQuest - Détails</Title>
+
 <?php 
     include "include/html_setup.php";
 ?>
@@ -15,9 +17,13 @@ const ACTIVE_PAGE = Page::Details;
     include "include/header.php"; 
     include "include/nav.php";
 ?>
-<main>
-    <h1 class="py-3 mt-3">Details</h1>
-    <?php include_once INCLUDE_FILE . '/detail.php'; ?>
+<main class="main">
+    <br>
+    <fieldset>
+        <legend><h1 class="py-3 mt-3">Détails</h1></legend>
+        <?php include_once INCLUDE_FILE . '/detail.php'; ?>
+    </fieldset>
+    <br>
 </main>
 
 <?php include_once INCLUDE_FILE . '/footer.php'; ?>
