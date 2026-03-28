@@ -6,7 +6,7 @@ doitEtreCo();
 ?>
 <?php include 'include/html_setup.php' ?>
 
-<title>Vitrine</title>
+<title>DarQuest - Aide</title>
 
 <?php 
     include 'include/header.php';

@@ -4,7 +4,7 @@ session_start();
 ?>
 <?php include 'include/html_setup.php' ?>
 
-<title>DarQuest - Enigmes</title>
+<title>DarQuest - Énigma</title>
 
 <?php 
     include 'include/header.php';
