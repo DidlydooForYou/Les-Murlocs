@@ -50,19 +50,31 @@ if(!empty($_GET['id'])){
                         <div class="stars-inner" style="width: <?= $starPercentage ?>%;"></div>
                     </div>
                     <p class="rating-number <?= $color ?>"><?= $avg ?>/5</p>
+                    
 
                 <!--Nombre de review de l'item-->
                 <!--<a href="" class="reviews">--><p class="card-text"><?= $product['nb_reviews'] ?? 0 ?> reviews</p><!--</a>-->
 
                 <!--Prix de l'item-->
-                <p class="card-text"><?= $product['prix']?>$</p>
+                 <div class="card-text" style="display: flex; justify-content: center;">
+                        <div id="tableau-total" class="coins-container">
+                            <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin.png">
+                            <span class="coin-amount"><?=$product['prixOr']?></span>
+
+                            <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin.png">
+                            <span class="coin-amount"><?=$product['prixArgent']?></span>
+
+                            <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin.png">
+                            <span class="coin-amount"><?=$product['prixBronze']?></span>
+                        </div>
+                    </div>
 
                 <!--Description de l'item-->
                 <p class="card-text"><?= $product['description']?></p>
 
                 <div class="mt-auto">
-                    <?php if(!IS_ADMIN) : ?>
-                        <a href="" class="btn btn-boot mt-auto">Ajouter au panier</a>
+                    <?php if(IS_AUTH) : ?>
+                        <button onclick="ajouter_panier(<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
                     <?php endif; ?>
                 </div>
                 </div>
@@ -72,3 +84,4 @@ if(!empty($_GET['id'])){
 
     <?php endforeach; ?>
 </div>
+<script src="scripts/fonctionsPanier.js"> </script>
