@@ -57,7 +57,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DbDarquest`.`Item` (
   `nomItem` VARCHAR(80) NOT NULL,
-  `photoItem` VARCHAR(80) NOT NULL,
+  `photoItem` VARCHAR(255) NOT NULL,
   `prixOr` INT NOT NULL ,
   `prixArgent` INT NOT NULL,
   `prixBronze` INT NOT NULL,

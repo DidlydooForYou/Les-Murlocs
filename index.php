@@ -50,18 +50,33 @@ include "include/html_setup.php";
 document.getElementById("sortPrice").addEventListener("change", function () {
     const url = new URL(window.location.href);
     url.searchParams.set("sortPrice", this.value);
+
+    url.searchParams.delete("sortAlphabete");
+    url.searchParams.delete("sortCatego");
+
     window.location.href = url.toString();
 });
+
 document.getElementById("sortAlphabete").addEventListener("change", function () {
     const url = new URL(window.location.href);
     url.searchParams.set("sortAlphabete", this.value);
+
+    url.searchParams.delete("sortPrice");
+    url.searchParams.delete("sortCatego");
+
     window.location.href = url.toString();
 });
+
 document.getElementById("sortCatego").addEventListener("change", function () {
     const url = new URL(window.location.href);
     url.searchParams.set("sortCatego", this.value);
+
+    url.searchParams.delete("sortPrice");
+    url.searchParams.delete("sortAlphabete");
+
     window.location.href = url.toString();
 });
 </script>
+
 
 <?php include 'include/footer.php' ?>
