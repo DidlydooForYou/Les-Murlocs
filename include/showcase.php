@@ -34,7 +34,7 @@ else {
         <div class="col-lg-3 d-flex align-items-stretch">
             <div class="card mt-4 w-100 backgroundImage">
                 <a href="details.php?id=<?= $product['idItem'] ?>">
-                    <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['photoAlt'] ?>">
+                    <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid image-wrapper" alt="<?= $product['photoAlt'] ?>">
                 </a>
 
                 <div class="card-body d-flex flex-column text-center backgroundColor">
