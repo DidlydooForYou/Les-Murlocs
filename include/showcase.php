@@ -2,11 +2,8 @@
 require_once 'source/initialization.php';
 require_once 'core/Database.php';
 require_once 'source/VitrineDAL.php';
-<<<<<<< HEAD
 require_once 'source/PanierDAL.php';
-=======
 require_once 'sql/bd.php';
->>>>>>> 3cfc349630eab6d1a66780805e0084cdfff816e4
 
 $connexion = Database::getConnexion($dbConfig);
 
