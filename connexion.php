@@ -21,7 +21,7 @@ $erreur = false;
 ?>
 <?php include 'include/html_setup.php' ?>
 
-<title>Connexion</title>
+<title>DarQuest - Connexion</title>
 
 <?php 
     include 'include/header.php';
