@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `DbDarquest`.`Item` (
   `prixArgent` INT NOT NULL,
   `prixBronze` INT NOT NULL,
   `description` VARCHAR(80) NOT NULL,
+  `qttItem` INT NOT NULL,
   `idItem` INT NOT NULL AUTO_INCREMENT,
   UNIQUE INDEX `nomItem_UNIQUE` (`nomItem` ASC) ,
   PRIMARY KEY (`idItem`))
