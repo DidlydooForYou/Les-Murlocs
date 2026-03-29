@@ -9,14 +9,21 @@
     background-color: black;
     display: grid;
     grid-auto-rows: auto;
-    grid-template-columns: 7% minmax(0,1fr) 200px 15%;
+    grid-template-columns: 7% minmax(0,1fr) 200px 200px 200px;
 }
 
 .panier-content{
     background-color: #f7f8f0;
     padding: 20px;
     margin: 1px;
-    
+    text-align: center;
+}
+
+.panier-title{
+    background-color: #f7f8f0;
+    padding: 10px;
+    margin: 1px;
+    font-weight: bold;
     text-align: center;
 }
 
@@ -41,8 +48,12 @@
     text-align:left;
 }
 
-.panier-quantite{
+.panier-prix-unitaire{
     grid-column: 3;
+}
+
+.panier-quantite{
+    grid-column: 4;
     display: grid;
     grid-template-columns:25% 25% 25% 25%;
 }
@@ -79,7 +90,7 @@
 }
 
 .panier-prix{
-    grid-column: 4;
+    grid-column: 5;
 }
 
 

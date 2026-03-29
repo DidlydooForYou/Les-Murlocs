@@ -1,45 +1,18 @@
-<?php 
-session_start();
-require_once "sql/bd.php";
-isset($_POST['idItem']) ? $idItem = $_POST['idItem'] : exit("id manquant");
-function ajouter_panier($idItem){
-     if (!isset($_SESSION['id'])) {
-            return false;
-        }
-        $idJoueur = $_SESSION['id'];
-    if (item_deja_panier($idItem)){
+<?php
+    require_once 'source/initialization.php';
+    require_once 'core/Database.php';
+    require_once 'source/VitrineDAL.php';
 
-        $sql = "update panier set qtPanier = qtPanier + 1 where JoueursJeu_idJoueur = ? and Item_idItem = ?";
-        try {
-            $pdo = get_pdo();
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$idJoueur, $idItem]);
-            return true;
+    $connexion = Database::getConnexion($dbConfig);
 
-        }
-        catch (Exception $e){
-            return false;
-        }
-    }else{
-        $sql = "insert into panier (qtPanier, JoueursJeu_idJoueur, Item_idItem) values (?, ?, ?) ";
-        try{
-            $pdo = get_pdo();
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([1,$idJoueur,$idItem]);
-            return true;
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $idItem = (int)$_POST['idItem'];
+        $idJoueur = (int)$_POST['idJoueur'];
 
-        }
-        catch (Exception $e){
-            return false;
-        }
+        $result = VitrineDAL::AjouterPanier($connexion, $idJoueur, $idItem);
+
+        echo json_encode([
+            "success" => $result
+        ]);
     }
-
-}
-if (ajouter_panier($idItem)){
-    echo "oui";
-
-}
-else{
-    echo "non";
-}
 ?>

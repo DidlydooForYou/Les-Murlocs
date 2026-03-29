@@ -17,7 +17,7 @@
         exit;
     }
 
-    $userId = 1;    // Either renameAll $userId pour $_SESSION["id"] or change 1 pour $_SESSION["id"]
+    $userId = $_SESSION["id"];    // Either renameAll $userId pour $_SESSION["id"] or change 1 pour $_SESSION["id"]
 
     $products = PanierDAL::selectByUser($connexion, $userId);
 
@@ -43,6 +43,25 @@
 
     <?php else : ?>
     <div id="panier" class="panier-Container">
+
+        <div class="panier-row">
+            <div class="panier-title">
+                Image
+            </div>
+            <div class="panier-title" style="text-align:left">
+                Nom
+            </div>
+            <div class="panier-title">
+                Prix Unitaire
+            </div>
+            <div class="panier-title">
+                Quantité
+            </div>
+            <div class="panier-title">
+                Prix Total
+            </div>
+        </div>
+        
         <?php foreach($products as $product) : ?>
 
             <div id="Tableau_<?=$product['idItem']?>" class="panier-row">
@@ -52,6 +71,19 @@
 
                 <div class="panier-content panier-nom">
                     <?=$product['nomItem']?> 
+                </div>
+
+                <div class="panier-content panier-prix-unitaire ">    
+                    <div class="coins-container">
+                        <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
+                        <span class="coin-amount"><?=$product['prixOr']?></span>
+
+                        <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin">
+                        <span class="coin-amount"><?=$product['prixArgent']?></span>
+
+                        <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin">
+                        <span class="coin-amount"><?=$product['prixBronze']?></span>
+                    </div>
                 </div>
 
                 <div class="panier-content panier-quantite">

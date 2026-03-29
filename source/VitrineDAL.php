@@ -95,5 +95,20 @@ class VitrineDAL{
 
         return $result;
     }
+
+    public static function ajouterPanier(PDO $connexion, $idJoueur, $idItem):bool {
+
+        $sql = "insert into panier (qtPanier, JoueursJeu_idJoueur, Item_idItem) values (:qtItem,:idJoueur,:idItem)";
+
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue('qtItem', 1, PDO::PARAM_INT);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        $stmt->bindValue('idItem', $idItem, PDO::PARAM_INT);
+
+        $result = $stmt->execute();
+
+        return $result;
+    }
 }
 ?>
