@@ -8,7 +8,7 @@ const ACTIVE_PAGE = Page::Menu;
 
 include "include/html_setup.php";
 ?>
-
+<link rel="stylesheet" href="public/css/vitrine.css">
 <title>DarQuest - Vitrine</title>
 
 <?php 

@@ -27,35 +27,35 @@ else {
     $products = VitrineDAL::selectAll($connexion);
 }
 
-$idJoueur = $_SESSION['idJoueur'] ?? null;
+if(isset($_SESSION['id']))
+    $idJoueur = $_SESSION["id"];
 
-$cartItems = [];
+$cartItems = array();
 
-if ($idJoueur !== null) {
+if (isset($idJoueur)) {
 
     $panier = PanierDAL::selectByUser($connexion, $idJoueur);
-
-    $bank = PanierDAL::getUserBank($connexion, $idJoueur);
 
     foreach ($panier as $item) {
         $cartItems[$item['idItem']] = $item['qtPanier'];
     }
-
-} else {
-    $cartItems = [];
 }
 ?>
-
 <div class="container text-center">
     <div class="row justify-content-center">
 
         <?php foreach($products as $product) : 
-            
-        $isInCart = isset($cartItems[$product['idItem']]);
-        $quantity = $cartItems[$product['idItem']] ?? 1;
+            if(isset($cartItems[$product['idItem']])){
+                $isInCart = true;
+                $itemQuantite = $cartItems[$product['idItem']];
+            }
+            else{
+                $isInCart = false;
+            }
+                
         ?>
 
-        <div class="col-lg-3 d-flex align-items-stretch">
+        <div id="card_<?=$product['idItem']?>" class="col-lg-3 d-flex align-items-stretch">
             <div class="card mt-4 w-100 backgroundImage">
                 <a href="details.php?id=<?= $product['idItem'] ?>">
                     <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid image-wrapper" alt="<?= $product['nomItem'] ?>">
@@ -95,32 +95,28 @@ if ($idJoueur !== null) {
                             <span class="coin-amount"><?=$product['prixBronze']?></span>
                         </div>
                     </div>
-                    <?php if (!$isInCart): ?>
+                    <!-- Button Section -->
+                    <?php if(IS_AUTH) : //  Si connecté?>
 
-                         <?php 
-             if(IS_AUTH) : ?>
-                        <button onclick="ajouter_panier(<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
-                    <?php endif; ?>
-        
-    
+                        <?php if($isInCart) :// Si item est dans le cart?>
+                            <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                <div class="quantity-container">
+                                    <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, 1)">+</button>
+                                    <input id="input_<?=$product['idItem']?>" class="quantity-element quantity-input" type="number" value="<?=$itemQuantite?>" onblur="changeItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, this.value)">
+                                    <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, -1)">-</button>
+                                </div>
+                            </div>
 
-<?php else: ?>
 
-    <div class="quantity-selector mt-auto">
-        <button class="btn btn-minus" onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                        <?php else :         // Si item est pas dans le cart?>
+                            <button onclick="ajouter_panierAJAX(<?=$idJoueur?>,<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
+                        <?php endif;?>
 
-        <input 
-            type="text" 
-            id="InputQte<?= $product['idItem'] ?>" 
-            value="<?= $quantity ?>" 
-            onchange="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
-            class="quantity-input"
-        >
-       
-        <button class="btn btn-plus" onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
-    </div>
-
-<?php endif; ?>
+                    <?php else :        //  Si pas connecté?>
+                        <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                            Connectez-vous pour ajouter au panier
+                        </div>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
@@ -129,7 +125,7 @@ if ($idJoueur !== null) {
 
     </div>
 </div>
-<script src="scripts/fonctionsPanier.js"> </script>
+<script src="scripts/showcaseAjax.js"> </script>
 
 
     <div id="hand-zone"></div>

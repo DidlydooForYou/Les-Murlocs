@@ -111,15 +111,3 @@ function acheterPanier(idJoueur, prixTotal){
         }
     });
 }
-function ajouter_panier(idItem){
-    fetch("ajax-panier-ajouter.php", {
-        method : "POST",
-          headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: "idItem=" + idItem
-  })
-  .then(res => res.text())
-  .then(data => data === "oui" ?alert("Ajouté au panier !") : alert("Erreur dans l'ajout au panier"))
-  .catch(err => console.log(err));
-    }
