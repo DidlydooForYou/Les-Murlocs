@@ -107,7 +107,7 @@ if (isset($validite)){
 }
 ?>
 <?php include 'include/html_setup.php' ?>
-<title>Connexion</title>
+<title>DarQuest - Inscription</title>
 <?php 
     include 'include/header.php';
     include 'include/nav.php'; 
