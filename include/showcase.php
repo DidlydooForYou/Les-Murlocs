@@ -2,20 +2,22 @@
 require_once 'source/initialization.php';
 require_once 'core/Database.php';
 require_once 'source/VitrineDAL.php';
+require_once 'source/PanierDAL.php';
+require_once 'sql/bd.php';
 
 $connexion = Database::getConnexion($dbConfig);
 
-if (!empty($_GET['sortAlphabete'])) {
+if (!empty($_GET['sortPrice'])) {
+    $sort = $_GET['sortPrice'];
+    $products = VitrineDAL::selectByPrice($connexion, $sort);
+}
+else if (!empty($_GET['sortAlphabete'])) {
     $sort = $_GET['sortAlphabete'];
     $products = VitrineDAL::selectByAlphabete($connexion, $sort);
 }
 else if (!empty($_GET['sortCatego'])){
     $sort = $_GET['sortCatego'];
     $products = VitrineDAL::selectByCategory($connexion, $sort);
-}
-else if (!empty($_GET['sortPrice'])) {
-    $sort = $_GET['sortPrice'];
-    $products = VitrineDAL::selectByPrice($connexion, $sort);
 }
 else if (!empty($_GET['research'])) {
     $search = "%" . strtolower($_GET['research']) . "%";
@@ -24,17 +26,39 @@ else if (!empty($_GET['research'])) {
 else {
     $products = VitrineDAL::selectAll($connexion);
 }
+
+$idJoueur = $_SESSION['idJoueur'] ?? null;
+
+$cartItems = [];
+
+if ($idJoueur !== null) {
+
+    $panier = PanierDAL::selectByUser($connexion, $idJoueur);
+
+    $bank = PanierDAL::getUserBank($connexion, $idJoueur);
+
+    foreach ($panier as $item) {
+        $cartItems[$item['idItem']] = $item['qtPanier'];
+    }
+
+} else {
+    $cartItems = [];
+}
 ?>
 
 <div class="container text-center">
     <div class="row justify-content-center">
 
-        <?php foreach($products as $product) : ?>
+        <?php foreach($products as $product) : 
+            
+        $isInCart = isset($cartItems[$product['idItem']]);
+        $quantity = $cartItems[$product['idItem']] ?? 1;
+        ?>
 
         <div class="col-lg-3 d-flex align-items-stretch">
             <div class="card mt-4 w-100 backgroundImage">
                 <a href="details.php?id=<?= $product['idItem'] ?>">
-                    <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['nomItem'] ?>">
+                    <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid image-wrapper" alt="<?= $product['nomItem'] ?>">
                 </a>
 
                 <div class="card-body d-flex flex-column text-center backgroundColor">
@@ -71,7 +95,32 @@ else {
                             <span class="coin-amount"><?=$product['prixBronze']?></span>
                         </div>
                     </div>
-                    <a href="" class="btn btn-boot mt-auto">Ajouter au panier</a>
+                    <?php if (!$isInCart): ?>
+
+                         <?php 
+             if(IS_AUTH) : ?>
+                        <button onclick="ajouter_panier(<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
+                    <?php endif; ?>
+        
+    
+
+<?php else: ?>
+
+    <div class="quantity-selector mt-auto">
+        <button class="btn btn-minus" onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+
+        <input 
+            type="text" 
+            id="InputQte<?= $product['idItem'] ?>" 
+            value="<?= $quantity ?>" 
+            onchange="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
+            class="quantity-input"
+        >
+       
+        <button class="btn btn-plus" onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+    </div>
+
+<?php endif; ?>
                 </div>
             </div>
         </div>
@@ -79,6 +128,9 @@ else {
         <?php endforeach; ?>
 
     </div>
+</div>
+<script src="scripts/fonctionsPanier.js"> </script>
+
 
     <div id="hand-zone"></div>
 

@@ -18,9 +18,8 @@ include "include/html_setup.php";
 
 <main class="main">
     <br>
-    <h1>Vitrine</h1>
         <form class="ms-2 d-flex align-items-center gap-2" role="search" action="index.php">
-            <input name="research" class="form-control" type="search" placeholder="Recherche">
+            <input name="research" class="form-control" type="search" placeholder="Recherche sur DarQuest">
 
             <select name="sortPrice" id="sortPrice" class="form-select w-auto">
                 <option value="" hidden>Trier par prix</option>
@@ -42,6 +41,7 @@ include "include/html_setup.php";
                 <option value="alpha_desc">Z à A</option>
             </select>
         </form>
+        <h1>Vitrine</h1>
         <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
     <br>
 </main>
@@ -50,18 +50,33 @@ include "include/html_setup.php";
 document.getElementById("sortPrice").addEventListener("change", function () {
     const url = new URL(window.location.href);
     url.searchParams.set("sortPrice", this.value);
+
+    url.searchParams.delete("sortAlphabete");
+    url.searchParams.delete("sortCatego");
+
     window.location.href = url.toString();
 });
+
 document.getElementById("sortAlphabete").addEventListener("change", function () {
     const url = new URL(window.location.href);
     url.searchParams.set("sortAlphabete", this.value);
+
+    url.searchParams.delete("sortPrice");
+    url.searchParams.delete("sortCatego");
+
     window.location.href = url.toString();
 });
+
 document.getElementById("sortCatego").addEventListener("change", function () {
     const url = new URL(window.location.href);
     url.searchParams.set("sortCatego", this.value);
+
+    url.searchParams.delete("sortPrice");
+    url.searchParams.delete("sortAlphabete");
+
     window.location.href = url.toString();
 });
 </script>
+
 
 <?php include 'include/footer.php' ?>

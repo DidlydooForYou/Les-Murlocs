@@ -25,7 +25,7 @@ class VitrineDAL{
         return $result;
     }
     public static function selectById(PDO $connexion, int $id): false|array{
-        $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where idItem = :id GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
+        $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze,i.photoAlt, i.description, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where idItem = :id GROUP BY i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze,i.photoAlt, i.description, i.photoItem";
 
         $statement = $connexion->prepare($sql);
         
@@ -38,20 +38,28 @@ class VitrineDAL{
         return $result;
     }
     public static function selectByPrice(PDO $connexion, string $sortWay){
-        if($sortWay === "price_asc"){
-            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.photoAlt, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY prix";
-        }else if($sortWay === "price_desc"){
-            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY prix DESC";
-        }
-
-        $statement = $connexion->prepare($sql);
-
-        $statement->execute();
-
-        $result = $statement->fetchAll();
-
-        return $result;
+    if($sortWay === "price_asc"){
+        $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, 
+                       i.description, i.photoItem, 
+                       AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews
+                FROM item i 
+                LEFT JOIN evaluations e ON i.idItem = e.Item_idItem
+                GROUP BY i.idItem, i.nomItem, i.description, i.photoItem, i.prixOr, i.prixArgent, i.prixBronze
+                ORDER BY i.prixOr ASC, i.prixArgent ASC, i.prixBronze ASC";
+    } else if($sortWay === "price_desc"){
+        $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, 
+                       i.description, i.photoItem, 
+                       AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews
+                FROM item i 
+                LEFT JOIN evaluations e ON i.idItem = e.Item_idItem
+                GROUP BY i.idItem, i.nomItem, i.description, i.photoItem, i.prixOr, i.prixArgent, i.prixBronze
+                ORDER BY i.prixOr DESC, i.prixArgent DESC, i.prixBronze DESC";
     }
+
+    $statement = $connexion->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll();
+}
 
     public static function selectByAlphabete(PDO $connexion, string $alphab){
         if($alphab === "alpha_asc"){
