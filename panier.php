@@ -73,13 +73,13 @@
                 <div class="panier-content panier-prix">
                     
                     <div class="coins-container">
-                        <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
+                        <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin.png">
                         <span class="coin-amount"><?=$prixCalcule['Or']?></span>
 
-                        <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin">
+                        <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin.png">
                         <span class="coin-amount"><?=$prixCalcule['Argent']?></span>
 
-                        <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin">
+                        <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin.png">
                         <span class="coin-amount"><?=$prixCalcule['Bronze']?></span>
                     </div>
                 </div>
@@ -96,13 +96,13 @@
             <h3 style="text-align:right">Total : </h3>
 
             <div id="tableau-total" class="coins-container">
-                <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
+                <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin.png">
                 <span class="coin-amount"><?=$totalSplit['Or']?></span>
 
-                <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin">
+                <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin.png">
                 <span class="coin-amount"><?=$totalSplit['Argent']?></span>
 
-                <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin">
+                <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin.png">
                 <span class="coin-amount"><?=$totalSplit['Bronze']?></span>
             </div>
 
@@ -125,13 +125,13 @@
         <div class="panel-bottom">
 
             <div id="panel-total" class="coins-container" style="margin:auto;">
-                <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
+                <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin.png">
                 <span class="coin-amount"><?=$totalSplit['Or']?></span>
 
-                <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin">
+                <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin.png">
                 <span class="coin-amount"><?=$totalSplit['Argent']?></span>
 
-                <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin">
+                <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin.png">
                 <span class="coin-amount"><?=$totalSplit['Bronze']?></span>
             </div>
 
