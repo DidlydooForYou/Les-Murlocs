@@ -114,7 +114,7 @@ if (isset($validite)){
 ?>
     <main class="main" style="padding-left: 4px; ">
         <h3>S'inscrire à Darquest</h3>
-        <form action="inscription.php" enctype="multipart/form-data" method="POST"
+        <form action="inscription.php" style="padding-left: 4px;" enctype="multipart/form-data" method="POST"
             onsubmit="return validationInscription()">
                 <label for="prenom"> Prénom :</label>
                 <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="25">

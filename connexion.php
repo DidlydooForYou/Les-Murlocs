@@ -29,7 +29,7 @@ $erreur = false;
 ?>
     <main class="main" style="padding-left: 4px;">
         <h3>Se connecter</h3>
-    <form action="connexion.php" method="POST" onsubmit="return connexionValidation()">
+    <form action="connexion.php"style="padding-left: 4px;" method="POST" onsubmit="return connexionValidation()">
     
             <label for="email">Adresse courriel : </label>
             <input type="email" name="email" id="email"><br>

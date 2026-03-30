@@ -7,6 +7,7 @@ const ACTIVE_PAGE = Page::Details;
 
 ?>
 
+<link rel="stylesheet" href="public/css/vitrine.css">
 <Title>DarQuest - Détails</Title>
 
 <?php 

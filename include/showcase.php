@@ -113,9 +113,9 @@ if (isset($idJoueur)) {
                         <?php endif;?>
 
                     <?php else :        //  Si pas connecté?>
-                        <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                        <a href="connexion.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
                             Connectez-vous pour ajouter au panier
-                        </div>
+                        </a>
                     <?php endif;?>
                 </div>
             </div>
