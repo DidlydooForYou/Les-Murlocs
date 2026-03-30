@@ -1,0 +1,32 @@
+.quantity-container{
+    display: grid;
+    grid-template-columns:33% 34% 33%;
+    width:50%;
+}
+
+.quantity-element{
+    margin: auto;
+    text-align: center;
+}
+
+.quantity-button{
+    height: 30px;
+    width: 30px;
+
+    border: none;
+    border-radius: 5%;
+}
+
+.quantity-input{
+    -moz-appearance: textfield;
+    appearance: textfield;
+
+    height: 30px;
+    width: 35px;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

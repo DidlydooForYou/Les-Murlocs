@@ -57,11 +57,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DbDarquest`.`Item` (
   `nomItem` VARCHAR(80) NOT NULL,
-  `photoItem` VARCHAR(80) NOT NULL,
+  `photoItem` VARCHAR(255) NOT NULL,
   `prixOr` INT NOT NULL ,
   `prixArgent` INT NOT NULL,
   `prixBronze` INT NOT NULL,
   `description` VARCHAR(80) NOT NULL,
+  `qttItem` INT NOT NULL,
   `idItem` INT NOT NULL AUTO_INCREMENT,
   UNIQUE INDEX `nomItem_UNIQUE` (`nomItem` ASC) ,
   PRIMARY KEY (`idItem`))

@@ -1,6 +1,7 @@
 <?php
-session_start();
 require "sql/bd.php";
+require "source/initialization.php";
+doitEtreDeco();
 if (isset($_SESSION["connexion"])){
 if ($_SESSION["connexion"]){
     header('Location:accesRefuse.php');
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     if (isset($_FILES['url'])) {
         if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-            $chemin = "lorem.png";
+            $chemin = "public/images/profilBase.webp";
         } else if (
             $_FILES['url']['type'] == "image/jpeg" ||
             $_FILES['url']['type'] == "image/png" ||
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $_FILES['url']['type'] == "image/webp"
         ) {
 
-            $repertoire = 'images/';
+            $repertoire = 'public/images/';
             $chemin = $repertoire . $_FILES['url']['name'];
             $extension = $_FILES['url']['type'];
 
@@ -71,22 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $image = imagecreatefromwebp($chemin);
                         break;
                 }
-
-
-                $image = imagescale($image, 640);
-
-                switch ($extension) {
-                    case 'image/jpeg':
-                    case 'image/jpg':
-                        imagejpeg($image, $chemin, 90);
-                        break;
-                    case 'image/png':
-                        imagepng($image, $chemin);
-                        break;
-                    case 'image/webp':
-                        imagewebp($image, $chemin, 90);
-                        break;
-                }
+                
+               $image = imagescale($image, 640);
+               $cheminAvif = pathinfo($chemin,PATHINFO_DIRNAME) . "/" . pathinfo($chemin,PATHINFO_FILENAME) . ".avif";
+               imageavif($image,$cheminAvif,90);
+               unlink($chemin);
+               $chemin = $cheminAvif;
+                
             } else {
                 $validite = false;
             }
@@ -98,34 +90,32 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 if (isset($validite)){
     if ($validite){
-       ajouter_joueur($nom,$prenom,$email,$mdp,$chemin,$alias);
+       $erreur = ajouter_joueur($nom,$prenom,$email,$mdp,$chemin,$alias);
+       if ($erreur){
         header('Location:connexion.php');
         exit;
+       }
+       else{
+        if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE){
+        
+        }
+        else{
+            unlink($chemin);
+        }
+       }
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <?php include "includes/header.php" ?>
-    </header>
-    <nav>
-        <?php include "includes/nav.php" ?>
-    </nav>
-    <main>
+<?php include 'include/html_setup.php' ?>
+<title>DarQuest - Inscription</title>
+<?php 
+    include 'include/header.php';
+    include 'include/nav.php'; 
+?>
+    <main class="main" style="padding-left: 4px; ">
         <h3>S'inscrire à Darquest</h3>
-        <form action="inscription.php" enctype="multipart/form-data" method="POST"
+        <form action="inscription.php" style="padding-left: 4px;" enctype="multipart/form-data" method="POST"
             onsubmit="return validationInscription()">
-            <fieldset style="width : 40%">
                 <label for="prenom"> Prénom :</label>
                 <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="25">
                 <br>
@@ -151,15 +141,19 @@ if (isset($validite)){
                 <br>
                 <input type="submit" value="S'inscrire">
                 <span id="erreur" style="color: red;"></span>
-            </fieldset>
         </form>
         <p>Déjà membre de Darquest ?</p>
         <a href="connexion.php">Se connecter</a>
+        <?php
+    if (isset($erreur)) {
+        if (!$erreur) {
+            echo "<span style='color:red'> Erreur dans les données </span>";
+        }
+    }
+    ?>
     </main>
-    <footer>
-        <?php include "includes/footer.php" ?>
-    </footer>
-</body>
+   <?php include 'include/footer.php' ?>
+
 <script src="scripts/inscriptionValidation.js"></script>
 
 </html>
