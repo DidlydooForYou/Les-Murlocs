@@ -25,7 +25,7 @@ class VitrineDAL{
         return $result;
     }
     public static function selectById(PDO $connexion, int $id): false|array{
-        $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze,i.photoAlt, i.description, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where idItem = :id GROUP BY i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze,i.photoAlt, i.description, i.photoItem";
+        $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where idItem = :id GROUP BY i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem";
 
         $statement = $connexion->prepare($sql);
         
