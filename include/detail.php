@@ -47,7 +47,9 @@ if (isset($idJoueur)) {
 
             <div class="card mt-4 w-100 d-flex flex-column backgroundDetails">
                 <!--Image de l'item-->
-                <img src="<?=$product['photoItem'] ?>" class="card-img-top image-wrapper" alt="<?= $product['nomItem']?>">
+                <div class="image-wrapper">
+                    <img src="<?=$product['photoItem'] ?>" class="card-img-top" alt="<?= $product['nomItem']?>">
+                </div>
 
                 <div class="card-body d-flex flex-column text-center">
                     <!--Nom de l'item-->
