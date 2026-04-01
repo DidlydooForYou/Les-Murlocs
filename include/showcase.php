@@ -62,7 +62,7 @@ if (isset($idJoueur)) {
                 </a>
 
                 <div class="card-body d-flex flex-column text-center backgroundColor">
-                        <h5 class="card-title"><?= $product['nomItem'] ?></h5>
+                        <h3 class="card-title"><?= $product['nomItem'] ?></h3>
                      <?php
                         $avg = number_format($product['moyenne_etoiles'] ?? 0, 1);
                         $starPercentage = ($avg / 5) * 100;
@@ -95,6 +95,8 @@ if (isset($idJoueur)) {
                             <span class="coin-amount"><?=$product['prixBronze']?></span>
                         </div>
                     </div>
+
+                    <br>
                     <!-- Button Section -->
                     <?php if(IS_AUTH) : //  Si connecté?>
 

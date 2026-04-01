@@ -53,7 +53,13 @@ if (isset($idJoueur)) {
 
                 <div class="card-body d-flex flex-column text-center">
                     <!--Nom de l'item-->
-                <h5 class="card-title"><?= $product['nomItem']?></h5>
+                <h4 class="card-title"><?= $product['nomItem']?></h4>
+
+                <!--Description de l'item-->
+                <p class="card-text"><?= $product['description']?></p>
+
+                <!--Nombre de review de l'item-->
+                <!--<a href="" class="reviews">--><p class="card-text"><?= $product['nb_reviews'] ?? 0 ?> reviews</p><!--</a>-->
 
                 <!--Moyenne des reviews de l'item-->
                 <?php
@@ -75,10 +81,6 @@ if (isset($idJoueur)) {
                         <div class="stars-inner" style="width: <?= $starPercentage ?>%;"></div>
                     </div>
                     <p class="rating-number <?= $color ?>"><?= $avg ?>/5</p>
-                    
-
-                <!--Nombre de review de l'item-->
-                <!--<a href="" class="reviews">--><p class="card-text"><?= $product['nb_reviews'] ?? 0 ?> reviews</p><!--</a>-->
 
                 <!--Prix de l'item-->
                  <div class="card-text" style="display: flex; justify-content: center;">
@@ -94,8 +96,7 @@ if (isset($idJoueur)) {
                         </div>
                     </div>
 
-                <!--Description de l'item-->
-                <p class="card-text"><?= $product['description']?></p>
+                    <br>
 
                 <div class="mt-auto">
                      <?php if(IS_AUTH) : //  Si connecté?>

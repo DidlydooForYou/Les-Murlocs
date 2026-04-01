@@ -56,6 +56,7 @@ form *{
     width:70%;
     padding: 15px;
     margin: 15px;
+    border-radius: 10px;
 }
 
 .navLink{
@@ -83,6 +84,8 @@ form *{
     left: 0;
     width: 100%;
     background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .dropdown:hover .dropdown-content-container {
@@ -90,8 +93,20 @@ form *{
 }
 
 .dropdown-element {
+    border:1px solid black;
     padding: 10px;
     display: block;
+    border-radius: 0;
+}
+
+.dropdown-element:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.dropdown-element:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .dropdown-element:hover {
@@ -145,6 +160,14 @@ form *{
 /* end main */
 
 /* Vitrine */
+
+.searchBarContainer {               
+    background-color: #7AAACE;
+    padding: 15px 20px;                 
+    box-sizing: border-box;   
+    display: flex;
+    margin-left: auto;
+}
 
 .card-title {
     margin-bottom: 1rem;
@@ -209,12 +232,12 @@ form *{
 }
 
 .rating-average {
-    color: #ffc107;
+    color: #ffbf00;
     font-weight: 600;
 }
 
 .rating-bad {
-    color: #dc3545;
+    color: #ff0019;
     font-weight: 600;
 }
 
@@ -277,6 +300,7 @@ form *{
     margin: 0.4rem 0;
 }
 
+/* end details */
 
 
 /* Footer */
