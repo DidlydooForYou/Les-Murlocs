@@ -169,6 +169,44 @@ form *{
     margin-left: auto;
 }
 
+.commentBarContainer {
+    background-color: #517189;
+    padding: 15px 20px;                 
+    box-sizing: border-box;   
+    display: flex;
+    margin-left: auto;
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto 20px auto; 
+    border: 3px solid #c9a86a;
+    border-radius: 12px;
+    flex-direction:column;
+}
+
+.comment-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.send-btn {
+    align-self: center;
+    width:100%;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid #c9a86a;
+    background-color: white;
+    color: #aaa;
+}
+
+.comment-input::placeholder {
+    color: #aaa;
+}
+
 .card-title {
     margin-bottom: 1rem;
 }

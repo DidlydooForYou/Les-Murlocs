@@ -7,6 +7,7 @@ require_once 'sql/bd.php';
 
 $connexion = DataBase::getConnexion($dbConfig);
 $products = [];
+$armor = [];
 
 if(!empty($_GET['id'])){
     $id = $_GET['id'];
@@ -43,7 +44,7 @@ if (isset($idJoueur)) {
             }
         ?>
 
-    <div class="col-lg-3 d-flex align-items-stretch">
+    <div class="col-lg-4 d-flex align-items-stretch">
 
             <div class="card mt-4 w-100 d-flex flex-column backgroundDetails">
                 <!--Image de l'item-->
@@ -59,7 +60,14 @@ if (isset($idJoueur)) {
                 <p class="card-text"><?= $product['description']?></p>
 
                 <!--Nombre de review de l'item-->
-                <!--<a href="" class="reviews">--><p class="card-text"><?= $product['nb_reviews'] ?? 0 ?> reviews</p><!--</a>-->
+                <a href="reviews.php?id=<?= $product['idItem']?>" class="reviews"><p class="card-text"><?= $product['nb_reviews'] ?? 0 ?> reviews</p></a>
+
+                <!--Quantite de l'item en magasin-->
+                <?php if($product['qttItem'] != 0 && $product['qttItem'] != null) : ?>
+                <p class="card-text"><?= $product['qttItem']?> en stock</p>
+                <?php else : ?>
+                <p class="card-text" style="color:red">Rupture de stock</p>
+                <?php endif; ?>
 
                 <!--Moyenne des reviews de l'item-->
                 <?php
@@ -95,7 +103,6 @@ if (isset($idJoueur)) {
                             <span class="coin-amount"><?=$product['prixBronze']?></span>
                         </div>
                     </div>
-
                     <br>
 
                 <div class="mt-auto">
