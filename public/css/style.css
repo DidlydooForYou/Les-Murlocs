@@ -315,3 +315,9 @@ form *{
   --bs-btn-disabled-bg: #7AAACE;
   --bs-btn-disabled-border-color: #7AAACE;
 }
+.buttonEnigma {
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
