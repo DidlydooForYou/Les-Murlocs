@@ -70,3 +70,26 @@ function localRefresh(idItem){
         }
     });
 }
+
+/* Form dans la vitrine */
+function updateSelectText() {
+    const isMobile = window.matchMedia("(max-width: 800px)").matches;
+
+    const priceSelect = document.getElementById("sortPrice");
+    const categoSelect = document.getElementById("sortCatego");
+    const alphaSelect = document.getElementById("sortAlphabete");
+
+    if(isMobile){
+        priceSelect.options[0].text = "Prix";
+        categoSelect.options[0].text = "Categorie";
+        alphaSelect.options[0].text = "A-Z";
+    } else {
+        priceSelect.options[0].text = "Trier par prix";
+        categoSelect.options[0].text = "Trier par catégorie";
+        alphaSelect.options[0].text = "Trier par ordre alphabétique";
+    }
+}
+
+updateSelectText();
+
+window.addEventListener("resize", updateSelectText);

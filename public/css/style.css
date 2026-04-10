@@ -2,8 +2,6 @@ body{
     padding : 0px;
     margin : 0px;
 
-    min-width: 900px;
-
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -25,6 +23,10 @@ form *{
     display: flex;
     justify-content: center;
     height: 250px;
+}
+
+.bannerLogoContainer{
+    height: 100%;
 }
 
 .bannerLogo{
@@ -53,9 +55,15 @@ form *{
 
 .navElement{
     border: 1px solid black;
-    width:70%;
+    border-radius: 12px;
+
+    flex:1;
+
     padding: 15px;
-    margin: 15px;
+
+    margin: 40px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .navLink{
@@ -85,6 +93,11 @@ form *{
     background-color: #f9f9f9;
 }
 
+.dropdown:hover {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .dropdown:hover .dropdown-content-container {
     display: block;
 }
@@ -92,6 +105,16 @@ form *{
 .dropdown-element {
     padding: 10px;
     display: block;
+
+    border-left:1px solid black;
+    border-right:1px solid black;
+}
+
+.dropdown-bottom {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+
+    border-bottom:1px solid black;
 }
 
 .dropdown-element:hover {
@@ -269,8 +292,6 @@ form *{
     margin: 0.4rem 0;
 }
 
-
-
 /* Footer */
 #buttonBackUp{
     box-sizing: border-box;
@@ -314,4 +335,41 @@ form *{
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #7AAACE;
   --bs-btn-disabled-border-color: #7AAACE;
+}
+
+
+@media (max-width: 800px) {
+    body{
+        min-width: none;
+    }
+
+    /*Modified header*/
+    .headerContainer{
+        height: 10vh;
+
+        justify-content: none;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bannerLogoContainer{
+        height: 10vh;
+    }
+    /**/
+
+    .navContainer{
+        /*border: 1px solid red;/**/
+        width: 100%;
+
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .navElement{
+        flex:0 0 auto;
+
+        padding: 5px;
+        margin: 5px;
+    }
 }

@@ -55,7 +55,7 @@ if (isset($idJoueur)) {
                 
         ?>
 
-        <div id="card_<?=$product['idItem']?>" class="col-lg-3 d-flex align-items-stretch">
+        <div id="card_<?=$product['idItem']?>" class="col-6 col-lg-3 d-flex align-items-stretch">
             <div class="card mt-4 w-100 backgroundImage">
                 <a href="details.php?id=<?= $product['idItem'] ?>">
                     <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid image-wrapper" alt="<?= $product['nomItem'] ?>">
@@ -101,9 +101,9 @@ if (isset($idJoueur)) {
                         <?php if($isInCart) :// Si item est dans le cart?>
                             <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
                                 <div class="quantity-container">
-                                    <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, 1)">+</button>
-                                    <input id="input_<?=$product['idItem']?>" class="quantity-element quantity-input" type="number" value="<?=$itemQuantite?>" onblur="changeItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, this.value)">
                                     <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, -1)">-</button>
+                                    <input id="input_<?=$product['idItem']?>" class="quantity-element quantity-input" type="number" value="<?=$itemQuantite?>" onblur="changeItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, this.value)">
+                                    <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, 1)">+</button>
                                 </div>
                             </div>
 

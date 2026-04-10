@@ -35,11 +35,11 @@
     include 'include/nav.php'; 
 ?>
 
-<main class="main">
+<main id="main" class="main">
     <h1> Panier </h1>
 
     <?php if($products == null) : ?>
-    <div> Vous n'avez pas d'item dans votre panier </div>
+    <div id="aucunItem"> Vous n'avez pas d'item dans votre panier </div>
 
     <?php else : ?>
     <div id="panier" class="panier-Container">
