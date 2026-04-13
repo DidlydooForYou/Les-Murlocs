@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
             <br>
             <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $_GET['id'] ?>">
 
+                <?php if(IS_AUTH) : ?>
                 <div class="comment-top">
                     <input name="comment" class="comment-input" type="text" placeholder="Entrer un commentaire"
                         required>
@@ -52,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
                 </div>
 
                 <button type="submit" class="btn btn-boot send-btn">Envoyer</button>
+                <?php else : ?>
+                <a href="connexion.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">Connectez-vous pour envoyer un message</a>
+                <?php endif; ?>
 
             </form>
 

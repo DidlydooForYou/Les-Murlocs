@@ -292,6 +292,13 @@ form *{
     color:white;
 }
 
+.rating-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+}
+
 .stars {
     position: relative;
     display: inline-block;
@@ -306,10 +313,28 @@ form *{
     margin: 0.4rem auto 0.2rem auto;
 }
 
+.stars-details {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    width: 82px;
+    height: 20px;
+    overflow: hidden;
+    line-height: 20px;
+    margin: 0;
+}
+
+.stars-details::before {
+    content: "★★★★★";
+    color: #ccc;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .stars::before {
     content: "★★★★★";
-    color: #ccc; 
-    font-family: Arial, sans-serif;
+    color: #ccc;
     position: absolute;
     top: 0;
     left: 0;
@@ -322,21 +347,132 @@ form *{
     height: 100%;
     overflow: hidden;
     white-space: nowrap;
-    letter-spacing: 0.15em;
 }
 
 .stars-inner::before {
     content: "★★★★★";
-    color: #f8ce0b; 
-    font-family: Arial, sans-serif;
+    color: #f8ce0b;
     position: absolute;
     top: 0;
     left: 0;
 }
 
+.rating-row p {
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+}
+
+
 .card-text {
     margin: 0.4rem 0;
 }
+
+.product-details {
+    padding-left: 20px;
+}
+
+.product-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.purchase-box {
+    border-radius: 8px;
+    background: #c9a86a;
+    align-content:center;
+}
+
+.in-stock {
+    color: #0a8a00;
+    font-weight: bold;
+}
+
+.out-of-stock {
+    color: red;
+    font-weight: bold;
+}
+
+.price-title {
+    font-weight: 600;
+}
+
+.purchase-box .coins-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px; 
+    transform-origin: center; 
+}
+
+
+.purchase-box .coin-image {
+    width: 18px;   
+    height: 18px;
+}
+
+.purchase-box .coin-amount {
+    font-size: 0.9rem;  
+}
+
+.price-outside .coins-container {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    transform: scale(1);     
+    transform-origin: left;   
+}
+
+.price-outside .coin-image {
+    width: 20px;
+    height: 20px;
+}
+
+.price-outside .coin-amount {
+    font-size: 0.9rem;
+}
+
+.purchase-box .quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.purchase-box .quantity-button {
+    padding: 4px 8px;  
+    font-size: 0.85rem; 
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #eee;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.purchase-box .quantity-input {
+    width: 45px;     
+    padding: 4px;
+    font-size: 0.85rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 28px;         
+}
+
 
 /* end details */
 
