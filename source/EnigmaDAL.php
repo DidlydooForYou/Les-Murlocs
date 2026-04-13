@@ -11,6 +11,12 @@
 
         return $statement->fetchAll();
     }
+    public static function selectAllMageQuestion(PDO $connexion) : array {
+        $sql = "SELECT * from questions where categorie = 'magie'";
+        $statement = $connexion->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 
     public static function selectResponses(PDO $connexion, $idQuestion){
 
