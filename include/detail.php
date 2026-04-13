@@ -3,11 +3,12 @@ require_once 'source/initialization.php';
 require_once 'core/Database.php';
 require_once 'source/VitrineDAL.php';
 require_once 'source/PanierDAL.php';
+require_once 'source/DetailsDAL.php';
 require_once 'sql/bd.php';
 
 $connexion = DataBase::getConnexion($dbConfig);
 $products = [];
-$armor = [];
+$details = [];
 
 if (!empty($_GET['id'])) {
     $id = $_GET['id'];
@@ -49,20 +50,18 @@ if (isset($idJoueur)) {
 
                     <div class="card-body">
                         <div class="row">
-
-                            <!-- LEFT: IMAGE -->
                             <div class="col-md-5 d-flex align-items-start">
-                                <img src="<?= $product['photoItem'] ?>" class="img-fluid product-image"
+                                <img src="<?= $product['photoItem'] ?>" class="img-fluid product-image mx-auto d-block"
                                     alt="<?= $product['nomItem'] ?>">
                             </div>
 
-                            <!-- MIDDLE: DETAILS -->
                             <div class="col-md-5 d-flex flex-column text-start product-details">
                                 <!--Nom de l'item-->
                                 <h2 class="card-title"><?= $product['nomItem'] ?></h2>
 
                                 <!--Moyenne des reviews de l'item-->
                                 <?php
+                                
                                 $avg = number_format($product['moyenne_etoiles'] ?? 0, 1);
                                 $starPercentage = ($avg / 5) * 100;
 
@@ -78,7 +77,7 @@ if (isset($idJoueur)) {
                                 }
                                 ?>
                                 <div class="rating-row">
-
+                                    <a href="reviews.php?id=<?= $product['idItem'] ?>" class="reviews">
                                     <!-- Average number -->
                                     <p class="rating-number <?= $color ?> mb-0"><?= $avg ?></p>
 
@@ -88,9 +87,7 @@ if (isset($idJoueur)) {
                                     </div>
 
                                     <!-- Review count -->
-                                    <a href="reviews.php?id=<?= $product['idItem'] ?>" class="reviews"
-                                        style="text-decoration: none;">
-                                        <p class="card-text mb-0">(<?= $product['nb_reviews'] ?? 0 ?>)</p>
+                                    <p class="card-text mb-0">(<?= $product['nb_reviews'] ?? 0 ?>)</p>
                                     </a>
 
                                 </div>
@@ -117,10 +114,32 @@ if (isset($idJoueur)) {
                                 <!-- Type de l'item -->
                                 <p class="card-text"><strong>Type </strong> <?= $product['type'] ?></p>
 
-                                <!-- -->
+                                <?php
+                                    if (!empty($_GET['id'])) {
+                                        $id = $_GET['id'];
+                                        $details = DetailsDAL::selectByType($connexion, $id, $product['type']);
+                                    } else {
+                                        echo "<h3>Aucun produit trouvé.</h3>";
+                                    }
+                                ?>                
+                                
+                                <?php if($product['type'] == "arme") : ?>
+                                    <p class="card-text"><strong>Efficacite </strong> <?= $details['efficacite'] ?></p>
+                                    <p class="card-text"><strong>Genre arme </strong> <?= $details['genreArme'] ?></p>
+                                <?php elseif($product['type'] == "potion") : ?>
+                                    <p class="card-text"><strong>Effet </strong> <?= $details['effet'] ?></p>
+                                    <p class="card-text"><strong>Durée </strong> <?= $details['duree'] ?></p>
+                                <?php elseif($product['type'] == "armure") : ?>
+                                    <p class="card-text"><strong>Matière </strong> <?= $details['matiere'] ?></p>
+                                    <p class="card-text"><strong>Taille </strong> <?= $details['taille'] ?></p>
+                                <?php elseif($product['type'] == "sort") : ?>
+                                    <p class="card-text"><strong>Instantanée </strong> <?= $details['instantane'] ?></p>
+                                    <p class="card-text"><strong>Dommages </strong> <?= $details['dommage'] ?></p>
+
+                                <?php endif ?>
+
                             </div>
 
-                            <!-- RIGHT: PURCHASE BOX -->
                             <div class="col-md-2">
                                 <div class="purchase-box p-3">
                                     <p class="price-title">Achat unique</p>
