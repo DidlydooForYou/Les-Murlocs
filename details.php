@@ -7,6 +7,7 @@ const ACTIVE_PAGE = Page::Details;
 
 ?>
 
+<link rel="stylesheet" href="public/css/vitrine.css">
 <Title>DarQuest - Détails</Title>
 
 <?php 
@@ -19,10 +20,8 @@ const ACTIVE_PAGE = Page::Details;
 ?>
 <main class="main">
     <br>
-    <fieldset>
-        <legend><h1 class="py-3 mt-3">Détails</h1></legend>
-        <?php include_once INCLUDE_FILE . '/detail.php'; ?>
-    </fieldset>
+
+    <?php include_once INCLUDE_FILE . '/detail.php'; ?>
     <br>
 </main>
 

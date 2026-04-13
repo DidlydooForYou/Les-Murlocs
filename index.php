@@ -17,8 +17,7 @@ include "include/html_setup.php";
 ?>
 
 <main class="main">
-    <br>
-        <form class="ms-2 d-flex align-items-center gap-2" role="search" action="index.php">
+        <form class="searchBarContainer d-flex align-items-center gap-2" role="search" action="index.php">
             <input name="research" class="form-control" type="search" placeholder="Recherche sur DarQuest">
 
             <select name="sortPrice" id="sortPrice" class="form-select w-auto">
@@ -28,7 +27,7 @@ include "include/html_setup.php";
             </select>
 
             <select id="sortCatego" name="sortCatego" class="form-select w-auto">
-                <option value="" hidden>Trier par catégorie</option>
+                <option value="" hidden>Filtrer par catégorie</option>
                 <option value="sorts">Sorts</option>
                 <option value="armors">Armures</option>
                 <option value="weapons">Armes</option>
@@ -41,7 +40,6 @@ include "include/html_setup.php";
                 <option value="alpha_desc">Z à A</option>
             </select>
         </form>
-        <h1>Vitrine</h1>
         <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
     <br>
 </main>
