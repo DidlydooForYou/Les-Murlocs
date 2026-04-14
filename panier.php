@@ -44,7 +44,7 @@
     <?php else : ?>
     <div id="panier" class="panier-Container">
 
-        <div class="panier-row">
+        <div class="panier-row panier-headers">
             <div class="panier-title">
                 Image
             </div>
@@ -73,6 +73,10 @@
                     <?=$product['nomItem']?> 
                 </div>
 
+                <div class="panier-content panier-desc">
+                    <?=$product['description']?> 
+                </div>
+
                 <div class="panier-content panier-prix-unitaire ">    
                     <div class="coins-container">
                         <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
@@ -87,11 +91,11 @@
                 </div>
 
                 <div class="panier-content panier-quantite">
-                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, 1)">+</button>
+                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, -1)">-</button>
                     
                     <input class="qte-element qte-amount" id="InputQte<?=$product['idItem']?>" type="number" value="<?=$product['qtPanier']?>" onblur="changeItemQuantite(<?=$userId?>, <?=$product['idItem']?>, this.value)">
                     
-                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, -1)">-</button>
+                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, 1)">+</button>
                     
                     <button class="qte-element btn-circular" onclick="deleteItem(<?=$userId?>, <?=$product['idItem']?>)">×</button>
                 </div>
@@ -125,8 +129,8 @@
     </div>
     <div style="display: flex; justify-content: flex-end;">
         <div class="confirm-container">
-            <h3 style="text-align:right">Total : </h3>
-
+            <h3 style="text-align:right;">Total : </h3>
+            
             <div id="tableau-total" class="coins-container">
                 <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
                 <span class="coin-amount"><?=$totalSplit['Or']?></span>

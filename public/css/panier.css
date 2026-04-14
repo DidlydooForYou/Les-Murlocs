@@ -48,6 +48,10 @@
     text-align:left;
 }
 
+.panier-desc{
+    display: none;
+}
+
 .panier-prix-unitaire{
     grid-column: 3;
 }
@@ -150,4 +154,67 @@
 
 .btn-cancel:active{
     background-color: #A1A1A1;
+}
+
+
+@media (max-width: 800px) {
+    .panier-title,
+    .panier-headers {
+        display: none;
+    }
+
+    .panier-Container{
+        border: none;
+    }
+
+    .panier-row{
+        margin-bottom: 20px;
+        gap:none;
+        border: 1px solid black;
+
+        
+        grid-template-areas: 
+        "image nom"
+        "image desc"
+        "image prix-un"
+        "qte prix";
+
+        grid-template-columns: 45% 55%;
+        grid-template-rows: auto 1fr auto auto;
+    }
+
+    .panier-image-box{
+        grid-area: image;
+        grid-column: auto;
+    }
+
+    .panier-image{
+        height: auto;
+        width: 100%;
+    }
+
+    .panier-nom{
+        grid-area: nom;
+    }
+
+    .panier-desc{
+        padding: 3px;
+        text-align: left;
+
+        display: block;
+        overflow-y: auto;
+        grid: desc;
+    }
+
+    .panier-prix-unitaire{
+        grid-area: prix-un
+    }
+
+    .panier-quantite{
+        grid-area: qte;
+    }
+
+    .panier-prix{
+        grid-area: prix;
+    }
 }
