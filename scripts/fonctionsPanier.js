@@ -46,7 +46,11 @@ function addingItemQuantite(idJoueur, idItem, addition){
     let currentValue = document.getElementById("InputQte" + idItem).value
     let nouvelleQuantite = parseInt(currentValue) + parseInt(addition);
 
-    changeItemQuantite(idJoueur, idItem, nouvelleQuantite);
+    if(nouvelleQuantite > 0)
+        changeItemQuantite(idJoueur, idItem, nouvelleQuantite);
+    else {
+        deleteItem(idJoueur, idItem);
+    } 
 }
 
 function localRefresh(){

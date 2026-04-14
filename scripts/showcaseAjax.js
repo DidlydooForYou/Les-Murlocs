@@ -57,7 +57,29 @@ function addingItemQuantite(idJoueur, idItem, addition){
     let currentValue = document.getElementById('input_' + idItem).value;
     let nouvelleQuantite = parseInt(currentValue) + parseInt(addition);
 
-    changeItemQuantite(idJoueur, idItem, nouvelleQuantite);
+    if(nouvelleQuantite > 0)
+        changeItemQuantite(idJoueur, idItem, nouvelleQuantite);
+    else {
+        removeItem(idJoueur, idItem);
+    } 
+}
+
+function removeItem(idJoueur, idItem){
+    
+    $.ajax({
+        url: 'ajax-panier-effacer.php',
+        type: 'POST',
+        data: {
+            idItem: idItem,
+            idJoueur: idJoueur
+        },
+        success: function(response) {
+            localRefresh(idItem);
+        },
+        error: function(xhr, status, error) {
+            console.log("Error :", error);
+        }
+    });
 }
 
 function localRefresh(idItem){
