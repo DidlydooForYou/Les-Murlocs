@@ -6,7 +6,7 @@ function get_pdo()
         "dbName" => "dbdarquest",
         "dbUser" => "root",
         "dbPass" => "",
-        "dbPort" => 3306,
+        "dbPort" => 3307,
         "dbParams" => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_CASE => PDO::CASE_NATURAL,
@@ -59,8 +59,32 @@ function obtenir_joueur($email, $mdp)
             //exit;
         }
     }
-
 }
+function obtenir_alias($idJoueur){
+    $sql = "SELECT alias FROM joueursjeu WHERE idJoueur = ?";    
+    try{    
+        $pdo = get_pdo();
+        $stmt = $pdo->prepare($sql);
+
+        //$stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+
+        $stmt->execute([$idJoueur]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!$result){
+            return false;
+        } else {
+            $result = $result['alias'];
+        }
+
+        return $result;
+    }
+    catch (Exception $e)
+    {
+        //exit;
+    }
+}
+
 function alias_pris($alias)
 {
     $sql = "select alias from joueursjeu where alias = ?";
@@ -245,23 +269,8 @@ function ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $in
     return false;
 
 }
-// ici nouveau
-function obtenir_inventaire_joueur($idJoueur)
-{
-    try {
-        $pdo = get_pdo();
-        $sql = "select i.idItem, i.nomItem, i.photoItem, i.description, i.type, inv.qtInventaire
-                from inventaire inv
-                join item i on inv.Item_idItem = i.idItem
-                where inv.JoueursJeu_idJoueur = ?
-                order by i.type, i.nomItem";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$idJoueur]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
-        return [];
-    }
-}
+
+
 
 
 ?>
