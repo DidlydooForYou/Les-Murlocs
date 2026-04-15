@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `DbDarquest`.`JoueursJeu` (
   `mage` TINYINT NULL DEFAULT 0,
   `idJoueur` INT NOT NULL AUTO_INCREMENT,
   `nbrDemande` INT NULL DEFAULT 0,
+  `PointsDeVie` INT NULL DEFAULT 10,
   UNIQUE INDEX `alias_UNIQUE` (`alias` ASC) ,
   PRIMARY KEY (`idJoueur`))
 ENGINE = InnoDB;

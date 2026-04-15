@@ -46,19 +46,13 @@ form *{
 
 /* Nav */
 .navContainer{
-    /*border: 1px solid red;/**/
-
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    
     min-height: 50px;
-    /*background-image: linear-gradient(#355872 0%,#7aaace 100%);*/
     background-color: #355872;
 }
 
 .navLinkContainer{
-    /*border: 1px solid lime;/**/
-
     display: flex;
     justify-content: center;
 }
@@ -187,12 +181,20 @@ form *{
 
 /* Vitrine */
 
-.searchBarContainer {               
+html, body {
+    overflow-x: hidden;
+}
+
+
+.searchBarContainer {
     background-color: #7AAACE;
-    padding: 15px 20px;                 
-    box-sizing: border-box;   
+    padding: 10px 20px;
+    box-sizing: border-box;
     display: flex;
-    margin-left: auto;
+    margin:0;
+    width: 100%;
+    transform: translateX(-2px);
+    gap: 3px;
 }
 
 .commentBarContainer {
@@ -557,6 +559,12 @@ form *{
   --bs-btn-disabled-bg: #7AAACE;
   --bs-btn-disabled-border-color: #7AAACE;
 }
+
+.container {
+    max-width: 100%;
+    padding: 0;
+}
+
 
 
 @media (max-width: 800px) {

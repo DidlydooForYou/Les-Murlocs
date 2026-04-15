@@ -2,9 +2,6 @@
 session_start();
 require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
-require_once 'source/Page.php';
-
-const ACTIVE_PAGE = Page::Menu;
 
 include "include/html_setup.php";
 ?>
@@ -17,8 +14,7 @@ include "include/html_setup.php";
 ?>
 
 <main class="main">
-    <br>
-        <form class="search-sort-container" role="search" action="index.php">
+        <form class="search-sort-container searchBarContainer" role="search" action="index.php">
             <input name="research" class="search-sort-element form-control search-bar" type="search" placeholder="Recherche sur DarQuest">
             
             <select name="sortPrice" id="sortPrice" class="search-sort-element form-select sort-element">

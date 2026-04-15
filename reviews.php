@@ -2,10 +2,7 @@
 require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
 require_once 'source/ReviewDAL.php';
-require_once 'source/Page.php';
 require_once 'core/Database.php';
-
-const ACTIVE_PAGE = Page::Reviews;
 
 include "include/header.php";
 include "include/nav.php";
