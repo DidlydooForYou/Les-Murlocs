@@ -160,6 +160,7 @@ form *{
 .coins-container{
     display: flex;
     align-items: center;
+    justify-content:flex-end;
 }
 
 .coins-container .coin-amount:last-of-type {
