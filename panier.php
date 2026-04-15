@@ -3,6 +3,7 @@
 
     require_once 'source/initialization.php';
     require_once 'core/Database.php';
+    require_once 'source/CoinManagement.php';
     require_once 'source/PanierDAL.php';
 
     $connexion = Database::getConnexion($dbConfig);
@@ -35,16 +36,16 @@
     include 'include/nav.php'; 
 ?>
 
-<main class="main">
+<main id="main" class="main">
     <h1> Panier </h1>
 
     <?php if($products == null) : ?>
-    <div> Vous n'avez pas d'item dans votre panier </div>
+    <div id="aucunItem"> Vous n'avez pas d'item dans votre panier </div>
 
     <?php else : ?>
     <div id="panier" class="panier-Container">
 
-        <div class="panier-row">
+        <div class="panier-row panier-headers">
             <div class="panier-title">
                 Image
             </div>
@@ -73,6 +74,10 @@
                     <?=$product['nomItem']?> 
                 </div>
 
+                <div class="panier-content panier-desc">
+                    <?=$product['description']?> 
+                </div>
+
                 <div class="panier-content panier-prix-unitaire ">    
                     <div class="coins-container">
                         <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
@@ -87,17 +92,17 @@
                 </div>
 
                 <div class="panier-content panier-quantite">
-                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, 1)">+</button>
+                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, -1)">-</button>
                     
                     <input class="qte-element qte-amount" id="InputQte<?=$product['idItem']?>" type="number" value="<?=$product['qtPanier']?>" onblur="changeItemQuantite(<?=$userId?>, <?=$product['idItem']?>, this.value)">
                     
-                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, -1)">-</button>
+                    <button class="qte-element btn-circular" onclick="addingItemQuantite(<?=$userId?>, <?=$product['idItem']?>, 1)">+</button>
                     
                     <button class="qte-element btn-circular" onclick="deleteItem(<?=$userId?>, <?=$product['idItem']?>)">×</button>
                 </div>
                 
                 <?php 
-                    $prixCalcule = PanierDAL::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']);
+                    $prixCalcule = Coins::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']);
                     $totalOr += $prixCalcule['Or'];
                     $totalArgent += $prixCalcule['Argent'];
                     $totalBronze += $prixCalcule['Bronze'];
@@ -120,13 +125,13 @@
         <?php 
             endforeach;
             
-            $totalSplit = PanierDAL::multiplierCoins($totalOr, $totalArgent, $totalBronze, 1);
+            $totalSplit = Coins::multiplierCoins($totalOr, $totalArgent, $totalBronze, 1);
         ?>
     </div>
     <div style="display: flex; justify-content: flex-end;">
         <div class="confirm-container">
-            <h3 style="text-align:right">Total : </h3>
-
+            <h3 style="text-align:right;">Total : </h3>
+            
             <div id="tableau-total" class="coins-container">
                 <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
                 <span class="coin-amount"><?=$totalSplit['Or']?></span>

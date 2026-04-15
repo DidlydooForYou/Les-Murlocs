@@ -1,7 +1,7 @@
 <?php
 class PanierDAL{
     public static function selectByUser(PDO $connexion, int $idJoueur): array {
-        $sql = "SELECT photoItem, nomItem, p.Item_idItem as idItem, qtPanier, prixOr, prixArgent, prixBronze
+        $sql = "SELECT photoItem, nomItem, i.description, p.Item_idItem as idItem, qtPanier, prixOr, prixArgent, prixBronze
                 FROM Panier p INNER JOIN Item i ON p.Item_idItem = i.idItem
                 WHERE p.JoueursJeu_idJoueur = :idJoueur
                 ORDER BY nomItem";
@@ -15,39 +15,6 @@ class PanierDAL{
         $result = $stmt->fetchAll();
 
         return $result;
-    }
-
-    public static function getUserBank(PDO $connexion, int $idJoueur): array {
-        $sql = "SELECT pieceOr, pieceArgent, pieceBronze
-                FROM joueursjeu
-                WHERE idJoueur = :idJoueur";
-
-        $stmt = $connexion->prepare($sql);
-
-        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        $result = $stmt->fetch();
-
-        return $result;
-    }
-
-    /* Jsp ou mettre cette fonction là ngl. Faut juste penser à changer les calls dans panier.php quand on va la déplacer*/
-    public static function multiplierCoins(int $prixOr, int $prixArgent, int $prixBronze, int $amount): array {
-        $prixUnitaireBronze = ($prixOr * 100) + ($prixArgent * 10) + $prixBronze;
-        $prixTotal = $prixUnitaireBronze * $amount;
-
-        $prixBronzeFinal = $prixTotal % 10;             // Enlève les unités
-        $prixArgentFinal = intdiv($prixTotal,10) % 10;  // Met les dizaines aux unités puis les enlèves
-        $prixOrFinal = intdiv($prixTotal,100);          // Transfert le reste aux unités
-
-        return [
-            "Or" => $prixOrFinal,
-            "Argent" => $prixArgentFinal,
-            "Bronze" => $prixBronzeFinal,
-            "SommeTotale" => $prixTotal
-        ];
     }
 
     public static function changeItemQuantite(PDO $connexion, int $idJoueur, int $idItem, int $nouvelleQuantite): bool{
