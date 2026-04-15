@@ -7,7 +7,6 @@ function get_pdo()
         "dbUser" => "root",
         "dbPass" => "",
         "dbPort" => 3306,
-        "dbPort" => 3307,
         "dbParams" => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_CASE => PDO::CASE_NATURAL,
@@ -62,7 +61,7 @@ function obtenir_joueur($email, $mdp)
     }
 
 }
-}
+
 function obtenir_alias($idJoueur){
     $sql = "SELECT alias FROM joueursjeu WHERE idJoueur = ?";    
     try{    
@@ -272,7 +271,6 @@ function ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $in
     return false;
 
 }
-
 
 // ici nouveau
 function obtenir_inventaire_joueur($idJoueur)
