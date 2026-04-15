@@ -6,7 +6,7 @@ require_once 'source/Page.php';
 require_once 'source/EnigmaDAL.php';
 require_once 'core/Database.php';
 //doitEtreCo();
-
+$connexion = Database::getConnexion($dbConfig);
 if ($_SERVER['REQUEST_METHOD'] === "POST"){
     $erreur = false;
     if (!isset($_POST['reponse'])){
@@ -16,15 +16,29 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
         if (!$erreur){
         if ($_POST['formType'] === "mage"){
             $reponse = $_POST['reponse'];
-            if ($reponse === $_SESSION['ReponseCorrect']){
+            if ($reponse == $_SESSION['ReponseCorrect']){
+                if (!isset($_SESSION['bonneMage'])){
+                    $_SESSION['bonneMage'] = 1;
+                }
+            else{
                $_SESSION['bonneMage']++;
-               $message = "Good job !";
+            }
+               $message = "Félicitation, c'est une bonne réponse, vous êtes à " . $_SESSION['bonneMage'] . " sur 3 pour devenir mage !";
                $continuation = true;
+               EnigmaDAL::bonneReponse($connexion,$_SESSION['id'], $_SESSION['difficulte']);
             }
             else{
                 $_SESSION['bonneMage'] = 0;
-                $message = "Veuillez recommencez !";
+                $message = "Échec ! Veuillez recommencer le questionnaire pour devenir mage";
                 $continuation = false;
+                EnigmaDAL::mauvaiseReponse($connexion,$_SESSION['id'], $_SESSION['difficulte']);
+            }
+
+            if ($_SESSION['bonneMage'] >= 3){
+                EnigmaDAL::devenirMage($connexion, $_SESSION['id']);
+                $_SESSION['mage'] = true;
+               header("Location:" . $_SERVER['PHP_SELF']);
+               exit;
             }
 
         }
@@ -47,17 +61,38 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
 
 <main class="main" style="padding-left : 4px">
    <h3>Bienvenue à Énigma ! </h3>  
+
+   <?php 
+   if (isset($_SESSION['bonneMage']) && $_SESSION['bonneMage'] >= 3){
+    echo "<p>Félicitations, vous avez répondu à 3 bonnes réponses de mage, vous devenez mage !";
+    $_SESSION['bonneMage'] = 0;
+   }
+   
+   ?>
    <div>
     <div>
-    <button class="buttonEnigma" onclick="afficherMage()" style="background-color: lightblue;">Devenir mage</button>
+        <?php
+            if (!IS_MAGE){
+                echo "<button class='buttonEnigma' onclick='afficherMage()' style='background-color: lightblue;'>Devenir mage</button>";
+            }
+            
+        ?>
+    <!-- <button class="buttonEnigma" onclick="afficherMage()" style="background-color: lightblue;">Devenir mage</button> -->
     <button class="buttonEnigma" onclick="afficherDifficulté()" style="background-color: lightblue;">Répondre pour gagner de l'argent</button>
     </div>
-    <div id="questionMage"  <?php if (isset($continuation)){echo $continuation ?  "display = 'block'" :  "display ='none"; } ?>style="display: none;">
+    <div id="questionMage"  style="<?php if (isset($continuation) && $continuation){
+        echo "display : block;";
+    }
+    else{
+        echo "display : none;";
+    }
+        
+        ?>">
         <h3>Veuillez répondre à 3 questions pour devenir mage</h3>
         <form action="enigma.php" method="POST" >
             <input type="hidden" name="formType" value="mage">
         <?php 
-         $connexion = Database::getConnexion($dbConfig);
+         
          $questions = EnigmaDAL::selectAllMageQuestion($connexion);
          shuffle($questions);
          $questionRandom = array_pop($questions);
@@ -66,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
          $reponses = EnigmaDAL::selectResponses($connexion,$id);
          $enonce = $questionRandom['enonce'];
          $difficulte = $questionRandom['difficulte'];
+         $_SESSION['difficulte'] = $difficulte;
          switch ($difficulte) {
             case 'f':
                 $difficulte = 'facile';
@@ -82,15 +118,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"){
          echo "<p> Difficulté de la question : $difficulte </p>";
          echo "<p> Catégorie : $categorie </p>";
          echo "<p>$enonce</p>";
+        //  var_dump($enonce,$difficulte,$categorie);
          shuffle($reponses);
          foreach ($reponses as $reponse){
-            $enonce = $reponse['reponse'];
+            $enonceQuestion = $reponse['reponse'];
             $idReponse = $reponse['idReponse'];
             if ($reponse['correct'] === 1){
-                 $_SESSION['ReponseCorrect'] = $enonce;
+                 $_SESSION['ReponseCorrect'] = $idReponse;
             }
             echo "<input type='radio' value='$idReponse' name='reponse'>";
-            echo "<label style='padding-left : 8px;' for='$idReponse'> $enonce </label> <br>";
+            echo "<label style='padding-left : 8px;' for='$idReponse'> $enonceQuestion </label> <br>";
          }
 
         ?>

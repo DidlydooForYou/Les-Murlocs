@@ -1,4 +1,5 @@
 <?php
+require_once 'source/EnigmaDAL.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -32,6 +33,7 @@ const VITRINE_IMG = URL_ROOT . 'upload';
 define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));
 define('IS_ADMIN', IS_AUTH && $_SESSION['role'] === 1);
+define('IS_MAGE',IS_AUTH && $_SESSION["mage"] );
 function doitEtreDeco(){
     if (IS_AUTH){
         header('Location:accesRefuse.php');

@@ -27,6 +27,34 @@
     return $stmt->fetchAll();
    
     }
-
+    public static function estMage(PDO $connexion, $idJoueur){
+        $sql = "SELECT mage from joueursjeu where idJoueur = :idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('idJoueur',$idJoueur,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+            
     }
+    public static function devenirMage(PDO $connexion, $idJoueur){
+        $sql = "UPDATE joueursJeu set mage = 1 where idJoueur = :idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('idJoueur',$idJoueur,PDO::PARAM_INT);
+        $stmt->execute();
+    }
+    public static function bonneReponse(PDO $connexion, $idJoueur, $difficulte){
+        $sql = "CALL bonne_reponse(:idJoueur, :difficulte)";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('idJoueur',$idJoueur,PDO::PARAM_INT);
+        $stmt->bindValue('difficulte', $difficulte, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+    public static function mauvaiseReponse(PDO $connexion, $idJoueur, $difficulte){
+        $sql = "CALL mauvaise_reponse(:idJoueur, :difficulte)";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('idJoueur',$idJoueur,PDO::PARAM_INT);
+        $stmt->bindValue('difficulte', $difficulte, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+    }
+    
 ?>
