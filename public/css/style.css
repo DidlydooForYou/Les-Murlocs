@@ -23,6 +23,8 @@ form *{
     display: flex;
     justify-content: center;
     height: 250px;
+
+    position: relative;
 }
 
 .bannerLogoContainer{
@@ -31,6 +33,14 @@ form *{
 
 .bannerLogo{
     height: 100%;
+}
+
+#header-coins{
+    position: absolute;
+    top:10px;
+    right: 20px;
+
+    text-align: right;
 }
 /* end header*/
 
@@ -154,6 +164,10 @@ form *{
     align-items: center;
 }
 
+.coins-container .coin-amount:last-of-type {
+    margin-right: 0px;
+}
+
 .coin-amount{
     margin:3px;
     margin-right: 10px;
@@ -236,7 +250,6 @@ form *{
 /* End vitrine */
 
 /* Details */
-
 .backgroundDetails{
     border: 3px solid #c9a86a; 
     border-radius: 10px;
@@ -354,6 +367,15 @@ form *{
 
     .bannerLogoContainer{
         height: 10vh;
+    }
+
+    #header-coins{
+        position: relative;
+        margin:auto;
+        margin-top: 8px;
+        margin-right: 0px;
+
+        
     }
     /**/
 

@@ -3,6 +3,7 @@
 
     require_once 'source/initialization.php';
     require_once 'core/Database.php';
+    require_once 'source/CoinManagement.php';
     require_once 'source/PanierDAL.php';
 
     $connexion = Database::getConnexion($dbConfig);
@@ -101,7 +102,7 @@
                 </div>
                 
                 <?php 
-                    $prixCalcule = PanierDAL::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']);
+                    $prixCalcule = Coins::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']);
                     $totalOr += $prixCalcule['Or'];
                     $totalArgent += $prixCalcule['Argent'];
                     $totalBronze += $prixCalcule['Bronze'];
@@ -124,7 +125,7 @@
         <?php 
             endforeach;
             
-            $totalSplit = PanierDAL::multiplierCoins($totalOr, $totalArgent, $totalBronze, 1);
+            $totalSplit = Coins::multiplierCoins($totalOr, $totalArgent, $totalBronze, 1);
         ?>
     </div>
     <div style="display: flex; justify-content: flex-end;">

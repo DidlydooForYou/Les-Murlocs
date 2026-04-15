@@ -9,9 +9,9 @@
         $idJoueur = (int)$_POST['idJoueur'];
         $prixTotal = (int)$_POST['prixTotal'];
 
-        $userBank = PanierDAL::getUserBank($connexion, $idJoueur);
+        $userBank = Coins::getUserBank($connexion, $idJoueur);
 
-        $userTotal = PanierDAL::multiplierCoins($userBank['pieceOr'],$userBank['pieceArgent'],$userBank['pieceBronze'],1)['SommeTotale'];
+        $userTotal = Coins::multiplierCoins($userBank['pieceOr'],$userBank['pieceArgent'],$userBank['pieceBronze'],1)['SommeTotale'];
 
         if($userTotal >= $prixTotal){
             $result = PanierDAL::acheterItem($connexion, $idJoueur);
