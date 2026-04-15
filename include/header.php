@@ -1,4 +1,4 @@
-<header class="headerContainer">
+<header class="headerContainer" style="border:5px solid #c9a86a; border-bottom:none;">
     <a href="index.php" class="bannerLogoContainer"> <img class="bannerLogo" src="public/images/LogoDarQuest.png"
             alt="LogoDarQuest.png"> </a>
 
@@ -19,17 +19,17 @@
                 ?>
 
             <link rel="stylesheet" href="public/css/vitrine.css">
-            <h3 style="text-align: right;"><?= $userAlias ?></h3>
+            <h3 style="text-align: right; color:#c9a86a;"><?= $userAlias ?></h3>
 
-            <div class="coins-container">
+            <div class="coins-container" style="justify-content:flex-end">
                 <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
-                <span class="coin-amount"><?= $userBank['Or'] ?></span>
+                <span class="coin-amount" style="color:#c9a86a;"><?= $userBank['Or'] ?></span>
 
                 <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin">
-                <span class="coin-amount"><?= $userBank['Argent'] ?></span>
+                <span class="coin-amount" style="color:#c9a86a;"><?= $userBank['Argent'] ?></span>
 
                 <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin">
-                <span class="coin-amount"><?= $userBank['Bronze'] ?></span>
+                <span class="coin-amount" style="color:#c9a86a;"><?= $userBank['Bronze'] ?></span>
             </div>
             <div class="pdv-container">
                     <?php

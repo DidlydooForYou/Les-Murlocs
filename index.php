@@ -13,7 +13,7 @@ include "include/html_setup.php";
     include 'include/nav.php'; 
 ?>
 
-<main class="main">
+<main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
         <form class="search-sort-container searchBarContainer" role="search" action="index.php">
             <input name="research" class="search-sort-element form-control search-bar" type="search" placeholder="Recherche sur DarQuest">
             

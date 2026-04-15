@@ -30,6 +30,19 @@ if (isset($idJoueur)) {
         $cartItems[$item['idItem']] = $item['qtPanier'];
     }
 }
+
+if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
+    header("Location: index.php");
+    exit;
+}
+
+$id = (int) $_GET['id'];
+$details = VitrineDAL::selectById($connexion, $id);
+
+if(!$details){
+    header("Location: index.php");
+    exit;
+}
 ?>
 
 <div class="container text-center">

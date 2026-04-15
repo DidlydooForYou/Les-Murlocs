@@ -14,7 +14,7 @@ class ReviewDAL{
         return $result;
     }
 
-    public static function insertReview(PDO $connexion, int $idItem, int $idJoueur, string $commentaire, $etoiles){
+    public static function insertReview(PDO $connexion, int $idItem, int $idJoueur, string $commentaire, int $etoiles){
         $sql = "INSERT INTO evaluations (commentaire, etoiles, JoueursJeu_idJoueur, Item_idItem) VALUES (:commentaire, :etoiles, :idJoueur, :idItem)";
 
         $statement = $connexion -> prepare($sql);

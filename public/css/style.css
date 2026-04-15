@@ -160,7 +160,6 @@ form *{
 .coins-container{
     display: flex;
     align-items: center;
-    justify-content:flex-end;
 }
 
 .coins-container .coin-amount:last-of-type {
@@ -285,7 +284,7 @@ html, body {
 }
 
 .reviews:hover{
-    color:#006EAF
+    color:#c9a86a;
 }
 
 .rating {

@@ -1,7 +1,6 @@
 <?php
 require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
-
 ?>
 
 <link rel="stylesheet" href="public/css/vitrine.css">
@@ -15,9 +14,7 @@ require_once 'source/initialization.php';
     include "include/header.php"; 
     include "include/nav.php";
 ?>
-<main class="main">
-    <br>
-
+<main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
     <?php include_once INCLUDE_FILE . '/detail.php'; ?>
     <br>
 </main>
