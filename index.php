@@ -41,7 +41,6 @@ include "include/html_setup.php";
                 <option value="alpha_desc">Z à A</option>
             </select>
         </form>
-        <h1>Vitrine</h1>
         <?php include_once INCLUDE_FILE . '/showcase.php'; ?>
     <br>
 </main>

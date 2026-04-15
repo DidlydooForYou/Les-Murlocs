@@ -57,12 +57,12 @@ if (isset($idJoueur)) {
 
         <div id="card_<?=$product['idItem']?>" class="col-6 col-lg-3 d-flex align-items-stretch">
             <div class="card mt-4 w-100 backgroundImage">
-                <a href="details.php?id=<?= $product['idItem'] ?>">
-                    <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid image-wrapper" alt="<?= $product['nomItem'] ?>">
+                <a href="details.php?id=<?= $product['idItem'] ?>" class="image-wrapper">
+                    <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['nomItem'] ?>">
                 </a>
 
                 <div class="card-body d-flex flex-column text-center backgroundColor">
-                        <h5 class="card-title"><?= $product['nomItem'] ?></h5>
+                        <h3 class="card-title"><?= $product['nomItem'] ?></h3>
                      <?php
                         $avg = number_format($product['moyenne_etoiles'] ?? 0, 1);
                         $starPercentage = ($avg / 5) * 100;
@@ -95,6 +95,8 @@ if (isset($idJoueur)) {
                             <span class="coin-amount"><?=$product['prixBronze']?></span>
                         </div>
                     </div>
+
+                    <br>
                     <!-- Button Section -->
                     <?php if(IS_AUTH) : //  Si connecté?>
 

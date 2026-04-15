@@ -10,6 +10,7 @@ enum Page
     case Inventaire;
     case Enigma;
     case Details;
+    case Reviews;
 
     public function text(): string{
         return match($this){
@@ -22,6 +23,7 @@ enum Page
             Page::Inventaire => 'Inventaire',
             Page::Enigma => 'Enigmes',
             Page::Details => 'Details', 
+            Page::Reviews => 'Reviews'
         };
     }
 
@@ -29,7 +31,8 @@ enum Page
         return match($this){
             Page::Menu => '/',
             Page::Vitrine => '/vitrine.php',
-            Page::Details => '/deatils.php',
+            Page::Details => '/details.php',
+            Page::Reviews => 'reviews.php'
         };
     }
 }

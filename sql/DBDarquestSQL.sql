@@ -64,6 +64,8 @@ CREATE TABLE IF NOT EXISTS `DbDarquest`.`Item` (
   `description` VARCHAR(80) NOT NULL,
   `qttItem` INT NOT NULL,
   `idItem` INT NOT NULL AUTO_INCREMENT,
+  `type` type VARCHAR(20) NOT NULL, 
+  ADD CONSTRAINT chk_item_type CHECK (type IN ('arme', 'armure', 'potion', 'sort'));
   UNIQUE INDEX `nomItem_UNIQUE` (`nomItem` ASC) ,
   PRIMARY KEY (`idItem`))
 ENGINE = InnoDB;
