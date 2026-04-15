@@ -2,11 +2,11 @@
 require "sql/bd.php";
 require "source/initialization.php";
 doitEtreDeco();
-if (isset($_SESSION["connexion"])){
-if ($_SESSION["connexion"]){
-    header('Location:accesRefuse.php');
-    exit;
-}
+if (isset($_SESSION["connexion"])) {
+    if ($_SESSION["connexion"]) {
+        header('Location:accesRefuse.php');
+        exit;
+    }
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $validite = true;
@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $validite = false;
         }
         if (strlen($_POST['mdp']) >= 8 && strlen($_POST['mdp']) <= 50) {
-            $mdp = password_hash($_POST['mdp'],PASSWORD_DEFAULT);
-           
+            $mdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+
         } else {
             $validite = false;
         }
@@ -72,13 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $image = imagecreatefromwebp($chemin);
                         break;
                 }
-                
-               $image = imagescale($image, 640);
-               $cheminAvif = pathinfo($chemin,PATHINFO_DIRNAME) . "/" . pathinfo($chemin,PATHINFO_FILENAME) . ".avif";
-               imageavif($image,$cheminAvif,90);
-               unlink($chemin);
-               $chemin = $cheminAvif;
-                
+
+                $image = imagescale($image, 640);
+                $cheminAvif = pathinfo($chemin, PATHINFO_DIRNAME) . "/" . pathinfo($chemin, PATHINFO_FILENAME) . ".avif";
+                imageavif($image, $cheminAvif, 90);
+                unlink($chemin);
+                $chemin = $cheminAvif;
+
             } else {
                 $validite = false;
             }
@@ -88,34 +88,35 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     }
 }
-if (isset($validite)){
-    if ($validite){
-       $erreur = ajouter_joueur($nom,$prenom,$email,$mdp,$chemin,$alias);
-       if ($erreur){
-        header('Location:connexion.php');
-        exit;
-       }
-       else{
-        if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE){
-        
+if (isset($validite)) {
+    if ($validite) {
+        $erreur = ajouter_joueur($nom, $prenom, $email, $mdp, $chemin, $alias);
+        if ($erreur) {
+            header('Location:connexion.php');
+            exit;
+        } else {
+            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+
+            } else {
+                unlink($chemin);
+            }
         }
-        else{
-            unlink($chemin);
-        }
-       }
     }
 }
 ?>
 <?php include 'include/html_setup.php' ?>
+<link rel="stylesheet" href="public/css/connexion.css">
 <title>DarQuest - Inscription</title>
-<?php 
-    include 'include/header.php';
-    include 'include/nav.php'; 
+<?php
+include 'include/header.php';
+include 'include/nav.php';
 ?>
-    <main class="main" style="padding-left: 4px; ">
-        <h3>S'inscrire à Darquest</h3>
-        <form action="inscription.php" style="padding-left: 4px;" enctype="multipart/form-data" method="POST"
-            onsubmit="return validationInscription()">
+<main class="main">
+    <div class="container">
+        <div class="connexion-wrapper">
+            <h3>S'inscrire à Darquest</h3>
+            <form action="inscription.php" style="padding-left: 4px;" enctype="multipart/form-data" method="POST"
+                onsubmit="return validationInscription()">
                 <label for="prenom"> Prénom :</label>
                 <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="25">
                 <br>
@@ -135,24 +136,35 @@ if (isset($validite)){
                 <input type="password" name="mdpConfirm" id="mdpConfirm" required minlength="8" maxlength="50">
                 <br>
                 <label for="url">Image :</label>
-                <br>
-                <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
+
+                <label for="url" class="upload-btn">Choisir une image</label>
                 <input type="file" id="url" name="url" accept="image/*">
+
+                <div class="file-name" id="file-name">Aucune image sélectionnée</div>
+
+                <img id="pfp-preview" class="pfp-preview" src="#" alt="Preview">
+
+                <br>
                 <br>
                 <input type="submit" value="S'inscrire">
                 <span id="erreur" style="color: red;"></span>
-        </form>
-        <p>Déjà membre de Darquest ?</p>
-        <a href="connexion.php">Se connecter</a>
-        <?php
-    if (isset($erreur)) {
-        if (!$erreur) {
-            echo "<span style='color:red'> Erreur dans les données </span>";
-        }
-    }
-    ?>
-    </main>
-   <?php include 'include/footer.php' ?>
+            </form>
+            <div class="login-links">
+                <p>Déjà membre de Darquest ?</p>
+                <a href="connexion.php">Se connecter</a>
+            </div>
+
+            <?php
+            if (isset($erreur)) {
+                if (!$erreur) {
+                    echo "<span style='color:red'> Erreur dans les données </span>";
+                }
+            }
+            ?>
+        </div>
+    </div>
+</main>
+<?php include 'include/footer.php' ?>
 
 <script src="scripts/inscriptionValidation.js"></script>
 

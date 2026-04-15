@@ -46,7 +46,11 @@ function addingItemQuantite(idJoueur, idItem, addition){
     let currentValue = document.getElementById("InputQte" + idItem).value
     let nouvelleQuantite = parseInt(currentValue) + parseInt(addition);
 
-    changeItemQuantite(idJoueur, idItem, nouvelleQuantite);
+    if(nouvelleQuantite > 0)
+        changeItemQuantite(idJoueur, idItem, nouvelleQuantite);
+    else {
+        deleteItem(idJoueur, idItem);
+    } 
 }
 
 function localRefresh(){
@@ -54,12 +58,16 @@ function localRefresh(){
         url: "panier.php",
         success: function(response) {
             let html = $("<div>").html(response);               // Copie la page html de la reponse dans un <div>
-                
-            $('#panier').html(html.find('#panier').html());     // Trouve les élements dans la copie et les applique à la page actuelle
-            $('#confirmation-panel').html(html.find('#confirmation-panel').html());
+            
+            if(html.find('#aucunItem').length > 0){
+                $('#main').html(html.find('#main').html());
+            } else {
+                $('#panier').html(html.find('#panier').html());     // Trouve les élements dans la copie et les applique à la page actuelle
+                $('#confirmation-panel').html(html.find('#confirmation-panel').html());
 
-            $('#panel-total').html(html.find('#panel-total').html());
-            $('#tableau-total').html(html.find('#tableau-total').html());
+                $('#panel-total').html(html.find('#panel-total').html());
+                $('#tableau-total').html(html.find('#tableau-total').html());
+            }
         }
     });
 }
@@ -94,16 +102,16 @@ function acheterPanier(idJoueur, prixTotal){
             prixTotal: prixTotal
         },
         success: function(response) {
-            alert(response);
             let data = JSON.parse(response);
 
             if(data.success){
                 alert("Achat complété !");
-
                 localRefresh();
+
             } else {
-                alert("Erreur: Il vous manque " + data.error + " pieces");
+                alert("Erreur: Il vous manque " + data.error + " pièces");
             }
+            
             
         },
         error: function(xhr, status, error) {
