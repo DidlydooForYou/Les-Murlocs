@@ -6,6 +6,7 @@ function get_pdo()
         "dbName" => "dbdarquest",
         "dbUser" => "root",
         "dbPass" => "",
+        "dbPort" => 3306,
         "dbPort" => 3307,
         "dbParams" => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -59,6 +60,8 @@ function obtenir_joueur($email, $mdp)
             //exit;
         }
     }
+
+}
 }
 function obtenir_alias($idJoueur){
     $sql = "SELECT alias FROM joueursjeu WHERE idJoueur = ?";    
@@ -271,6 +274,23 @@ function ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $in
 }
 
 
+// ici nouveau
+function obtenir_inventaire_joueur($idJoueur)
+{
+    try {
+        $pdo = get_pdo();
+        $sql = "select i.idItem, i.nomItem, i.photoItem, i.description, i.type, inv.qtInventaire
+                from inventaire inv
+                join item i on inv.Item_idItem = i.idItem
+                where inv.JoueursJeu_idJoueur = ?
+                order by i.type, i.nomItem";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$idJoueur]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
 
 
 ?>
