@@ -1,3 +1,5 @@
+
+
 <?php
 require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
@@ -12,99 +14,18 @@ doitEtreCo();
     include "include/html_setup.php";
 ?>
 
+<link rel="stylesheet" href="public/css/inventaire.css">
+
 <?php 
     include "include/header.php"; 
     include "include/nav.php";
 ?>
 
-<style>
-body {
-    margin: 0;
-    background-color: #f7f8f0;
-}
 
-.vitrine {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 40px;
-}
 
-.main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: transparent;
-}
 
-.main h1,
-.section-title {
-    text-align: center;
-}
 
-.carte-item {
-    width: 260px;
-    background: #355c7d;
-    border: 2px solid #1f3f59;
-    color: white;
-    padding: 14px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: left;
-    border-radius: 12px;
-}
-.carte-item p {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
 
-.carte-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.quantite {
-    font-weight: bold;
-    color: #dcdcdc;
-}
-
-.carte-item img {
-    width: 100%;
-    height: 140px;
-    object-fit: contain;
-    background: #e5e5e5;
-    margin-bottom: 10px;
-}
-
-.label {
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.btn-vendre {
-    margin-top: 12px;
-    padding: 8px;
-    background: #6c94b3;
-    border: 1px solid #1f3f59;
-    color: white;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.btn-vendre:hover {
-    background: #5a819e;
-}
-
-.section-title {
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
-</style>
 
 <?php
 $inventaire = [];
@@ -112,9 +33,6 @@ $inventaire = [];
 if (isset($_SESSION['id'])) {
     $inventaire = obtenir_inventaire_joueur($_SESSION['id']);
 }
-
-
-
 
 
 $groupes = [];

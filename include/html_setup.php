@@ -6,6 +6,7 @@
     <link href="public/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="public/images/logo.png">
     <link rel="stylesheet" href="public/css/style.css">
+    
     <script src="public/assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js" defer></script>
     <script
         src="https://code.jquery.com/jquery-4.0.0.min.js"
