@@ -1,7 +1,3 @@
-
-<?php
-session_start();
-?>
 <?php include 'include/html_setup.php' ?>
 
 <title>DarQuest - Énigma</title>

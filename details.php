@@ -1,13 +1,11 @@
-<?php
-require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'core/Database.php';
-require_once 'source/VitrineDAL.php';
-require_once 'source/PanierDAL.php';
-require_once 'source/DetailsDAL.php';
-require_once 'sql/bd.php';
+<?php 
+    include "include/html_setup.php";
 
-$connexion = DataBase::getConnexion($dbConfig);
+    require_once 'DAL/VitrineDAL.php';
+    require_once 'DAL/PanierDAL.php';
+    require_once 'DAL/DetailsDAL.php';
+
+$connexion = DataBase::getConnexion();
 $products = [];
 $details = [];
 ?>
@@ -15,9 +13,7 @@ $details = [];
 <link rel="stylesheet" href="public/css/vitrine.css">
 <Title>DarQuest - Détails</Title>
 
-<?php 
-    include "include/html_setup.php";
-?>
+
 
 <?php 
     include "include/header.php"; 

@@ -1,18 +1,9 @@
 <?php
-require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'source/ReviewDAL.php';
-require_once 'source/Page.php';
-require_once 'core/Database.php';
-require_once 'sql/bd.php';
-
-const ACTIVE_PAGE = Page::Reviews;
-
-include "include/header.php";
-include "include/nav.php";
 include "include/html_setup.php";
 
-$connexion = Database::getConnexion($dbConfig);
+require_once 'DAL/ReviewDAL.php';
+
+$connexion = Database::getConnexion();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
     $comment = $_POST['comment'];
@@ -26,7 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
     exit;
 }
 
-
+include "include/header.php";
+include "include/nav.php";
 ?>
 
 <link rel="stylesheet" href="public/css/reviews.css">

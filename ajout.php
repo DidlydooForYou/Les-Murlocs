@@ -1,7 +1,6 @@
 <?php
-session_start();
-require "sql/bd.php";
-require_once "source/initialization.php";
+include 'include/html_setup.php';
+
 if (!IS_ADMIN) {
     header('Location:accesRefuse.php');
     exit;
@@ -115,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                     if ($validite) {
                         $genre = $_POST['genre'];
-                        $erreur = ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $cheminAvif);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
@@ -144,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $cheminAvif);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
@@ -174,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $cheminAvif);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
@@ -205,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $cheminAvif);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
@@ -229,8 +228,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 }
 ?>
-
-<?php include 'include/html_setup.php' ?>
 
 <title>DarQuest - Ajout</title>
 

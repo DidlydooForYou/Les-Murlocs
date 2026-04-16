@@ -1,13 +1,10 @@
 <?php
-session_start();
-require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'core/Database.php';
-require_once 'source/VitrineDAL.php';
-require_once 'source/PanierDAL.php';
-require_once 'sql/bd.php';
+include "include/html_setup.php";
 
-$connexion = Database::getConnexion($dbConfig);
+require_once 'DAL/VitrineDAL.php';
+require_once 'DAL/PanierDAL.php';
+
+$connexion = Database::getConnexion();
 
 if (!empty($_GET['sortPrice'])) {
     $sort = $_GET['sortPrice'];
@@ -42,9 +39,8 @@ if (isset($idJoueur)) {
         $cartItems[$item['idItem']] = $item['qtPanier'];
     }
 }
-
-include "include/html_setup.php";
 ?>
+
 <link rel="stylesheet" href="public/css/vitrine.css">
 <title>DarQuest - Vitrine</title>
 
@@ -54,30 +50,31 @@ include "include/html_setup.php";
 ?>
 
 <main class="main">
-        <form class="searchBarContainer d-flex align-items-center gap-2" role="search" action="index.php">
-            <input name="research" class="form-control" type="search" placeholder="Recherche sur DarQuest">
-
-            <select name="sortPrice" id="sortPrice" class="form-select w-auto">
+        <form class="search-sort-container searchBarContainer" role="search" action="index.php">
+            <input name="research" class="search-sort-element form-control search-bar" type="search" placeholder="Recherche sur DarQuest">
+            
+            <select name="sortPrice" id="sortPrice" class="search-sort-element form-select sort-element">
                 <option value="" hidden>Trier par prix</option>
                 <option value="price_asc">Prix ↑</option>
                 <option value="price_desc">Prix ↓</option>
             </select>
 
-            <select id="sortCatego" name="sortCatego" class="form-select w-auto">
-                <option value="" hidden>Filtrer par catégorie</option>
+            <select id="sortCatego" name="sortCatego" class="search-sort-element form-select sort-element">
+                <option value="" hidden>Trier par catégorie</option>
                 <option value="sorts">Sorts</option>
                 <option value="armors">Armures</option>
                 <option value="weapons">Armes</option>
                 <option value="potions">Potions</option>
             </select>
 
-            <select id="sortAlphabete" name="sortAlphabete" class="form-select w-auto">
+            <select id="sortAlphabete" name="sortAlphabete" class="search-sort-element form-select sort-element">
                 <option value="" hidden>Trier par ordre alphabétique</option>
                 <option value="alpha_asc">A à Z</option>
                 <option value="alpha_desc">Z à A</option>
             </select>
         </form>
-      
+        
+<!---->
         <div class="container text-center">
             <div class="row justify-content-center">
 
@@ -92,7 +89,7 @@ include "include/html_setup.php";
                         
                 ?>
 
-                <div id="card_<?=$product['idItem']?>" class="col-lg-3 d-flex align-items-stretch">
+                <div id="card_<?=$product['idItem']?>" class="col-6 col-lg-3 d-flex align-items-stretch">
                     <div class="card mt-4 w-100 backgroundImage">
                         <a href="details.php?id=<?= $product['idItem'] ?>" class="image-wrapper">
                             <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['nomItem'] ?>">
@@ -140,9 +137,9 @@ include "include/html_setup.php";
                                 <?php if($isInCart) :// Si item est dans le cart?>
                                     <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
                                         <div class="quantity-container">
-                                            <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, 1)">+</button>
-                                            <input id="input_<?=$product['idItem']?>" class="quantity-element quantity-input" type="number" value="<?=$itemQuantite?>" onblur="changeItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, this.value)">
                                             <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, -1)">-</button>
+                                            <input id="input_<?=$product['idItem']?>" class="quantity-element quantity-input" type="number" value="<?=$itemQuantite?>" onblur="changeItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, this.value)">
+                                            <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, 1)">+</button>
                                         </div>
                                     </div>
 
@@ -164,44 +161,11 @@ include "include/html_setup.php";
 
             </div>
         </div>
-        <script src="scripts/showcaseAjax.js"> </script>
-
+        <script src="scripts/fonctions_Index.js"> </script>
 
         <div id="hand-zone"></div>
+<!---->
     <br>
 </main>
-
-<script>
-document.getElementById("sortPrice").addEventListener("change", function () {
-    const url = new URL(window.location.href);
-    url.searchParams.set("sortPrice", this.value);
-
-    url.searchParams.delete("sortAlphabete");
-    url.searchParams.delete("sortCatego");
-
-    window.location.href = url.toString();
-});
-
-document.getElementById("sortAlphabete").addEventListener("change", function () {
-    const url = new URL(window.location.href);
-    url.searchParams.set("sortAlphabete", this.value);
-
-    url.searchParams.delete("sortPrice");
-    url.searchParams.delete("sortCatego");
-
-    window.location.href = url.toString();
-});
-
-document.getElementById("sortCatego").addEventListener("change", function () {
-    const url = new URL(window.location.href);
-    url.searchParams.set("sortCatego", this.value);
-
-    url.searchParams.delete("sortPrice");
-    url.searchParams.delete("sortAlphabete");
-
-    window.location.href = url.toString();
-});
-</script>
-
 
 <?php include 'include/footer.php' ?>
