@@ -1,6 +1,12 @@
 <?php
 require "sql/bd.php";
 require "source/initialization.php";
+require_once 'core/error-exception.php';
+require_once 'source/initialization.php';
+require_once 'source/Page.php';
+require_once 'source/EnigmaDAL.php';
+require_once 'core/Database.php';
+
 doitEtreDeco();
 $erreur = false;
 
@@ -8,13 +14,24 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
     $mdp = $_POST['password'];
 
-    if (obtenir_joueur($email, $mdp)) {
-        $_SESSION["connexion"] = true;
-        $_SESSION["id"] = obtenir_id($email)["JoueursJeu_idJoueur"];
-        $_SESSION['role'] = administrateur($_SESSION["id"])["administrateur"];
+    if (obtenir_joueur($email, $mdp)){
+         $_SESSION["connexion"] = true;
+         $_SESSION["id"] = obtenir_id($email)["JoueursJeu_idJoueur"];
+         $_SESSION['role'] = administrateur($_SESSION["id"])["administrateur"];
+        $connexion = Database::getConnexion($dbConfig);
+        $mage = EnigmaDAL::estMage($connexion, $_SESSION["id"]);
+        if ($mage['mage'] == 1){
+            $_SESSION["mage"] = true;
+        }
+        else{
+            $_SESSION["mage"] = false;
+        }
+        
         header('Location:index.php');
-        exit;
-    } else {
+        
+         exit;
+    }
+    else{
         $erreur = true;
     }
 }
