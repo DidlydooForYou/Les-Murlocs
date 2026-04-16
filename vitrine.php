@@ -1,9 +1,6 @@
 <?php
 require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
-require_once 'source/Page.php';
-
-const ACTIVE_PAGE = Page::Vitrine;
 
 include "include/header.php"; 
 include "include/nav.php";

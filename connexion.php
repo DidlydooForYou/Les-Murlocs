@@ -9,7 +9,8 @@ require_once 'core/Database.php';
 
 doitEtreDeco();
 $erreur = false;
- if (!empty($_POST['email']) && !empty($_POST['password'])) {
+
+if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
     $mdp = $_POST['password'];
 
@@ -33,34 +34,45 @@ $erreur = false;
     else{
         $erreur = true;
     }
- }
+}
 ?>
-<?php include 'include/html_setup.php' ?>
 
+<?php include 'include/html_setup.php'; ?>
+<link rel="stylesheet" href="public/css/connexion.css">
 <title>DarQuest - Connexion</title>
+<?php include 'include/header.php'; ?>
+<?php include 'include/nav.php'; ?>
 
-<?php 
-    include 'include/header.php';
-    include 'include/nav.php'; 
-?>
-    <main class="main" style="padding-left: 4px;">
-        <h3>Se connecter</h3>
-    <form action="connexion.php"style="padding-left: 4px;" method="POST" onsubmit="return connexionValidation()">
-    
-            <label for="email">Adresse courriel : </label>
-            <input type="email" name="email" id="email"><br>
-            <label for="password">Mot de passe : </label>
-            <input type="password" name="password" id="password"><br>
-            <input type="submit" value="Se connecter">
-            <span id="erreur" style="color: red;"></span>
+<main class="main">
+    <div class="container">
+        <div class="connexion-wrapper">
 
+            <h3>Se connecter</h3>
 
-    </form>
-    <?php if (isset($erreur))  if ($erreur == true) echo "<p style= 'color: red'>Courriel et/ou mot de passe incorrect </p>"; ?>
-    <p>Vous n'avez pas de compte ?</p>
-    <a href="inscription.php">S'inscrire</a>
-    </main>
-   <?php include 'include/footer.php' ?>
-    <script src="scripts/connexionValidation"></script>
+            <form action="connexion.php" method="POST" onsubmit="return connexionValidation()">
+
+                <label for="email">Adresse courriel :</label>
+                <input type="email" name="email" id="email">
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" name="password" id="password">
+
+                <br>
+                <br>
+                <input type="submit" value="Se connecter">
+
+                <?php if ($erreur) : ?>
+                    <p class="error">Courriel et/ou mot de passe incorrect</p>
+                <?php endif; ?>
+
+            </form>
+
+            <a href="inscription.php">Créer un compte</a>
+
+        </div>
+    </div>
+</main>
+<?php include 'include/footer.php' ?>
+<script src="scripts/connexionValidation"></script>
 
 </html>

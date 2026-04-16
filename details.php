@@ -1,10 +1,6 @@
 <?php
 require_once 'core/error-exception.php';
 require_once 'source/initialization.php';
-require_once 'source/Page.php';
-
-const ACTIVE_PAGE = Page::Details;
-
 ?>
 
 <link rel="stylesheet" href="public/css/vitrine.css">
@@ -18,12 +14,8 @@ const ACTIVE_PAGE = Page::Details;
     include "include/header.php"; 
     include "include/nav.php";
 ?>
-<main class="main">
-    <br>
-    <fieldset>
-        <legend><h1 class="py-3 mt-3">Détails</h1></legend>
-        <?php include_once INCLUDE_FILE . '/detail.php'; ?>
-    </fieldset>
+<main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
+    <?php include_once INCLUDE_FILE . '/detail.php'; ?>
     <br>
 </main>
 
