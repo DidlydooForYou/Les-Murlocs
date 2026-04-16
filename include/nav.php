@@ -6,7 +6,7 @@
 
 
     <span class="navLinkContainer">
-        <a class="navElement navLink" href="enigma.php">Énigmes</a>
+        <a class="navElement navLink" href="enigma.php">Énigma</a>
     </span>
 
    
