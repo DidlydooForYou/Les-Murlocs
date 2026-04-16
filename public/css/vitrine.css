@@ -1,3 +1,27 @@
+/**/
+
+.search-sort-container{
+    /*border:1px solid red;/**/
+    display:flex;
+
+    margin-left:2px;
+    margin-right: 2px;
+}
+
+.search-sort-element{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.search-bar{
+    flex:1;
+}
+
+.sort-element{
+    width:300px;
+}
+
+/**/
 .quantity-container{
     display: grid;
     grid-template-columns:33% 34% 33%;
@@ -29,4 +53,56 @@
 .quantity-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+@media (max-width: 800px) {
+    .search-sort-container{
+        /*border:1px solid red;/**/
+        display:grid;
+        grid-template-areas: 
+        "search search search"
+        "price catego a-z";
+    }
+
+    #sortPrice{
+        grid-area: price;
+    }
+
+    #sortCatego{
+        grid-area: catego;
+    }
+
+    #sortAlphabete{
+        grid-area: a-z;
+    }
+
+    .search-sort-element{
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    .search-bar{
+        grid-area: search;
+        flex:1;
+    }
+
+    .quantity-container{
+        width: 100%;
+    }
+
+    .sort-element{
+        width:100%;
+    }
+
+    .card-title{
+        margin-bottom: 0;
+    }
+
+    .btn{
+        font-size: small;
+    }
+
+    .rating-number{
+        display:none;
+    }
 }
