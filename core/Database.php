@@ -265,4 +265,23 @@ class Database
     return false;
 
 }
+    public static function ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin)
+    {
+    if (!Database::nom_pris($nom)) {
+        $retour = true;
+
+        try {
+            $pdo = Database::getConnexion();
+            $stmt = $pdo->prepare("CALL Ajouter_Item_Arme(?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+            $stmt->execute([$nom, $chemin, $nom, $prixOr, $prixArgent, $prixBronze, $quantite, $description, $efficacite, $genre]);
+            $stmt->closeCursor();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            $retour = false;
+        }
+        return $retour;
+    }
+    return false;
+
+        }
 }

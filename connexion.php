@@ -1,7 +1,7 @@
 <?php 
 include 'include/html_setup.php';
 
-require_once 'source/EnigmaDAL.php';
+require_once 'DAL/EnigmaDAL.php';
 
 doitEtreDeco();
 $erreur = false;
