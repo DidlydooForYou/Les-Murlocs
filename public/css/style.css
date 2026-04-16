@@ -175,6 +175,10 @@ form *{
     margin-right: 0px;
 }
 
+.coins-container .coin-amount:last-of-type {
+    margin-right: 0px;
+}
+
 .coin-amount{
     margin:3px;
     margin-right: 10px;
@@ -293,7 +297,7 @@ html, body {
 }
 
 .reviews:hover{
-    color:#006EAF
+    color:#c9a86a;
 }
 
 .rating {
@@ -567,6 +571,12 @@ html, body {
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #7AAACE;
   --bs-btn-disabled-border-color: #7AAACE;
+}
+.buttonEnigma {
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .container {

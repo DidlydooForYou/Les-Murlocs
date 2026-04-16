@@ -1,4 +1,4 @@
-<header class="headerContainer">
+<header class="headerContainer" style="border:5px solid #c9a86a; border-bottom:none;">
     <a href="index.php" class="bannerLogoContainer"> <img class="bannerLogo" src="public/images/LogoDarQuest.png"
             alt="LogoDarQuest.png"> </a>
 

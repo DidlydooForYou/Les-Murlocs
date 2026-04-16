@@ -17,6 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
     exit;
 }
 
+if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
+    header("Location: index.php");
+    exit;
+}
+
+$id = (int) $_GET['id'];
+$details = ReviewDAL::selectAllReviews($connexion, $id);
+
+if(!$details){
+    header("Location: index.php");
+    exit;
+}
+
+
 include "include/header.php";
 include "include/nav.php";
 ?>
@@ -24,11 +38,11 @@ include "include/nav.php";
 <link rel="stylesheet" href="public/css/reviews.css">
 <Title>DarQuest - Reviews</Title>
 
-<main class="main">
+<main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
     <div class="container">
         <div class="reviews-wrapper">
             <br>
-            <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $_GET['id'] ?>">
+            <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $id  ?>">
 
                 <?php if(IS_AUTH) : ?>
                 <div class="comment-top">

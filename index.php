@@ -49,7 +49,6 @@ if (isset($idJoueur)) {
     include 'include/nav.php'; 
 ?>
 
-<main class="main">
         <form class="search-sort-container searchBarContainer" role="search" action="index.php">
             <input name="research" class="search-sort-element form-control search-bar" type="search" placeholder="Recherche sur DarQuest">
             
