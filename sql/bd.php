@@ -59,8 +59,32 @@ function obtenir_joueur($email, $mdp)
             //exit;
         }
     }
-
 }
+function obtenir_alias($idJoueur){
+    $sql = "SELECT alias FROM joueursjeu WHERE idJoueur = ?";    
+    try{    
+        $pdo = get_pdo();
+        $stmt = $pdo->prepare($sql);
+
+        //$stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+
+        $stmt->execute([$idJoueur]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!$result){
+            return false;
+        } else {
+            $result = $result['alias'];
+        }
+
+        return $result;
+    }
+    catch (Exception $e)
+    {
+        //exit;
+    }
+}
+
 function alias_pris($alias)
 {
     $sql = "select alias from joueursjeu where alias = ?";
