@@ -1,5 +1,5 @@
 <?php
-    class EnigmaDAL{
+class EnigmaDAL{
 
     public static function selectAll(PDO $connexion) : array {
 
@@ -21,7 +21,7 @@
     public static function selectResponses(PDO $connexion, $idQuestion){
 
     $sql = "select * from reponses join questions_has_reponses on questions_has_reponses.Reponses_idReponse= reponses.idReponse where questions_has_reponses.Questions_idQuestion = :idQuestion";
- $stmt = $connexion->prepare($sql);
+    $stmt = $connexion->prepare($sql);
     $stmt->bindValue('idQuestion',$idQuestion,PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
@@ -55,6 +55,6 @@
         $stmt->bindValue('difficulte', $difficulte, PDO::PARAM_STR);
         $stmt->execute();
     }
-    }
+}
     
 ?>

@@ -1,19 +1,6 @@
-function ajouter_panier(idItem){
-    fetch("ajax-panier-ajouter.php", {
-        method : "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: "idItem=" + idItem
-    })
-    .then(res => res.text())
-    .then(data => data === "oui" ?alert("Ajouté au panier !") : alert("Erreur dans l'ajout au panier"))
-    .catch(err => console.log(err));
-}
-
 function ajouter_panierAJAX(idJoueur, idItem){
     $.ajax({
-        url: 'ajax-panier-ajouter.php',
+        url: 'scripts/ajax/ajax-panier-ajouter.php',
         type: 'POST',
         data: {
             idJoueur: idJoueur,
@@ -36,7 +23,7 @@ function changeItemQuantite(idJoueur, idItem, nouvelleQuantite){
     }
 
     $.ajax({
-        url: 'ajax-panier-quantite.php',
+        url: 'scripts/ajax/ajax-panier-quantite.php',
         type: 'POST',
         data: {
             idItem: idItem,
@@ -67,7 +54,7 @@ function addingItemQuantite(idJoueur, idItem, addition){
 function removeItem(idJoueur, idItem){
     
     $.ajax({
-        url: 'ajax-panier-effacer.php',
+        url: 'scripts/ajax/ajax-panier-effacer.php',
         type: 'POST',
         data: {
             idItem: idItem,
@@ -115,3 +102,33 @@ function updateSelectText() {
 updateSelectText();
 
 window.addEventListener("resize", updateSelectText);
+
+document.getElementById("sortPrice").addEventListener("change", function () {
+    const url = new URL(window.location.href);
+    url.searchParams.set("sortPrice", this.value);
+
+    url.searchParams.delete("sortAlphabete");
+    url.searchParams.delete("sortCatego");
+
+    window.location.href = url.toString();
+});
+
+document.getElementById("sortAlphabete").addEventListener("change", function () {
+    const url = new URL(window.location.href);
+    url.searchParams.set("sortAlphabete", this.value);
+
+    url.searchParams.delete("sortPrice");
+    url.searchParams.delete("sortCatego");
+
+    window.location.href = url.toString();
+});
+
+document.getElementById("sortCatego").addEventListener("change", function () {
+    const url = new URL(window.location.href);
+    url.searchParams.set("sortCatego", this.value);
+
+    url.searchParams.delete("sortPrice");
+    url.searchParams.delete("sortAlphabete");
+
+    window.location.href = url.toString();
+});

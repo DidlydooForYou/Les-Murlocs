@@ -1,11 +1,11 @@
-<?php
-require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'source/Page.php';
-require_once 'source/EnigmaDAL.php';
-require_once 'core/Database.php';
-doitEtreCo();
-$connexion = Database::getConnexion($dbConfig);
+<?php 
+    include 'include/html_setup.php';
+    require_once 'source/EnigmaDAL.php';
+    doitEtreCo();
+
+
+    $connexion = Database::getConnexion();
+
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $erreur = false;
     if (!isset($_POST['reponse']) && !isset($_POST['reponseMagie'])) {
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if ($erreur) {
            
         }
-        else{
+        else {
         if ($_POST['formType'] === "mage") {
             $reponse = $_POST['reponseMagie'];
             var_dump($reponse, $_SESSION['ReponseCorrectMagie']);
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
 ?>
-<?php include 'include/html_setup.php' ?>
+
 
 <title>DarQuest - Énigma</title>
 
@@ -167,7 +167,7 @@ include 'include/nav.php';
             <form action="enigma.php" method="POST">
                 <input type="hidden" name="formType" value="argent">
                 <?php
-                $connexion = Database::getConnexion($dbConfig);
+                $connexion = Database::getConnexion();
                 $questions = EnigmaDAL::selectAll($connexion);
                 shuffle($questions);
                 $questionRandom = array_pop($questions);

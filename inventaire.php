@@ -1,14 +1,6 @@
 <?php
-require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'source/Page.php';
-
-const ACTIVE_PAGE = Page::Inventaire;
-doitEtreCo();
-?>
-
-<?php 
     include "include/html_setup.php";
+    doitEtreCo();
 ?>
 
 <?php 

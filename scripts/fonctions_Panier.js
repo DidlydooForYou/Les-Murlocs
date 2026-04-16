@@ -12,7 +12,6 @@ function closePanel(){
 
 
 // Changement de quantité
-
 function changeItemQuantite(idJoueur, idItem, nouvelleQuantite){
     if(nouvelleQuantite <= 0){
         nouvelleQuantite = 1;
@@ -25,7 +24,7 @@ function changeItemQuantite(idJoueur, idItem, nouvelleQuantite){
     let idPanel = "#Panel_" + idItem;
 
     $.ajax({
-        url: 'ajax-panier-quantite.php',
+        url: 'scripts/ajax/ajax-panier-quantite.php',
         type: 'POST',
         data: {
             idItem: idItem,
@@ -76,8 +75,10 @@ function localRefresh(){
 // Enlever un item
 function deleteItem(idJoueur, idItem){
     
+    console.log('deleteItem function reached');
+
     $.ajax({
-        url: 'ajax-panier-effacer.php',
+        url: '/scripts/ajax/ajax-panier-effacer.php',
         type: 'POST',
         data: {
             idItem: idItem,
@@ -95,7 +96,7 @@ function deleteItem(idJoueur, idItem){
 // Acheter le panier
 function acheterPanier(idJoueur, prixTotal){
     $.ajax({
-        url: 'ajax-panier-acheter.php',
+        url: 'scripts/ajax/ajax-panier-acheter.php',
         type: 'POST',
         data: {
             idJoueur: idJoueur,

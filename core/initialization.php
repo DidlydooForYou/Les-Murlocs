@@ -1,6 +1,4 @@
 <?php
-require_once 'source/EnigmaDAL.php';
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,20 +11,6 @@ const SOURCE = ROOT . '/source';
 
 const URL_ROOT = '/';
 
-$dbConfig = [
-    "dbHost" => "127.0.0.1",
-    "dbName" => "DbDarquest",
-    "dbUser" => "root",
-    "dbPass" => "",
-    "dbPort" => 3306,
-    "dbParams" => [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_CASE => PDO::CASE_NATURAL,
-        PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ],
-];
-
 const CSS = URL_ROOT . 'css';
 const VITRINE_IMG = URL_ROOT . 'upload';
 
@@ -34,19 +18,20 @@ define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));
 define('IS_ADMIN', IS_AUTH && $_SESSION['role'] === 1);
 define('IS_MAGE',IS_AUTH && $_SESSION["mage"] );
+
 function doitEtreDeco(){
     if (IS_AUTH){
         header('Location:accesRefuse.php');
         exit;
     }
 }
+
 function doitEtreCo(){
     if (!IS_AUTH){
         header('Location:connexion.php');
         exit;
     }
 }
-
 
 const PASSWORD_SIZE = 8;
 const MATCH_PATTERN ='/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,20}$/';
