@@ -141,7 +141,11 @@ form *{
 /* Main */
 .main{
     background-color: #f7f8f0;
-    flex:1
+    flex:1;
+
+    border:5px solid #c9a86a; 
+    border-top:none; 
+    border-bottom:none;
 }
 
 .button{
@@ -163,6 +167,7 @@ form *{
 
 .coins-container{
     display: flex;
+    justify-content: center;
     align-items: center;
     justify-content:flex-end;
 }

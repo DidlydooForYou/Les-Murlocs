@@ -283,5 +283,26 @@ class Database
     }
     return false;
 
-        }
+    }
+
+    public static function obtenir_inventaire_joueur($idJoueur){
+    try {
+        $pdo = Database::getConnexion();
+
+        $sql = "select i.idItem, i.nomItem, i.photoItem, i.description, i.type, inv.qtInventaire
+                from inventaire inv
+                join item i on inv.Item_idItem = i.idItem
+                where inv.JoueursJeu_idJoueur = ?
+                order by i.type, i.nomItem";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$idJoueur]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+
+    } catch (Exception $e) {
+        return [];
+    }
+}
+        
 }

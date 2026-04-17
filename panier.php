@@ -140,7 +140,7 @@
             </div>
 
             <div></div>
-            <button class="button" onclick="openPanel()"> Acheter </button>
+            <button class="btn btn-boot mt-auto" onclick="openPanel()"> Acheter </button>
         </div>
     </div>
 
@@ -169,11 +169,11 @@
             </div>
 
             <div class="panel-button">
-                <button class="button btn-cancel" onclick="closePanel()">Annuler</button>
+                <button class="btn btn-boot mt-auto btn-cancel" onclick="closePanel()">Annuler</button>
             </div>
 
             <div class="panel-button">
-                <button class="button" onclick="acheterPanier(<?=$userId?>,<?=$totalSplit['SommeTotale']?>)">Confirmer</button>
+                <button class="btn btn-boot mt-auto" onclick="acheterPanier(<?=$userId?>,<?=$totalSplit['SommeTotale']?>)">Confirmer</button>
             </div>
         </div>
     </div>
