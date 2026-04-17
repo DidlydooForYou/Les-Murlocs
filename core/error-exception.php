@@ -6,8 +6,6 @@ function customErrorHandler($errno, $errstr, $errfile, $errline) {
     if (REDIRECT_ERROR_PAGE) {
         header('Location: '. ERROR_PAGE);
     }
-   
-
 }
 
 function customExceptionHandler(Throwable $exception)
@@ -22,7 +20,6 @@ function customExceptionHandler(Throwable $exception)
     if (REDIRECT_ERROR_PAGE) {
         header('Location: '. ERROR_PAGE);
     }
-
 }
 
 function handleFatalError() {
@@ -38,7 +35,6 @@ function handleFatalError() {
         if (REDIRECT_ERROR_PAGE) {
             header('Location: '. ERROR_PAGE);
         }
-        
     }
 }
 

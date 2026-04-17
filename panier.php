@@ -1,12 +1,8 @@
 <?php 
     include 'include/html_setup.php';
+    require_once 'DAL/PanierDAL.php';
 
-    require_once 'source/initialization.php';
-    require_once 'core/Database.php';
-    require_once 'source/CoinManagement.php';
-    require_once 'source/PanierDAL.php';
-
-    $connexion = Database::getConnexion($dbConfig);
+    $connexion = Database::getConnexion();
 
     if(isset ($_SESSION["connexion"])){
         if(!$_SESSION["connexion"]){
@@ -27,7 +23,7 @@
     $totalBronze = 0;
 ?>
 <link rel="stylesheet" href="public/css/panier.css">
-<script src="scripts/fonctionsPanier.js"></script>
+<script src="scripts/fonctions_Panier.js"></script>
 
 <title>DarQuest - Panier</title>
 
@@ -102,7 +98,7 @@
                 </div>
                 
                 <?php 
-                    $prixCalcule = Coins::multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']);
+                    $prixCalcule = multiplierCoins($product['prixOr'], $product['prixArgent'],$product['prixBronze'],$product['qtPanier']);
                     $totalOr += $prixCalcule['Or'];
                     $totalArgent += $prixCalcule['Argent'];
                     $totalBronze += $prixCalcule['Bronze'];
@@ -125,7 +121,7 @@
         <?php 
             endforeach;
             
-            $totalSplit = Coins::multiplierCoins($totalOr, $totalArgent, $totalBronze, 1);
+            $totalSplit = multiplierCoins($totalOr, $totalArgent, $totalBronze, 1);
         ?>
     </div>
     <div style="display: flex; justify-content: flex-end;">

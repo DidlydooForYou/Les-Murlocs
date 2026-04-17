@@ -1,7 +1,8 @@
 <?php
-require "sql/bd.php";
-require "source/initialization.php";
+include 'include/html_setup.php';
 doitEtreDeco();
+
+
 if (isset($_SESSION["connexion"])) {
     if ($_SESSION["connexion"]) {
         header('Location:accesRefuse.php');
@@ -90,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 if (isset($validite)) {
     if ($validite) {
-        $erreur = ajouter_joueur($nom, $prenom, $email, $mdp, $chemin, $alias);
+        $erreur = Database::ajouter_joueur($nom, $prenom, $email, $mdp, $chemin, $alias);
         if ($erreur) {
             header('Location:connexion.php');
             exit;
@@ -104,9 +105,10 @@ if (isset($validite)) {
     }
 }
 ?>
-<?php include 'include/html_setup.php' ?>
+
 <link rel="stylesheet" href="public/css/connexion.css">
 <title>DarQuest - Inscription</title>
+
 <?php
 include 'include/header.php';
 include 'include/nav.php';

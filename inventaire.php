@@ -1,10 +1,8 @@
-
-
 <?php
 require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'source/Page.php';
-require_once 'sql/bd.php';
+require_once 'core/initialization.php';
+require_once 'DAL/Page.php';
+require_once 'core/Database.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
@@ -21,19 +19,12 @@ doitEtreCo();
     include "include/nav.php";
 ?>
 
-
-
-
-
-
-
 <?php
 $inventaire = [];
 
 if (isset($_SESSION['id'])) {
-    $inventaire = obtenir_inventaire_joueur($_SESSION['id']);
+    $inventaire = Database::obtenir_inventaire_joueur($_SESSION['id']);
 }
-
 
 $groupes = [];
 foreach ($inventaire as $item) {

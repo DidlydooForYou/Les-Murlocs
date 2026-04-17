@@ -1,7 +1,9 @@
+
 <?php
-    include 'include/html_setup.php';
-    doitEtreCo();
+require "source/initialization.php";
+doitEtreCo();
 ?>
+<?php include 'include/html_setup.php' ?>
 
 <title>DarQuest - Revente</title>
 

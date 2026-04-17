@@ -35,6 +35,10 @@ form *{
     height: 100%;
 }
 
+.header-alias{
+    text-align: right;
+}
+
 #header-coins{
     position: absolute;
     top:10px;
@@ -160,6 +164,15 @@ form *{
 .coins-container{
     display: flex;
     align-items: center;
+    justify-content:flex-end;
+}
+
+.coins-container .coin-amount:last-of-type {
+    margin-right: 0px;
+}
+
+.coins-container .coin-amount:last-of-type {
+    margin-right: 0px;
 }
 
 .coins-container .coin-amount:last-of-type {
@@ -284,7 +297,7 @@ html, body {
 }
 
 .reviews:hover{
-    color:#006EAF
+    color:#c9a86a;
 }
 
 .rating {
@@ -559,6 +572,12 @@ html, body {
   --bs-btn-disabled-bg: #7AAACE;
   --bs-btn-disabled-border-color: #7AAACE;
 }
+.buttonEnigma {
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
 
 .container {
     max-width: 100%;
@@ -574,24 +593,27 @@ html, body {
 
     /*Modified header*/
     .headerContainer{
-        height: 10vh;
+        height: auto;
+        min-height: 10vh;
 
         justify-content: none;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 2fr;
     }
 
     .bannerLogoContainer{
         height: 10vh;
     }
 
+    .header-alias{
+        font-size: large;
+    }
+
     #header-coins{
         position: relative;
         margin:auto;
         margin-top: 8px;
-        margin-right: 0px;
-
-        
+        margin-right: 0px;        
     }
     /**/
 

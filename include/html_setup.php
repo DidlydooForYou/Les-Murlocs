@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="public/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="icon" href="public/images/logo.png">
     <link rel="stylesheet" href="public/css/style.css">
     
@@ -14,3 +14,10 @@
         crossorigin="anonymous">
     </script>
 </head>
+<?php
+    @session_start();
+    require_once 'core/Database.php';
+    require_once 'core/error-exception.php';
+    require_once 'core/initialization.php';
+    require_once 'core/utilitaire.php';
+?>

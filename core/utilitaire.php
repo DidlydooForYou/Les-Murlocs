@@ -1,22 +1,5 @@
 <?php 
-class Coins{
-    public static function getUserBank(PDO $connexion, int $idJoueur): array {
-        $sql = "SELECT pieceOr, pieceArgent, pieceBronze
-                FROM joueursjeu
-                WHERE idJoueur = :idJoueur";
-
-        $stmt = $connexion->prepare($sql);
-
-        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        $result = $stmt->fetch();
-
-        return $result;
-    }
-
-    public static function multiplierCoins(int $prixOr, int $prixArgent, int $prixBronze, int $amount): array {
+    function multiplierCoins(int $prixOr, int $prixArgent, int $prixBronze, int $amount): array {
         $prixUnitaireBronze = ($prixOr * 100) + ($prixArgent * 10) + $prixBronze;
         $prixTotal = $prixUnitaireBronze * $amount;
 
@@ -31,5 +14,4 @@ class Coins{
             "SommeTotale" => $prixTotal
         ];
     }
-}
 ?>

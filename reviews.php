@@ -1,14 +1,9 @@
 <?php
-require_once 'core/error-exception.php';
-require_once 'source/initialization.php';
-require_once 'source/ReviewDAL.php';
-require_once 'core/Database.php';
-
-include "include/header.php";
-include "include/nav.php";
 include "include/html_setup.php";
 
-$connexion = Database::getConnexion($dbConfig);
+require_once 'DAL/ReviewDAL.php';
+
+$connexion = Database::getConnexion();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
     $comment = $_POST['comment'];
@@ -22,17 +17,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
     exit;
 }
 
+if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
+    header("Location: index.php");
+    exit;
+}
 
+$id = (int) $_GET['id'];
+$details = ReviewDAL::selectAllReviews($connexion, $id);
+
+if(!$details){
+    header("Location: index.php");
+    exit;
+}
+
+
+include "include/header.php";
+include "include/nav.php";
 ?>
 
 <link rel="stylesheet" href="public/css/reviews.css">
 <Title>DarQuest - Reviews</Title>
 
-<main class="main">
+<main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
     <div class="container">
         <div class="reviews-wrapper">
             <br>
-            <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $_GET['id'] ?>">
+            <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $id  ?>">
 
                 <?php if(IS_AUTH) : ?>
                 <div class="comment-top">
@@ -56,10 +66,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
 
             </form>
 
+            <?php
+                $products = [];
+
+                if (!empty($_GET['id'])) {
+                    $id = $_GET['id'];
+                    $products = ReviewDAL::selectAllReviews($connexion, $id);
+                }
+            ?>
+
+            <div class="container">
+                <div class="reviews-wrapper">
+                    <?php foreach ($products as $product): ?>
+                        <div class="review-card">
+                            <div class="review-header">
+
+                                <div class="user-info">
+                                    <img src="<?= $product['photoProfil'] ?>" class="profile" alt="<?= $product['alias'] ?>">
+                                    <div class="alias"><?= $product['alias'] ?></div>
+                                </div>
+
+                                <div class="stars-reviews">
+                                    <span class="star-number"><?= $product['etoiles'] ?></span>
+
+                                    <span class="star-icons">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <span class="star"><?= $i <= $product['etoiles'] ? "★" : "☆" ?></span>
+                                        <?php endfor; ?>
+                                    </span>
+                                </div>
+
+                            </div>
 
 
+                            <div class="comment"><?= $product['commentaire'] ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
 
-            <?php include_once INCLUDE_FILE . '/review.php'; ?>
 
         </div>
     </div>
