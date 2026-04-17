@@ -88,7 +88,8 @@ if (isset($idJoueur)) {
                     }
                         
                 ?>
-
+                    
+                    
                 <div id="card_<?=$product['idItem']?>" class="col-6 col-lg-3 d-flex align-items-stretch">
                     <div class="card mt-4 w-100 backgroundImage">
                         <a href="details.php?id=<?= $product['idItem'] ?>" class="image-wrapper">
@@ -133,7 +134,12 @@ if (isset($idJoueur)) {
                             <br>
                             <!-- Button Section -->
                             <?php if(IS_AUTH) : //  Si connecté?>
-
+                               <?php if ($product['type'] == 'sort' && !IS_MAGE) :?>
+                                    <a href="enigma.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                    Devenez mage pour acheter le sort
+                                </a>
+                                <?php else : ?>
+                                
                                 <?php if($isInCart) :// Si item est dans le cart?>
                                     <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
                                         <div class="quantity-container">
@@ -147,6 +153,8 @@ if (isset($idJoueur)) {
                                 <?php else :         // Si item est pas dans le cart?>
                                     <button onclick="ajouter_panierAJAX(<?=$idJoueur?>,<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
                                 <?php endif;?>
+                                <?php endif;?>
+                                 
 
                             <?php else :        //  Si pas connecté?>
                                 <a href="connexion.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">

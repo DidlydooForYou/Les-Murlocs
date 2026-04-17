@@ -3,7 +3,7 @@ class EnigmaDAL{
 
     public static function selectAll(PDO $connexion) : array {
 
-        $sql = "SELECT * from questions";
+        $sql = "SELECT * from questions except select * from questions where categorie = 'magie'";
 
         $statement = $connexion->prepare($sql); 
              

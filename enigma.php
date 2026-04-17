@@ -86,9 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 include 'include/header.php';
 include 'include/nav.php';
 ?>
-
+<link rel="stylesheet" href="public/css/enigma.css">
 <main class="main" style="padding-left : 4px">
-    <h3>Bienvenue à Énigma ! </h3>
+    <div class="enigmaMain">
+    <div class="titre">Bienvenue à Énigma ! </div>
 
     <?php
     if (isset($_SESSION['bonneMage']) && $_SESSION['bonneMage'] >= 3) {
@@ -131,19 +132,19 @@ include 'include/nav.php';
                 $_SESSION['difficulte'] = $difficulte;
                 switch ($difficulte) {
                     case 'f':
-                        $difficulte = 'facile';
+                        $difficulte = 'Facile';
                         break;
                     case 'm':
-                        $difficulte = 'moyenne';
+                        $difficulte = 'Moyenne';
                         break;
                     case 'd':
-                        $difficulte = 'difficile';
+                        $difficulte = 'Difficile';
                         break;
 
                 }
                 $categorie = $questionRandom['categorie'];
-                echo "<p> Difficulté de la question : $difficulte </p>";
-                echo "<p> Catégorie : $categorie </p>";
+                echo "<p style='font-weight : bold;'> Difficulté de la question : <span style='font-weight : normal;'>$difficulte</span> </p>" ;
+                echo "<p style='font-weight : bold;'> Catégorie : <span style='font-weight : normal;'>$categorie</span></p>";
                 echo "<p>$enonce</p>";
                 //  var_dump($enonce,$difficulte,$categorie);
                 shuffle($reponses);
@@ -158,7 +159,7 @@ include 'include/nav.php';
                 }
 
                 ?>
-                <input type="submit">
+                <input class="buttonEnvoyer" type="submit">
             </form>
 
         </div>
@@ -190,8 +191,8 @@ include 'include/nav.php';
 
                 }
                 $categorie = $questionRandom['categorie'];
-                echo "<p> Difficulté de la question : $difficulte </p>";
-                echo "<p> Catégorie : $categorie </p>";
+                echo "<p style='font-weight : bold;'> Difficulté de la question : <span style='font-weight : normal;'>$difficulte</span> </p>" ;
+                echo "<p style='font-weight : bold;'> Catégorie : <span style='font-weight : normal;'>$categorie</span></p>";
                 echo "<p>$enonce</p>";
                 shuffle($reponses);
                 foreach ($reponses as $reponse) {
@@ -204,14 +205,14 @@ include 'include/nav.php';
                     echo "<label style='padding-left : 8px;' for='$idReponse'> $enonceQuestion </label> <br>";
                 }
                 ?>
-                <input type="submit">
+                <input class="buttonEnvoyer" type="submit">
             </form>
         </div>
     </div>
     <?php
     if (isset($erreur)) {
         if ($erreur) {
-            echo "<p style='color:red'> Erreur </p>";
+            echo "<p style='color:red'> Erreur, vous n'avez pas choisi une réponse, veuillez recommencer </p>";
         }
     }
     if (isset($message)) {
@@ -219,6 +220,7 @@ include 'include/nav.php';
     }
 
     ?>
+    </div>
 </main>
 
 <?php include 'include/footer.php' ?>

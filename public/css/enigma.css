@@ -1,0 +1,32 @@
+.titre {
+    padding-left: 4px;
+    font-weight: bold;
+    font-size: x-large;
+    padding-bottom: 10px;
+    
+}
+.buttonEnvoyer{
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #355872;
+    border-radius: 12px;
+    color: white;
+   margin-bottom: 10px;
+}
+.buttonEnigma {
+    border: none;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.enigmaMain {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
