@@ -184,19 +184,17 @@
     }
 
     .panier-row{
-        margin-bottom: 20px;
-        gap:none;
-        border: 1px solid black;
-
-        
         grid-template-areas: 
         "image nom"
         "image desc"
-        "image prix-un"
         "qte prix";
 
         grid-template-columns: 45% 55%;
-        grid-template-rows: auto 1fr auto auto;
+        grid-template-rows: auto auto auto;
+    }
+
+    .panier-content{
+        border-top: 2px solid #c9a86a;
     }
 
     .panier-image-box{
@@ -211,6 +209,7 @@
 
     .panier-nom{
         grid-area: nom;
+        border-top:none;
     }
 
     .panier-desc{
@@ -219,15 +218,16 @@
 
         display: block;
         overflow-y: auto;
-        grid: desc;
+        grid-area: desc;
     }
 
     .panier-prix-unitaire{
-        grid-area: prix-un
+        display: none;
     }
 
     .panier-quantite{
         grid-area: qte;
+        border-left: none;
     }
 
     .panier-prix{
