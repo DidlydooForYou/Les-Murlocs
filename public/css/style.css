@@ -167,6 +167,12 @@ form *{
     justify-content:flex-end;
 }
 
+.coins-container-details{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+}
+
 .coins-container .coin-amount:last-of-type {
     margin-right: 0px;
 }
@@ -613,7 +619,7 @@ html, body {
         position: relative;
         margin:auto;
         margin-top: 8px;
-        margin-right: 0px;        
+        margin-right: 0px;       
     }
     /**/
 

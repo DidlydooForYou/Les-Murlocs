@@ -1,6 +1,5 @@
 <?php 
 include 'include/html_setup.php';
-
 require_once 'DAL/EnigmaDAL.php';
 
 doitEtreDeco();
