@@ -1,35 +1,47 @@
 .panier-Container{
-    border: 1px solid black;
+    
     margin: 10px;   
 }
 
 .panier-row{
-    gap: 1px;
-    background-color: black;
+    background-color: #355872;
+    border:3px solid #c9a86a;
+    color:white;
+    border-radius: 10px;
+
     display: grid;
     grid-auto-rows: auto;
+
+    margin-bottom: 10px;
+
     grid-template-columns: 7% minmax(0,1fr) 200px 200px 200px;
 }
 
 .panier-content{
-    background-color: #f7f8f0;
     padding: 20px;
-    margin: 1px;
     text-align: center;
+
+    border-left: 2px solid #c9a86a;
+
+    display: flex;
+    align-items: center;
 }
 
 .panier-title{
-    background-color: #f7f8f0;
     padding: 10px;
-    margin: 1px;
     font-weight: bold;
     text-align: center;
+
+    border-left: 2px solid #c9a86a;
+}
+
+.panier-title:first-child{
+    border-left:none;
 }
 
 .panier-image-box{
     grid-column: 1;
-    background-color: #f7f8f0;
-    margin: 1px;
+    margin: 4px;
     
     display: flex;
     align-items: center;
@@ -37,6 +49,10 @@
 }
 
 .panier-image{
+    background-color: white;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 10px;
+
     height: 75px;
     width: 100%;
     object-fit: contain;
@@ -148,6 +164,7 @@
 }
 
 .btn-cancel{
+    border:1px solid gray;
     background-color: #b3b3b3;
 }
 
