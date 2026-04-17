@@ -1,7 +1,7 @@
 <?php
     require_once '../../core/Database.php';
-    require_once '../php/initialization.php';
-    require_once '../php/Utilitaire.php';
+    require_once '../../core/initialization.php';
+    require_once '../../core/Utilitaire.php';
     require_once '../../DAL/PanierDAL.php';
 
     $connexion = Database::getConnexion();

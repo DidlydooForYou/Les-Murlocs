@@ -20,9 +20,6 @@ function changeItemQuantite(idJoueur, idItem, nouvelleQuantite){
         nouvelleQuantite = 99;
     }
 
-    let idTableau = "#Tableau_" + idItem;
-    let idPanel = "#Panel_" + idItem;
-
     $.ajax({
         url: 'scripts/ajax/ajax-panier-quantite.php',
         type: 'POST',
