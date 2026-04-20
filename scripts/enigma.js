@@ -23,3 +23,19 @@ function afficherMage(){
     }
     
 }
+function submitEnigma(){
+    const radios = document.getElementsByName("reponse");
+    let validation = false;
+    radios.forEach(radio => {
+        if (radio.checked)  {
+            validation = true;
+        }
+    });
+    if (validation){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
