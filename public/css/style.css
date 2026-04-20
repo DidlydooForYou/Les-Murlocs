@@ -143,6 +143,8 @@ form *{
     background-color: #f7f8f0;
     flex:1;
 
+    width:100%;
+
     border:5px solid #c9a86a; 
     border-top:none; 
     border-bottom:none;

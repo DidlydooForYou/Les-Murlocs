@@ -234,4 +234,33 @@
     .panier-prix{
         grid-area: prix;
     }
+
+    .confirmation-panel{
+        height: 50%;
+        width: 75%;
+    }
+
+    .panel-bottom{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        grid-template-areas: 
+        "panel-total panel-total"
+        "button1 button2";
+
+        justify-items: center;
+        align-items: center;
+    }
+
+    #panel-total{
+        grid-area: panel-total;
+    }
+
+    .panel-button:nth-of-type(1){
+        grid-area: button1;
+    }
+
+    .panel-button:nth-of-type(2){
+        grid-area: button2;
+    }
 }
