@@ -100,10 +100,9 @@ include 'include/header.php';
 include 'include/nav.php';
 ?>
 <link rel="stylesheet" href="public/css/enigma.css">
-<main class="main" style="padding-left : 4px">
-    <div class="enigmaMain">
-        <div class="titre">Bienvenue à Énigma ! </div>
-
+<main class="main">
+    <div class="enigma-container">
+        <div class="enigma-title">Bienvenue sur Énigma !</div>
         <?php
         $pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
         $pdv = $pdv['PointsDeVie'];
@@ -118,12 +117,11 @@ include 'include/nav.php';
                 <?php
                 if (!IS_MAGE) {
         
-                    echo "<button class='buttonEnigma' onclick='afficherMage()' style='background-color: lightblue;'>Devenir mage</button>";
+                    echo "<button class='buttonEnigma' onclick='afficherMage()'>Devenir mage</button>";
                 }
 
                 ?>
-                <button class="buttonEnigma" onclick="afficherDifficulté()"
-                    style="background-color: lightblue;">Répondre
+                <button class="buttonEnigma" onclick="afficherDifficulté()">Répondre
                     pour gagner de l'argent</button>
             </div>
             <div id="questionMage" style="<?php if (isset($continuation) && $continuation) {
