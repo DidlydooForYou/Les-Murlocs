@@ -23,6 +23,12 @@ function afficherMage(){
     }
     
 }
+function afficherStats(){
+    let divstat = document.getElementById("stats");
+    if (divstat.style.display == "none"){
+        divstat.style.display == "block";
+    }
+}
 function submitEnigma(){
     const radios = document.getElementsByName("reponse");
     let validation = false;

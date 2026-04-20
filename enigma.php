@@ -126,6 +126,7 @@ include 'include/nav.php';
                 }
 
                 ?>
+                <button class="buttonEnigma" onclick="afficherStats()" style="background-color: lightblue;"> Voir ses statistiques</button>
                 <button class="buttonEnigma" onclick="afficherDifficulté()"
                     style="background-color: lightblue;">Répondre
                     pour gagner de l'argent</button>
@@ -175,7 +176,7 @@ include 'include/nav.php';
                 </form>
 
             </div>
-            <div id="questionArgent" style="display: none;">
+            <div id="questionArgent" style="display: none;" id="stats">
                 <h3>Répondre à la question pour gagner de l'argent</h3>
                 <form action="enigma.php" method="POST" onsubmit="return submitEnigma()">
                     <input type="hidden" name="formType" value="argent">
@@ -247,6 +248,37 @@ include 'include/nav.php';
 
 
         ?>
+        <div style="display: none;">
+        <?php
+    require_once "core/Database.php";
+    $connexion = Database::getConnexion(); 
+    $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
+    if (count($stats) == 0){
+        echo "<p> Vous n'avez pas encore de statistiques </p>";
+    }else{
+        $bonneReponse = $stats['bonneReponse'];
+        $mauvaiseReponse = $stats['mauvaiseReponse'];
+        $bonneReponseDifficileAffile = $stats['bonneReponseDifficile'];
+        $questionFacile  = $stats['questionsFacile'];
+        $questionMoyenne = $stats['questionsMoyenne'];
+        $questionDifficile = $stats['questionsDifficile'];
+        $bonneReponseFacile = $stats['reponsesFacile'];
+        $bonneReponseMoyenne = $stats['reponsesMoyenne'];
+        $bonneReponseDifficile = $stats['reponsesFacile'];
+        echo "<p> Bonnes réponses :  $bonneReponse   </p>";
+        echo "<p> Mauvaises réponses $mauvaiseReponse </p>";
+        echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : $bonneReponseDifficileAffile</p>";
+        echo "<p> Questions faciles répondues : $questionFacile</p>";
+        echo "<p> Questions moyennes répondues : $questionMoyenne</p>";
+        echo "<p> Questions difficiles répondues : $questionDifficile </p>";
+        echo "<p> Bonnes réponses aux questions faciles : $bonneReponseFacile </p>";
+        echo "<p> Bonnes réponses aux questions moyennes : $bonneReponseMoyenne </p>";
+        echo "<p> Bonnes réponses aux questions difficiles : $bonneReponseDifficile </p>";
+
+    }
+
+     ?>
+     </div>
         <p id="remplir" style="color : red;"></p>
     </div>
 </main>
