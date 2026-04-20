@@ -3,9 +3,17 @@ require_once 'core/error-exception.php';
 require_once 'core/initialization.php';
 require_once 'DAL/Page.php';
 require_once 'core/Database.php';
+require_once 'DAL/InventoryDAL.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
+
+if (isset($_POST['vendre']) && isset($_POST['idItem'])) {
+    $connexion = Database::getConnexion();
+    InventoryDAL::vendreItem($connexion, $_POST['idItem'], $_SESSION['id']);
+    header("Location: inventaire.php");
+    exit;
+}
 ?>
 
 <?php 
@@ -21,21 +29,23 @@ doitEtreCo();
 
 <?php
 $inventaire = [];
+$groupes = [];
 
 if (isset($_SESSION['id'])) {
     $inventaire = Database::obtenir_inventaire_joueur($_SESSION['id']);
 }
 
-$groupes = [];
 foreach ($inventaire as $item) {
-    $groupes[$item['type']][] = $item;
+    if ($item['qtInventaire'] > 0) {
+        $groupes[$item['type']][] = $item;
+    }
 }
 ?>
 
 <main class="main">
     <h1 class="py-3 mt-3">Inventaire</h1>
 
-    <?php if (!empty($inventaire)) { ?>
+    <?php if (!empty($groupes)) { ?>
 
         <?php foreach ($groupes as $type => $items) { ?>
 
@@ -55,7 +65,7 @@ foreach ($inventaire as $item) {
 
                             <img src="<?= htmlspecialchars($item['photoItem']) ?>">
 
-                            <p><?= htmlspecialchars($item['description']) ?></p>
+                            <p class="description"><?= htmlspecialchars($item['description']) ?></p>
 
                             <?php if ($type === 'arme') { ?>
                                 <div class="label">Efficacité</div>
@@ -87,7 +97,10 @@ foreach ($inventaire as $item) {
                             <?php } ?>
                         </div>
 
-                        <div class="btn-vendre">Vendre</div>
+                        <form method="post">
+                            <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
+                            <button type="submit" name="vendre" class="btn btn-boot mt-auto">Vendre</button>
+                        </form>
 
                     </div>
 

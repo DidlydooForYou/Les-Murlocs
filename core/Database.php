@@ -298,7 +298,7 @@ class Database
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$idJoueur]);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC) ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     } catch (Exception $e) {
         return [];

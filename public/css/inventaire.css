@@ -12,7 +12,6 @@ body {
 }
 
 .main {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     background-color: transparent;
@@ -25,8 +24,8 @@ body {
 
 .carte-item {
     width: 260px;
-    background: #355c7d;
-    border: 2px solid #1f3f59;
+    background: #517189;
+    border: 2px solid #c9a86a;
     color: white;
     padding: 14px;
     box-sizing: border-box;
@@ -68,8 +67,8 @@ body {
 .btn-vendre {
     margin-top: 12px;
     padding: 8px;
-    background: #6c94b3;
-    border: 1px solid #1f3f59;
+    background: #517189;
+    border: 1px solid #c9a86a;
     color: white;
     border-radius: 8px;
     text-align: center;
@@ -83,4 +82,23 @@ body {
 .section-title {
     margin-top: 30px;
     margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+    .main{
+        padding:0px;
+    }
+
+    .vitrine{
+        gap: 10px;
+    }
+
+    .carte-item {
+        width: 45%;
+        padding:7px;
+    }
+
+    .description{
+        font-size: small;
+    }
 }
