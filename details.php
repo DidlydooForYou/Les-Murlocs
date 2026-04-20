@@ -11,6 +11,7 @@ $details = [];
 ?>
 
 <link rel="stylesheet" href="public/css/vitrine.css">
+<link rel="stylesheet" href="public/css/details.css">
 <Title>DarQuest - Détails</Title>
 
 
