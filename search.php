@@ -2,10 +2,9 @@
 require "core/Database.php";
 require_once 'DAL/VitrineDAL.php';
 require_once 'DAL/PanierDAL.php';
+require_once 'core/initialization.php';
 
 $pdo = Database::getConnexion();
-
-define("IS_AUTH", isset($_SESSION['id']));
 
 $search = "%" . strtolower($_GET['search'] ?? '') . "%";
 

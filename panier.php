@@ -33,8 +33,6 @@
 ?>
 
 <main id="main" class="main">
-    <h1> Panier </h1>
-
     <?php if($products == null) : ?>
     <div id="aucunItem"> Vous n'avez pas d'item dans votre panier </div>
 
