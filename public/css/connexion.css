@@ -75,6 +75,7 @@
     font-weight: bold;
 }
 
+
 .login-links {
     display: flex;
     justify-content: center;
@@ -122,12 +123,19 @@
 }
 
 .pfp-preview {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #c9a86a;
-    margin-top: 12px;
-    display: none;
+    margin-top: 10px;
+    border: 2px solid #c9a86a;
 }
+
+.image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+}
+
 
