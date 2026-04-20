@@ -117,7 +117,7 @@ include 'include/nav.php';
 
         ?>
         <div>
-            <div>
+            <div class="enigma-actions">
                 <?php
                 if (!IS_MAGE) {
         
@@ -164,7 +164,7 @@ include 'include/nav.php';
                     }
                     if (isset($attentionVie)) {
                         if ($attentionVie) {
-                            echo "<p><span class='attentionVie'> ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0 </span></p>";
+                            echo "<p><span class='attentionVie'>ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0</span></p>";
                         }
                     }
 

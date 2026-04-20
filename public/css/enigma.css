@@ -31,9 +31,10 @@
     align-items: center;
 }
 .attentionVie {
-    background-color:#fff000;
+    background-color:#ffee00;
     font-weight: bold;
     display: inline-block;
+    color: rgb(224, 42, 42);
 }
 
 .enigma-container{
@@ -69,28 +70,41 @@
 
 .buttonEnigma{
     background-color:#7AAACE;
+    border: 2px solid #355872;
+    align-self:center;
 }
 
-.buttonEnigma:hover, .buttonEnvoyer:hover{
+.buttonEnvoyer{
+    align-self:flex-end;
+}
+
+.buttonEnvoyer:hover{
     background: #ffd27f;
 }
 
+.buttonEnigma:hover{
+    background: #b4ccde;
+}
+
 #questionMage, #questionArgent{
-    background: #fffdf7;
-    border: 1px solid #d2c7a3;
+    background: #7AAACE;
+    border: 2px solid #b89a63;
     border-radius: 8px;
     padding: 15px;
     margin-top: 15px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    color:white;
 }
 
 label{
     cursor: pointer;
 }
 
-.attentionVie{
-    color: red;
-    font-weight: bold;
+.enigma-actions{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
 @media (max-width: 800px){
@@ -99,5 +113,9 @@ label{
     }
     .enigma-title{
         font-size: 22px;
+    }
+    .enigma-actions{
+        flex-direction: column;
+        align-items: center;
     }
 }
