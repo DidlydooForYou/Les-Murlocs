@@ -111,6 +111,10 @@ include 'include/nav.php';
             echo "<p>Félicitations, vous avez répondu à 3 bonnes réponses de mage, vous devenez mage !";
             $_SESSION['bonneMage'] = 0;
         }
+        if ($pdv == 0){
+            header('Location:mort.php');
+            exit;
+        }
 
         ?>
         <div>
