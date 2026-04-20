@@ -43,6 +43,14 @@ include "include/nav.php";
             $cartItems[$item['idItem']] = $item['qtPanier'];
         }
     }
+
+    $id = (int) $_GET['id'];
+    $details = VitrineDAL::selectById($connexion, $id);
+
+    if (!$details) {
+        header("Location: index.php");
+        exit;
+    }
     ?>
 
     <div class="container text-center">
@@ -106,7 +114,7 @@ include "include/nav.php";
                                     </div>
 
                                     <!--Prix de l'item-->
-                                    <div class="card-text price-outside">
+                                    <div class="card-text price-outside coins-container-details">
                                         <div id="tableau-total" class="coins-container">
                                             <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin.png">
                                             <span class="coin-amount"><?= $product['prixOr'] ?></span>

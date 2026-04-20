@@ -38,7 +38,7 @@
 
     <?php endif; ?>
 
-    <div class="navLinkContainer">
+    <div class="navLinkContainer" style="z-index: 9999;">
         <div class="dropdown navElement navLink">
             Paramètres
             <div class="dropdown-content-container">

@@ -1,6 +1,6 @@
 <?php
-    require_once '../../DAL/initialization.php';
     require_once '../../core/Database.php';
+    require_once '../../core/initialization.php';
     require_once '../../DAL/PanierDAL.php';
 
     $connexion = Database::getConnexion();

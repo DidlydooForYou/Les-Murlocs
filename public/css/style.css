@@ -141,7 +141,11 @@ form *{
 /* Main */
 .main{
     background-color: #f7f8f0;
-    flex:1
+    flex:1;
+
+    border:5px solid #c9a86a; 
+    border-top:none; 
+    border-bottom:none;
 }
 
 .button{
@@ -163,8 +167,15 @@ form *{
 
 .coins-container{
     display: flex;
+    justify-content: center;
     align-items: center;
     justify-content:flex-end;
+}
+
+.coins-container-details{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
 }
 
 .coins-container .coin-amount:last-of-type {
@@ -434,18 +445,20 @@ html, body {
 }
 
 .product-image {
-    max-width: 100%;
-    height: auto;
+    width:100%;
+    height: 100%;
     object-fit: contain;
     align-self:center;
     border-radius:12px;
     border:3px solid #7AAACE;
+    background-color:white;
 }
 
 .purchase-box {
     border-radius: 8px;
     background: #c9a86a;
     align-content:center;
+    height:100%;
 }
 
 .in-stock {
@@ -578,8 +591,6 @@ html, body {
     padding: 0;
 }
 
-
-
 @media (max-width: 800px) {
     body{
         min-width: none;
@@ -607,7 +618,7 @@ html, body {
         position: relative;
         margin:auto;
         margin-top: 8px;
-        margin-right: 0px;        
+        margin-right: 0px;       
     }
     /**/
 

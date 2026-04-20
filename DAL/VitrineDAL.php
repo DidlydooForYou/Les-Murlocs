@@ -25,7 +25,7 @@ class VitrineDAL{
         return $result;
     }
     public static function selectById(PDO $connexion, int $id): false|array{
-        $sql = "SELECT i.qttItem, i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.type , AVG(etoiles) as moyenne_etoiles, COUNT(etoiles), i.type as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where idItem = :id GROUP BY i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem";
+        $sql = "SELECT i.qttItem, i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.type , AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where i.idItem = :id GROUP BY i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem";
 
         $statement = $connexion->prepare($sql);
         
@@ -36,6 +36,20 @@ class VitrineDAL{
         $result = $statement->fetchAll();
 
         return $result;
+    }
+    public static function selectByLike(PDO $connexion, string $search) {
+        $sql = "SELECT i.*, COUNT(etoiles) as nb_reviews from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where nomItem like :search GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
+
+        $statement = $connexion->prepare($sql);
+
+        $statement->bindValue('search', $search, PDO::PARAM_STR);
+        
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+
+        return $result;
+
     }
     public static function selectByPrice(PDO $connexion, string $sortWay){
     if($sortWay === "price_asc"){

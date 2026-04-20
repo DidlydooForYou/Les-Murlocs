@@ -11,6 +11,20 @@ const SOURCE = ROOT . '/source';
 
 const URL_ROOT = '/';
 
+$dbConfig = [
+    "dbHost" => "127.0.0.1",
+    "dbName" => "DbDarquest",
+    "dbUser" => "root",
+    "dbPass" => "",
+    "dbPort" => 3306,
+    "dbParams" => [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_CASE => PDO::CASE_NATURAL,
+        PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ],
+];
+
 const CSS = URL_ROOT . 'css';
 const VITRINE_IMG = URL_ROOT . 'upload';
 

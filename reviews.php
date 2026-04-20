@@ -1,6 +1,6 @@
 <?php
 include "include/html_setup.php";
-
+require_once 'DAL/VitrineDAL.php';
 require_once 'DAL/ReviewDAL.php';
 
 $connexion = Database::getConnexion();
@@ -23,12 +23,13 @@ if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
 }
 
 $id = (int) $_GET['id'];
-$details = ReviewDAL::selectAllReviews($connexion, $id);
+$details = VitrineDAL::selectById($connexion, $id);
 
-if(!$details){
+if (!$details) {
     header("Location: index.php");
     exit;
 }
+
 
 
 include "include/header.php";
