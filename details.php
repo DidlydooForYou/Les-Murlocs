@@ -183,26 +183,33 @@ include "include/nav.php";
                                         <?php endif; ?>
 
                                         <?php if (IS_AUTH):  //  Si connecté ?>
-
-                                            <?php if ($isInCart): // Si item est dans le cart ?>
-                                                <div class="btn btn-boot mt-auto"
+                                            <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
+                                                <a href="enigma.php" class="btn btn-boot mt-auto"
                                                     style="background-color: #b3b3b3; display: flex; justify-content: center;">
-                                                    <div class="quantity-container">
-                                                        <button class="quantity-element quantity-button"
-                                                            onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
-                                                        <input id="input_<?= $product['idItem'] ?>"
-                                                            class="quantity-element quantity-input" type="number"
-                                                            value="<?= $itemQuantite ?>"
-                                                            onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
-                                                        <button class="quantity-element quantity-button"
-                                                            onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                                                    Devenez mage pour acheter le sort
+                                                </a>
+                                            <?php else: ?>
+
+                                                <?php if ($isInCart): // Si item est dans le cart ?>
+                                                    <div class="btn btn-boot mt-auto"
+                                                        style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                                        <div class="quantity-container">
+                                                            <button class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+                                                            <input id="input_<?= $product['idItem'] ?>"
+                                                                class="quantity-element quantity-input" type="number"
+                                                                value="<?= $itemQuantite ?>"
+                                                                onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
+                                                            <button class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
-                                            <?php else:          // Si item est pas dans le cart ?>
-                                                <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
-                                                    class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                                <?php else:          // Si item est pas dans le cart ?>
+                                                    <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
+                                                        class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                                <?php endif; ?>
                                             <?php endif; ?>
 
                                         <?php else:         //  Si pas connecté ?>
