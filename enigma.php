@@ -3,6 +3,7 @@ include 'include/html_setup.php';
 require_once 'DAL/EnigmaDAL.php';
 require_once 'DAL/JoueurDAL.php';
 doitEtreCo();
+doitEtreEnVie();
 
 $connexion = Database::getConnexion();
 
@@ -133,7 +134,7 @@ include 'include/nav.php';
 
             ?>">
                 <h3>Veuillez répondre à 3 questions pour devenir mage</h3>
-                <form action="enigma.php" method="POST">
+                <form action="enigma.php" onsubmit="return submitEnigma()" method="POST">
                     <input type="hidden" name="formType" value="mage">
                     <?php
 
@@ -172,7 +173,7 @@ include 'include/nav.php';
             </div>
             <div id="questionArgent" style="display: none;">
                 <h3>Répondre à la question pour gagner de l'argent</h3>
-                <form action="enigma.php" method="POST">
+                <form action="enigma.php" method="POST" onsubmit="return submitEnigma()">
                     <input type="hidden" name="formType" value="argent">
 
                     <?php
@@ -238,9 +239,11 @@ include 'include/nav.php';
         if (isset($messageBonus)) {
             echo "<p> $messageBonus </p>";
         }
+        
 
 
         ?>
+        <p id="remplir" style="color : red;"></p>
     </div>
 </main>
 

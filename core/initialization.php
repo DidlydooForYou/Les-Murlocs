@@ -32,6 +32,19 @@ function doitEtreCo(){
         exit;
     }
 }
+function doitEtreEnVie(){
+    if (IS_AUTH){
+        require_once "core/Database.php";
+        $connexion = Database::getConnexion();
+        require_once "DAL/JoueurDAL.php";
+        $point = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
+        $point = $point['PointsDeVie'];
+        if ($point == 0){
+            header('Location:mort.php');
+            exit;
+        }
+    }
+}
 
 const PASSWORD_SIZE = 8;
 const MATCH_PATTERN ='/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,20}$/';
