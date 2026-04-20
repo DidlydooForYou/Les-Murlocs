@@ -30,3 +30,8 @@
     justify-content: center;
     align-items: center;
 }
+.attentionVie {
+    background-color: chartreuse;
+    font-weight: bold;
+    display: inline-block;
+}

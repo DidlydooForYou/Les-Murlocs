@@ -55,6 +55,13 @@ class EnigmaDAL{
         $stmt->bindValue('difficulte', $difficulte, PDO::PARAM_STR);
         $stmt->execute();
     }
+    public static function nbrQuestionDifficile(PDO $connexion, $JoueursJeu_idJoueur){
+        $sql = "SELECT bonneReponseDifficile from statistiques where JoueursJeu_idJoueur = :JoueursJeu_idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('JoueursJeu_idJoueur', $JoueursJeu_idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
     
 ?>
