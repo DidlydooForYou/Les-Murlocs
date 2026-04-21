@@ -186,30 +186,27 @@ include "include/nav.php";
                                             <p class="out-of-stock">Rupture de stock</p>
                                         <?php endif; ?>
 
-                                        <?php if (IS_AUTH):  //  Si connecté ?>
+                                   <?php if (IS_AUTH):  //  Si connecté ?>
                                             <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
                                                 <a href="enigma.php" class="btn btn-boot mt-auto"
                                                     style="background-color: #b3b3b3; display: flex; justify-content: center;">
-                                                    <div class="quantity-container">
+                                                    Devenez mage pour acheter le sort
+                                                </a>
+                                            <?php else: ?>
 
-                                                        <button 
-                                                            class="quantity-element quantity-button"
-                                                            onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)"
-                                                        >
-                                                            -
-                                                        </button>
-                                                        <input id="input_<?= $product['idItem'] ?>"
-                                                            class="quantity-element quantity-input" 
-                                                            type="number"
-                                                            value="<?= $itemQuantite ?>"
-                                                            onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
-                                                        >
-                                                        <button 
-                                                            class="quantity-element quantity-button"
-                                                            onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)"
-                                                        >
-                                                            +
-                                                        </button>
+                                                <?php if ($isInCart): // Si item est dans le cart ?>
+                                                    <div class="btn btn-boot mt-auto"
+                                                        style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                                        <div class="quantity-container">
+                                                            <button class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+                                                            <input id="input_<?= $product['idItem'] ?>"
+                                                                class="quantity-element quantity-input" type="number"
+                                                                value="<?= $itemQuantite ?>"
+                                                                onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
+                                                            <button class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                                                        </div>
                                                     </div>
 
 
