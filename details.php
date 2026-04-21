@@ -190,26 +190,35 @@ include "include/nav.php";
                                             <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
                                                 <a href="enigma.php" class="btn btn-boot mt-auto"
                                                     style="background-color: #b3b3b3; display: flex; justify-content: center;">
-                                                    <div class="quantity-container">
 
-                                                        <button 
-                                                            class="quantity-element quantity-button"
-                                                            onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)"
-                                                        >
-                                                            -
-                                                        </button>
-                                                        <input id="input_<?= $product['idItem'] ?>"
-                                                            class="quantity-element quantity-input" 
-                                                            type="number"
-                                                            value="<?= $itemQuantite ?>"
-                                                            onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
-                                                        >
-                                                        <button 
-                                                            class="quantity-element quantity-button"
-                                                            onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)"
-                                                        >
-                                                            +
-                                                        </button>
+                                                    Devenez mage pour acheter le sort
+                                                </a>
+                                            <?php else: ?>
+
+                                                <?php if ($isInCart): // Si item est dans le cart ?>
+                                                    <div class="btn btn-boot mt-auto"
+                                                        style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                                        <div class="quantity-container">
+
+                                                            <button 
+                                                                class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)"
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <input id="input_<?= $product['idItem'] ?>"
+                                                                class="quantity-element quantity-input" 
+                                                                type="number"
+                                                                value="<?= $itemQuantite ?>"
+                                                                onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
+                                                            >
+                                                            <button 
+                                                                class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)"
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
                                                     </div>
 
 
