@@ -111,7 +111,7 @@ include 'include/nav.php';
             echo "<p>Félicitations, vous avez répondu à 3 bonnes réponses de mage, vous devenez mage !";
             $_SESSION['bonneMage'] = 0;
         }
-        if ($pdv == 0){
+        if ($pdv == 0) {
             header('Location:mort.php');
             exit;
         }
@@ -121,15 +121,17 @@ include 'include/nav.php';
             <div>
                 <?php
                 if (!IS_MAGE) {
-        
+
                     echo "<button class='buttonEnigma' onclick='afficherMage()' style='background-color: lightblue;'>Devenir mage</button>";
                 }
 
                 ?>
-                <button class="buttonEnigma" onclick="afficherStats()" style="background-color: lightblue;"> Voir ses statistiques</button>
+
                 <button class="buttonEnigma" onclick="afficherDifficulté()"
                     style="background-color: lightblue;">Répondre
                     pour gagner de l'argent</button>
+                <button class="buttonEnigma" onclick="afficherStats()" style="background-color: lightblue;"> Voir ses
+                    statistiques</button>
             </div>
             <div id="questionMage" style="<?php if (isset($continuation) && $continuation) {
                 echo "display : block;";
@@ -139,7 +141,7 @@ include 'include/nav.php';
 
             ?>">
                 <h3>Veuillez répondre à 3 questions pour devenir mage</h3>
-                <form action="enigma.php" onsubmit="return submitEnigma()" method="POST">
+                <form action="enigma.php" onsubmit="return submitEnigmaMagie()" method="POST">
                     <input type="hidden" name="formType" value="mage">
                     <?php
 
@@ -176,7 +178,7 @@ include 'include/nav.php';
                 </form>
 
             </div>
-            <div id="questionArgent" style="display: none;" id="stats">
+            <div id="questionArgent" style="display: none;">
                 <h3>Répondre à la question pour gagner de l'argent</h3>
                 <form action="enigma.php" method="POST" onsubmit="return submitEnigma()">
                     <input type="hidden" name="formType" value="argent">
@@ -196,15 +198,15 @@ include 'include/nav.php';
                     switch ($difficulte) {
                         case 'f':
                             $difficulte = 'facile';
-                            $pdv <=3 ? $attentionVie = true : $attentionVie = false;
+                            $pdv <= 3 ? $attentionVie = true : $attentionVie = false;
                             break;
                         case 'm':
                             $difficulte = 'moyenne';
-                           $pdv <=6 ? $attentionVie = true : $attentionVie = false;
+                            $pdv <= 6 ? $attentionVie = true : $attentionVie = false;
                             break;
                         case 'd':
                             $difficulte = 'difficile';
-                            $pdv <=10 ? $attentionVie = true : $attentionVie = false;
+                            $pdv <= 10 ? $attentionVie = true : $attentionVie = false;
                             break;
 
                     }
@@ -231,6 +233,38 @@ include 'include/nav.php';
                     <input class="buttonEnvoyer" type="submit">
                 </form>
             </div>
+            <div id="stats" style="display: none;">
+                <h3> Vos statistiques </h3>
+                <?php
+                require_once "core/Database.php";
+                $connexion = Database::getConnexion();
+                $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
+                if (count($stats) == 0) {
+                    echo "<p> Vous n'avez pas encore de statistiques </p>";
+                } else {
+                    $bonneReponse = $stats['bonneReponse'];
+                    $mauvaiseReponse = $stats['mauvaiseReponse'];
+                    $bonneReponseDifficileAffile = $stats['bonneReponseDifficile'];
+                    $questionFacile = $stats['questionsFacile'];
+                    $questionMoyenne = $stats['questionsMoyenne'];
+                    $questionDifficile = $stats['questionsDifficile'];
+                    $bonneReponseFacile = $stats['reponsesFacile'];
+                    $bonneReponseMoyenne = $stats['reponsesMoyenne'];
+                    $bonneReponseDifficile = $stats['reponsesFacile'];
+                    echo "<p> Bonnes réponses :  $bonneReponse   </p>";
+                    echo "<p> Mauvaises réponses $mauvaiseReponse </p>";
+                    echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " .  3- $bonneReponseDifficileAffile . " </p>";
+                    echo "<p> Questions faciles répondues : $questionFacile</p>";
+                    echo "<p> Questions moyennes répondues : $questionMoyenne</p>";
+                    echo "<p> Questions difficiles répondues : $questionDifficile </p>";
+                    echo "<p> Bonnes réponses aux questions faciles : $bonneReponseFacile </p>";
+                    echo "<p> Bonnes réponses aux questions moyennes : $bonneReponseMoyenne </p>";
+                    echo "<p> Bonnes réponses aux questions difficiles : $bonneReponseDifficile </p>";
+
+                }
+
+                ?>
+            </div>
         </div>
         <?php
         if (isset($erreur)) {
@@ -244,41 +278,11 @@ include 'include/nav.php';
         if (isset($messageBonus)) {
             echo "<p> $messageBonus </p>";
         }
-        
+
 
 
         ?>
-        <div style="display: none;">
-        <?php
-    require_once "core/Database.php";
-    $connexion = Database::getConnexion(); 
-    $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
-    if (count($stats) == 0){
-        echo "<p> Vous n'avez pas encore de statistiques </p>";
-    }else{
-        $bonneReponse = $stats['bonneReponse'];
-        $mauvaiseReponse = $stats['mauvaiseReponse'];
-        $bonneReponseDifficileAffile = $stats['bonneReponseDifficile'];
-        $questionFacile  = $stats['questionsFacile'];
-        $questionMoyenne = $stats['questionsMoyenne'];
-        $questionDifficile = $stats['questionsDifficile'];
-        $bonneReponseFacile = $stats['reponsesFacile'];
-        $bonneReponseMoyenne = $stats['reponsesMoyenne'];
-        $bonneReponseDifficile = $stats['reponsesFacile'];
-        echo "<p> Bonnes réponses :  $bonneReponse   </p>";
-        echo "<p> Mauvaises réponses $mauvaiseReponse </p>";
-        echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : $bonneReponseDifficileAffile</p>";
-        echo "<p> Questions faciles répondues : $questionFacile</p>";
-        echo "<p> Questions moyennes répondues : $questionMoyenne</p>";
-        echo "<p> Questions difficiles répondues : $questionDifficile </p>";
-        echo "<p> Bonnes réponses aux questions faciles : $bonneReponseFacile </p>";
-        echo "<p> Bonnes réponses aux questions moyennes : $bonneReponseMoyenne </p>";
-        echo "<p> Bonnes réponses aux questions difficiles : $bonneReponseDifficile </p>";
 
-    }
-
-     ?>
-     </div>
         <p id="remplir" style="color : red;"></p>
     </div>
 </main>
