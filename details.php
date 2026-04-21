@@ -131,10 +131,10 @@ include "include/nav.php";
                                     </div>
 
                                     <!--Description de l'item-->
-                                    <p class="card-text"><strong>Description </strong><br><?= $product['description'] ?></p>
+                                    <p class="card-text"><strong>Description : </strong><br><?= $product['description'] ?></p>
 
                                     <!-- Type de l'item -->
-                                    <p class="card-text"><strong>Type </strong> <?= $product['type'] ?></p>
+                                    <p class="card-text"><strong>Type : </strong><br> <?= $product['type'] ?></p>
 
                                     <?php
                                     if (!empty($_GET['id'])) {
@@ -145,18 +145,19 @@ include "include/nav.php";
                                     }
                                     ?>
 
+                                
                                     <?php if ($product['type'] == "arme"): ?>
-                                        <p class="card-text"><strong>Efficacite </strong> <?= $details['efficacite'] ?></p>
-                                        <p class="card-text"><strong>Genre arme </strong> <?= $details['genreArme'] ?></p>
+                                        <p class="card-text"><strong>Efficacite : </strong><br> <?= $details['efficacite'] ?></p>
+                                        <p class="card-text"><strong>Genre arme : </strong><br> <?= $details['genreArme'] ?></p>
                                     <?php elseif ($product['type'] == "potion"): ?>
-                                        <p class="card-text"><strong>Effet </strong> <?= $details['effet'] ?></p>
-                                        <p class="card-text"><strong>Durée </strong> <?= $details['duree'] ?></p>
+                                        <p class="card-text"><strong>Effet : </strong><br> <?= $details['effet'] ?></p>
+                                        <p class="card-text"><strong>Durée : </strong><br> <?= $details['duree'] ?></p>
                                     <?php elseif ($product['type'] == "armure"): ?>
-                                        <p class="card-text"><strong>Matière </strong> <?= $details['matiere'] ?></p>
-                                        <p class="card-text"><strong>Taille </strong> <?= $details['taille'] ?></p>
+                                        <p class="card-text"><strong>Matière : </strong><br> <?= $details['matiere'] ?></p>
+                                        <p class="card-text"><strong>Taille : </strong><br> <?= $details['taille'] ?></p>
                                     <?php elseif ($product['type'] == "sort"): ?>
-                                        <p class="card-text"><strong>Instantanée </strong> <?= $details['instantane'] ?></p>
-                                        <p class="card-text"><strong>Dommages </strong> <?= $details['dommage'] ?></p>
+                                        <p class="card-text"><strong>Instantanée : </strong><br> <?= $details['instantane'] ?></p>
+                                        <p class="card-text"><strong>Dommages : </strong><br> <?= $details['dommage'] ?></p>
 
                                     <?php endif ?>
 
@@ -186,9 +187,8 @@ include "include/nav.php";
                                         <?php endif; ?>
 
                                         <?php if (IS_AUTH):  //  Si connecté ?>
-
-                                            <?php if ($isInCart): // Si item est dans le cart ?>
-                                                <div class="btn btn-boot mt-auto"
+                                            <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
+                                                <a href="enigma.php" class="btn btn-boot mt-auto"
                                                     style="background-color: #b3b3b3; display: flex; justify-content: center;">
                                                     <div class="quantity-container">
 
@@ -211,12 +211,12 @@ include "include/nav.php";
                                                             +
                                                         </button>
                                                     </div>
-                                                </div>
 
 
-                                            <?php else:          // Si item est pas dans le cart ?>
-                                                <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
-                                                    class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                                <?php else:          // Si item est pas dans le cart ?>
+                                                    <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
+                                                        class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                                <?php endif; ?>
                                             <?php endif; ?>
 
                                         <?php else:         //  Si pas connecté ?>
