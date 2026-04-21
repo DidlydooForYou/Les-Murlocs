@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 include 'include/header.php';
 include 'include/nav.php';
 ?>
+<script src="scripts/enigma.js"></script>
 <link rel="stylesheet" href="public/css/enigma.css">
 <main class="main">
     <div class="enigma-container">
@@ -120,14 +121,14 @@ include 'include/nav.php';
             <div class="enigma-actions">
                 <?php
                 if (!IS_MAGE) {
-        
+
                     echo "<button class='buttonEnigma' onclick='afficherMage()'>Devenir mage</button>";
                 }
 
                 ?>
                 <button class="buttonEnigma" onclick="afficherDifficulté()">Répondre
                     pour gagner de l'argent</button>
-                <button class="buttonEnigma" onclick="afficherStats()" style="background-color: lightblue;"> Voir ses
+                <button class="buttonEnigma" onclick="afficherStats()"> Voir ses
                     statistiques</button>
             </div>
             <div id="questionMage" style="<?php if (isset($continuation) && $continuation) {
@@ -168,6 +169,9 @@ include 'include/nav.php';
                         if ($attentionVie) {
                             echo "<p><span class='attentionVie'>ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0</span></p>";
                         }
+                    }
+                    if (isset($message)) {
+                        echo "<p> $message </p>";
                     }
 
                     ?>
@@ -226,6 +230,9 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'> ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0 </span></p>";
                         }
                     }
+                    if (isset($message)) {
+                        echo "<p> $message </p>";
+                    }
                     ?>
                     <input class="buttonEnvoyer" type="submit">
                 </form>
@@ -236,7 +243,7 @@ include 'include/nav.php';
                 require_once "core/Database.php";
                 $connexion = Database::getConnexion();
                 $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
-                if (count($stats) == 0) {
+                if (!$stats || count($stats) == 0) {
                     echo "<p> Vous n'avez pas encore de statistiques </p>";
                 } else {
                     $bonneReponse = $stats['bonneReponse'];
@@ -250,7 +257,7 @@ include 'include/nav.php';
                     $bonneReponseDifficile = $stats['reponsesFacile'];
                     echo "<p> Bonnes réponses :  $bonneReponse   </p>";
                     echo "<p> Mauvaises réponses $mauvaiseReponse </p>";
-                    echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " .  3- $bonneReponseDifficileAffile . " </p>";
+                    echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " . 3 - $bonneReponseDifficileAffile . " </p>";
                     echo "<p> Questions faciles répondues : $questionFacile</p>";
                     echo "<p> Questions moyennes répondues : $questionMoyenne</p>";
                     echo "<p> Questions difficiles répondues : $questionDifficile </p>";
@@ -269,9 +276,6 @@ include 'include/nav.php';
                 echo "<p style='color:red'> Erreur, vous n'avez pas choisi une réponse, veuillez recommencer </p>";
             }
         }
-        if (isset($message)) {
-            echo "<p> $message </p>";
-        }
         if (isset($messageBonus)) {
             echo "<p> $messageBonus </p>";
         }
@@ -285,4 +289,3 @@ include 'include/nav.php';
 </main>
 
 <?php include 'include/footer.php' ?>
-<script src="scripts/enigma.js"></script>
