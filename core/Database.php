@@ -89,6 +89,22 @@ class Database
         }
     }
 
+    public static function obtenir_item(int $idItem){
+        $sql = "SELECT nomItem, qttItem FROM item WHERE idItem = :idItem";
+
+        $connexion = Database::getConnexion();
+
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue('idItem', $idItem, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $result = $stmt->fetch();
+
+        return $result;
+    }
+
     public static function obtenir_capital(int $idJoueur): array {
         $sql = "SELECT pieceOr, pieceArgent, pieceBronze
                 FROM joueursjeu
@@ -265,8 +281,8 @@ class Database
     return false;
 
 }
-    public static function ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin)
-    {
+public static function ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin)
+{
     if (!Database::nom_pris($nom)) {
         $retour = true;
 
@@ -282,10 +298,9 @@ class Database
         return $retour;
     }
     return false;
+}
 
-    }
-
-    public static function obtenir_inventaire_joueur($idJoueur){
+public static function obtenir_inventaire_joueur($idJoueur){
     try {
         $pdo = Database::getConnexion();
 
