@@ -100,10 +100,9 @@ include 'include/header.php';
 include 'include/nav.php';
 ?>
 <link rel="stylesheet" href="public/css/enigma.css">
-<main class="main" style="padding-left : 4px">
-    <div class="enigmaMain">
-        <div class="titre">Bienvenue à Énigma ! </div>
-
+<main class="main">
+    <div class="enigma-container">
+        <div class="enigma-title">Bienvenue sur Énigma !</div>
         <?php
         $pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
         $pdv = $pdv['PointsDeVie'];
@@ -118,17 +117,15 @@ include 'include/nav.php';
 
         ?>
         <div>
-            <div>
+            <div class="enigma-actions">
                 <?php
                 if (!IS_MAGE) {
-
-                    echo "<button class='buttonEnigma' onclick='afficherMage()' style='background-color: lightblue;'>Devenir mage</button>";
+        
+                    echo "<button class='buttonEnigma' onclick='afficherMage()'>Devenir mage</button>";
                 }
 
                 ?>
-
-                <button class="buttonEnigma" onclick="afficherDifficulté()"
-                    style="background-color: lightblue;">Répondre
+                <button class="buttonEnigma" onclick="afficherDifficulté()">Répondre
                     pour gagner de l'argent</button>
                 <button class="buttonEnigma" onclick="afficherStats()" style="background-color: lightblue;"> Voir ses
                     statistiques</button>
@@ -169,7 +166,7 @@ include 'include/nav.php';
                     }
                     if (isset($attentionVie)) {
                         if ($attentionVie) {
-                            echo "<p><span class='attentionVie'> ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0 </span></p>";
+                            echo "<p><span class='attentionVie'>ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0</span></p>";
                         }
                     }
 

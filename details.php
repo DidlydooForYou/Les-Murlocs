@@ -11,6 +11,7 @@ $details = [];
 ?>
 
 <link rel="stylesheet" href="public/css/vitrine.css">
+<link rel="stylesheet" href="public/css/details.css">
 <Title>DarQuest - Détails</Title>
 
 
@@ -130,10 +131,10 @@ include "include/nav.php";
                                     </div>
 
                                     <!--Description de l'item-->
-                                    <p class="card-text"><strong>Description </strong><br><?= $product['description'] ?></p>
+                                    <p class="card-text"><strong>Description : </strong><br><?= $product['description'] ?></p>
 
                                     <!-- Type de l'item -->
-                                    <p class="card-text"><strong>Type </strong> <?= $product['type'] ?></p>
+                                    <p class="card-text"><strong>Type : </strong><br> <?= $product['type'] ?></p>
 
                                     <?php
                                     if (!empty($_GET['id'])) {
@@ -144,18 +145,19 @@ include "include/nav.php";
                                     }
                                     ?>
 
+                                
                                     <?php if ($product['type'] == "arme"): ?>
-                                        <p class="card-text"><strong>Efficacite </strong> <?= $details['efficacite'] ?></p>
-                                        <p class="card-text"><strong>Genre arme </strong> <?= $details['genreArme'] ?></p>
+                                        <p class="card-text"><strong>Efficacite : </strong><br> <?= $details['efficacite'] ?></p>
+                                        <p class="card-text"><strong>Genre arme : </strong><br> <?= $details['genreArme'] ?></p>
                                     <?php elseif ($product['type'] == "potion"): ?>
-                                        <p class="card-text"><strong>Effet </strong> <?= $details['effet'] ?></p>
-                                        <p class="card-text"><strong>Durée </strong> <?= $details['duree'] ?></p>
+                                        <p class="card-text"><strong>Effet : </strong><br> <?= $details['effet'] ?></p>
+                                        <p class="card-text"><strong>Durée : </strong><br> <?= $details['duree'] ?></p>
                                     <?php elseif ($product['type'] == "armure"): ?>
-                                        <p class="card-text"><strong>Matière </strong> <?= $details['matiere'] ?></p>
-                                        <p class="card-text"><strong>Taille </strong> <?= $details['taille'] ?></p>
+                                        <p class="card-text"><strong>Matière : </strong><br> <?= $details['matiere'] ?></p>
+                                        <p class="card-text"><strong>Taille : </strong><br> <?= $details['taille'] ?></p>
                                     <?php elseif ($product['type'] == "sort"): ?>
-                                        <p class="card-text"><strong>Instantanée </strong> <?= $details['instantane'] ?></p>
-                                        <p class="card-text"><strong>Dommages </strong> <?= $details['dommage'] ?></p>
+                                        <p class="card-text"><strong>Instantanée : </strong><br> <?= $details['instantane'] ?></p>
+                                        <p class="card-text"><strong>Dommages : </strong><br> <?= $details['dommage'] ?></p>
 
                                     <?php endif ?>
 

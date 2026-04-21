@@ -143,6 +143,8 @@ form *{
     background-color: #f7f8f0;
     flex:1;
 
+    width:100%;
+
     border:5px solid #c9a86a; 
     border-top:none; 
     border-bottom:none;
@@ -257,10 +259,6 @@ html, body {
 
 .comment-input::placeholder {
     color: #aaa;
-}
-
-.card-title {
-    margin-bottom: 1rem;
 }
 
 .image-wrapper {
@@ -429,6 +427,11 @@ html, body {
 
 .product-details {
     padding-left: 20px;
+    flex: 1;
+}
+
+.product-details p{
+    height:100%;
 }
 
 .product-title {
@@ -442,6 +445,7 @@ html, body {
     gap: 10px;
     font-size: 1.4rem;
     font-weight: bold;
+    margin-bottom: 12px;
 }
 
 .product-image {
@@ -457,6 +461,7 @@ html, body {
 .purchase-box {
     border-radius: 8px;
     background: #c9a86a;
+    border:3px solid #b89a63;
     align-content:center;
     height:100%;
 }
@@ -536,7 +541,6 @@ html, body {
     border-radius: 4px;
     height: 28px;         
 }
-
 
 /* end details */
 

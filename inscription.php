@@ -128,26 +128,25 @@ include 'include/nav.php';
                 <label for="email">Adresse courriel : </label>
                 <input type="email" id="email" name="email" required minlength="6" maxlength="254">
                 <br>
-                <label for="alias">Alias :</label>
+                <label for="alias">Alias : </label>
                 <input type="text" name="alias" id="alias" required minlength="2" maxlength="50">
                 <br>
                 <label for="mdp">Mot de passe : </label>
                 <input type="password" name="mdp" id="mdp" required minlength="8" maxlength="50">
                 <br>
-                <label for="mdpConfirm">Confirmer le mot de passe :</label>
+                <label for="mdpConfirm">Confirmer le mot de passe : </label>
                 <input type="password" name="mdpConfirm" id="mdpConfirm" required minlength="8" maxlength="50">
                 <br>
-                <label for="url">Image :</label>
+                <label for="url">Image : </label>
 
                 <label for="url" class="upload-btn">Choisir une image</label>
                 <input type="file" id="url" name="url" accept="image/*">
 
                 <div class="file-name" id="file-name">Aucune image sélectionnée</div>
+                <div class="image-section">
+                    <img id="pfp-preview" class="pfp-preview" style="display:none;">
+                </div>
 
-                <img id="pfp-preview" class="pfp-preview" src="#" alt="Preview">
-
-                <br>
-                <br>
                 <input type="submit" value="S'inscrire">
                 <span id="erreur" style="color: red;"></span>
             </form>
@@ -169,5 +168,18 @@ include 'include/nav.php';
 <?php include 'include/footer.php' ?>
 
 <script src="scripts/inscriptionValidation.js"></script>
+<script>
+    document.getElementById("url").addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("pfp-preview");
+        const fileName = document.getElementById("file-name");
+
+        if (!file) return;
+
+        fileName.textContent = "";
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    });
+</script>
 
 </html>
