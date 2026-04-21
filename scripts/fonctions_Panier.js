@@ -107,7 +107,7 @@ function acheterPanier(idJoueur, prixTotal){
                 localRefresh();
 
             } else {
-                alert("Erreur: Il vous manque " + data.error + " pièces");
+                alert(data.error);
             }
             
             

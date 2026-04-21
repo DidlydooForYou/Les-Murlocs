@@ -55,5 +55,26 @@ class PanierDAL{
 
         return $result;
     }
+
+    public static function stocks_Insuffisants(PDO $connexion, int $idJoueur): bool|array{
+        $panier= PanierDAL::selectByUser($connexion, $idJoueur);
+
+        $tooMany = array();
+
+        foreach($panier as $itemPanier){
+            $itemData = Database::obtenir_item($itemPanier['idItem']);
+
+            if($itemData['qttItem'] < $itemPanier['qtPanier']){
+                $manqueItem = $itemPanier['qtPanier'] - $itemData['qttItem'];
+                $tooMany[] = $manqueItem." × ".$itemData['nomItem'];
+            }
+        }
+
+        if(count($tooMany) > 0){
+            return $tooMany;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
