@@ -119,7 +119,11 @@ include 'include/nav.php';
         ?>
         <div>
             <div class="enigma-actions">
+                
                 <?php
+                   if (isset($message)) {
+                        echo "<div> $message </div> <br>";
+                    }
                 if (!IS_MAGE) {
 
                     echo "<button class='buttonEnigma' onclick='afficherMage()'>Devenir mage</button>";
@@ -170,9 +174,7 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'>ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0</span></p>";
                         }
                     }
-                    if (isset($message)) {
-                        echo "<p> $message </p>";
-                    }
+                    
 
                     ?>
                     <input class="buttonEnvoyer" type="submit">
@@ -230,9 +232,7 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'> ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0 </span></p>";
                         }
                     }
-                    if (isset($message)) {
-                        echo "<p> $message </p>";
-                    }
+                 
                     ?>
                     <input class="buttonEnvoyer" type="submit">
                 </form>
