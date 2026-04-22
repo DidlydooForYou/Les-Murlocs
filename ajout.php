@@ -1,5 +1,5 @@
 <?php
-include 'php/php_setup.php';
+include 'include/php_setup.php';
 
 if (!IS_ADMIN) {
     header('Location:accesRefuse.php');

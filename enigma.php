@@ -88,7 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
 }
-
+ $pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
+        $pdv = $pdv['PointsDeVie'];
+  if ($pdv == 0) {
+            header('Location:mort.php');
+            exit;
+        }
 
 ?>
 
@@ -111,10 +116,6 @@ include 'include/nav.php';
         if (isset($_SESSION['bonneMage']) && $_SESSION['bonneMage'] >= 3) {
             echo "<p>Félicitations, vous avez répondu à 3 bonnes réponses de mage, vous devenez mage !";
             $_SESSION['bonneMage'] = 0;
-        }
-        if ($pdv == 0) {
-            header('Location:mort.php');
-            exit;
         }
 
         ?>
