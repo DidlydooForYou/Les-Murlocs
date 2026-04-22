@@ -49,10 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
             $chemin = "public/images/profilBase.webp";
         } else if (
-            $_FILES['url']['type'] == "image/jpeg" ||
-            $_FILES['url']['type'] == "image/png" ||
-            $_FILES['url']['type'] == "image/jpg" ||
-            $_FILES['url']['type'] == "image/webp"
+            $_FILES['url']['type'] == "image/avif"
+            //$_FILES['url']['type'] == "image/jpeg" ||
+            //$_FILES['url']['type'] == "image/png" ||
+            //$_FILES['url']['type'] == "image/jpg" ||
+            //$_FILES['url']['type'] == "image/webp"
         ) {
 
             $repertoire = 'public/images/';
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $extension = $_FILES['url']['type'];
 
             if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
-
+                /*
                 switch ($extension) {
                     case 'image/jpeg':
                     case 'image/jpg':
@@ -79,6 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 imageavif($image, $cheminAvif, 90);
                 unlink($chemin);
                 $chemin = $cheminAvif;
+                */
+                
 
             } else {
                 $validite = false;
@@ -140,7 +143,7 @@ include 'include/nav.php';
                 <label for="url">Image : </label>
 
                 <label for="url" class="upload-btn">Choisir une image</label>
-                <input type="file" id="url" name="url" accept="image/*">
+                <input type="file" id="url" name="url" accept=".avif,image/avif">
 
                 <div class="file-name" id="file-name">Aucune image sélectionnée</div>
                 <div class="image-section">
