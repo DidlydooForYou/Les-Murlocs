@@ -4,6 +4,7 @@ require_once "core/initialization.php";
 require_once 'DAL/VitrineDAL.php';
 require_once 'DAL/PanierDAL.php';
 require_once 'core/Database.php';
+include_once 'include/php_setup.php';
 $connexion = Database::getConnexion();
 
 if (!empty($_GET['sortPrice'])) {

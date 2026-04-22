@@ -1,5 +1,5 @@
 <?php
-include 'php/html_setup.php';
+include 'php/php_setup.php';
 
 if (!IS_ADMIN) {
     header('Location:accesRefuse.php');
@@ -228,12 +228,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 }
 ?>
-<?php include 'include/html_setup.php'; ?>
+
 
 <link rel="stylesheet" href="public/css/enigma.css">
 <title>DarQuest - Ajout</title>
 
 <?php
+include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>

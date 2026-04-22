@@ -17,12 +17,13 @@ if (isset($_POST['vendre']) && isset($_POST['idItem'])) {
 ?>
 
 <?php 
-    include "include/html_setup.php";
+    include "include/php_setup.php";
 ?>
 
 <link rel="stylesheet" href="public/css/inventaire.css">
 
 <?php 
+    include "include/html_setup.php";
     include "include/header.php"; 
     include "include/nav.php";
 ?>

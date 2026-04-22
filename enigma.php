@@ -1,5 +1,5 @@
 <?php
-include 'include/html_setup.php';
+include 'include/php_setup.php';
 require_once 'DAL/EnigmaDAL.php';
 require_once 'DAL/JoueurDAL.php';
 doitEtreCo();
@@ -96,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 <title>DarQuest - Énigma</title>
 
 <?php
+include 'include/html_setup.php'; 
 include 'include/header.php';
 include 'include/nav.php';
 ?>

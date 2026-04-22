@@ -1,5 +1,5 @@
 <?php
-include "include/html_setup.php";
+include "include/php_setup.php";
 
 require_once 'DAL/VitrineDAL.php';
 require_once 'DAL/PanierDAL.php';
@@ -17,6 +17,7 @@ $details = [];
 
 
 <?php
+include 'include/html_setup.php';
 include "include/header.php";
 include "include/nav.php";
 ?>

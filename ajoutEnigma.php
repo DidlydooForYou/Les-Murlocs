@@ -1,5 +1,5 @@
 <?php
-include 'include/html_setup.php';
+include 'include/php_setup.php';
 require_once 'DAL/EnigmaDAL.php';
 
 if (!IS_ADMIN) {
@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['type'] === "formEnigme") {
 <title>DarQuest - Ajout Énigma</title>
 
 <?php
+include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>

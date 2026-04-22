@@ -1,5 +1,5 @@
 <?php 
-    include 'include/html_setup.php';
+    include 'include/php_setup.php';
     require_once 'DAL/PanierDAL.php';
 
     $connexion = Database::getConnexion();
@@ -28,6 +28,7 @@
 <title>DarQuest - Panier</title>
 
 <?php 
+    include 'include/html_setup.php';
     include 'include/header.php';
     include 'include/nav.php'; 
 ?>

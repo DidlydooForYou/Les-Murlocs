@@ -1,11 +1,12 @@
 <?php
-    include 'include/html_setup.php';
+    include 'include/php_setup.php';
     doitEtreCo();
 ?>
 
 <title>DarQuest - Mort</title>
 
 <?php 
+    include 'include/html_setup.php';
     include 'include/header.php';
     include 'include/nav.php'; 
 ?>

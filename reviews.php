@@ -1,5 +1,5 @@
 <?php
-include "include/html_setup.php";
+include "include/php_setup.php";
 require_once 'DAL/VitrineDAL.php';
 require_once 'DAL/ReviewDAL.php';
 
@@ -32,7 +32,7 @@ if (!$details) {
 }
 
 
-
+include "include/html_setup.php";
 include "include/header.php";
 include "include/nav.php";
 ?>
