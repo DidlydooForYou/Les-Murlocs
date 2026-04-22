@@ -4,11 +4,11 @@ class Database
 {
     public static function getConnexion(): PDO {
         $dbConfig = [
-            "dbHost" => "127.0.0.1",
-            "dbName" => "DbDarquest",
-            "dbUser" => "root",
-            "dbPass" => "",
-            "dbPort" => 3307,
+            "dbHost" => "158.69.48.109",
+            "dbName" => "dbdarquest13",
+            "dbUser" => "equipe13",
+            "dbPass" => "x7ad6a84",
+            "dbPort" => 3306,
             "dbParams" => [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_CASE => PDO::CASE_NATURAL,
