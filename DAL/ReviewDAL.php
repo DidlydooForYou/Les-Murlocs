@@ -72,4 +72,16 @@ class ReviewDAL
         $stmt->bindValue(':user', $idJoueur, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    public static function deleteReview(PDO $connexion, int $idItem, int $idJoueur){
+        $sql = "DELETE FROM evaluations where Item_idItem = :item AND JoueursJeu_idJoueur = :user";
+
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue(':item', $idItem, PDO::PARAM_INT);
+        
+        $stmt->bindValue(':user', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
+    }
 }

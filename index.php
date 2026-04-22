@@ -57,7 +57,7 @@ include 'include/nav.php';
         </select>
 
         <select id="sortCatego" name="sortCatego" class="search-sort-element form-select sort-element">
-            <option value="" hidden>Trier par catégorie</option>
+            <option value="" hidden>Filtrer par catégorie</option>
             <option value="sorts">Sorts</option>
             <option value="armors">Armures</option>
             <option value="weapons">Armes</option>
