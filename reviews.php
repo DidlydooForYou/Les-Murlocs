@@ -5,19 +5,20 @@ require_once 'DAL/ReviewDAL.php';
 
 $connexion = Database::getConnexion();
 
+$idItem = $_GET['id'];
+$idJoueur = $_SESSION['id'];
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
     $comment = $_POST['comment'];
     $stars = $_POST['stars'];
-    $idItem = $_GET['id'];
-    $idJoueur = $_SESSION['id'];
 
     ReviewDAL::insertReview($connexion, $idItem, $idJoueur, $comment, $stars);
-
     header("Location: reviews.php?id=" . $idItem);
     exit;
 }
 
-if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: index.php");
     exit;
 }
@@ -43,37 +44,41 @@ include "include/nav.php";
     <div class="container">
         <div class="reviews-wrapper">
             <br>
-            <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $id  ?>">
+            <?php if (!ReviewDAL::userHasReview($connexion, $idItem, $idJoueur)): ?>
+                <form class="commentBarContainer" method="POST" action="reviews.php?id=<?= $id ?>">
 
-                <?php if(IS_AUTH) : ?>
-                <div class="comment-top">
-                    <input name="comment" class="comment-input" type="text" placeholder="Entrer un commentaire"
-                        required>
+                    <?php if (IS_AUTH): ?>
+                        <div class="comment-top">
+                            <input name="comment" class="comment-input" type="text" placeholder="Entrer un commentaire"
+                                required>
 
-                    <div class="star-rating">
-                        <input type="radio" name="stars" id="star5" value="5"><label for="star5">★</label>
-                        <input type="radio" name="stars" id="star4" value="4"><label for="star4">★</label>
-                        <input type="radio" name="stars" id="star3" value="3"><label for="star3">★</label>
-                        <input type="radio" name="stars" id="star2" value="2"><label for="star2">★</label>
-                        <input type="radio" name="stars" id="star1" value="1"><label for="star1">★</label>
-                        <input type="radio" name="stars" id="star0" value="0" checked><label for="star0" hidden>☆</label>
-                    </div>
-                </div>
+                            <div class="star-rating">
+                                <input type="radio" name="stars" id="star5" value="5"><label for="star5">★</label>
+                                <input type="radio" name="stars" id="star4" value="4"><label for="star4">★</label>
+                                <input type="radio" name="stars" id="star3" value="3"><label for="star3">★</label>
+                                <input type="radio" name="stars" id="star2" value="2"><label for="star2">★</label>
+                                <input type="radio" name="stars" id="star1" value="1"><label for="star1">★</label>
+                                <input type="radio" name="stars" id="star0" value="0" checked><label for="star0"
+                                    hidden>☆</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-boot send-btn">Envoyer</button>
+                    <?php else: ?>
+                        <a href="connexion.php" class="btn btn-boot mt-auto"
+                            style="background-color: #b3b3b3; display: flex; justify-content: center;">Connectez-vous pour
+                            envoyer un message</a>
+                    <?php endif; ?>
 
-                <button type="submit" class="btn btn-boot send-btn">Envoyer</button>
-                <?php else : ?>
-                <a href="connexion.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">Connectez-vous pour envoyer un message</a>
-                <?php endif; ?>
-
-            </form>
+                </form>
+            <?php endif ?>
 
             <?php
-                $products = [];
+            $products = [];
 
-                if (!empty($_GET['id'])) {
-                    $id = $_GET['id'];
-                    $products = ReviewDAL::selectAllReviews($connexion, $id);
-                }
+            if (!empty($_GET['id'])) {
+                $id = $_GET['id'];
+                $products = ReviewDAL::selectAllReviews($connexion, $id);
+            }
             ?>
 
             <div class="container">
@@ -83,7 +88,8 @@ include "include/nav.php";
                             <div class="review-header">
 
                                 <div class="user-info">
-                                    <img src="<?= $product['photoProfil'] ?>" class="profile" alt="<?= $product['alias'] ?>">
+                                    <img src="<?= $product['photoProfil'] ?>" class="profile"
+                                        alt="<?= $product['alias'] ?>">
                                     <div class="alias"><?= $product['alias'] ?></div>
                                 </div>
 
@@ -101,6 +107,11 @@ include "include/nav.php";
 
 
                             <div class="comment"><?= $product['commentaire'] ?></div>
+
+                            <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id']): ?>
+                                <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $_SESSION['id'] ?>" class="edit-btn">✎
+                                    Modifier</a>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
