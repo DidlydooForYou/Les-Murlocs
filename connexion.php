@@ -2,6 +2,7 @@
 require_once 'DAL/EnigmaDAL.php';
 require_once 'core/initialization.php';
 require_once 'core/Database.php';
+include 'include/php_setup.php';
 @session_start();
 doitEtreDeco();
 $erreur = false;
@@ -30,12 +31,15 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     }
 }
 ?>
-<?php include 'include/html_setup.php'; ?>
+
 
 <link rel="stylesheet" href="public/css/connexion.css">
 <title>DarQuest - Connexion</title>
-<?php include 'include/header.php'; ?>
-<?php include 'include/nav.php'; ?>
+<?php 
+include 'include/html_setup.php';
+include 'include/header.php';
+include 'include/nav.php';
+?>
 
 <main class="main">
     <div class="container">

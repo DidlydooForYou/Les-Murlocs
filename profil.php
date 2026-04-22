@@ -1,5 +1,5 @@
 <?php 
-    include 'include/html_setup.php';
+    include 'include/php_setup.php';
     include_once "DAL/EnigmaDAL.php";
     doitEtreCo();
 ?>
@@ -7,6 +7,7 @@
 <title>DarQuest - Profil</title>
 
 <?php 
+    include 'include/html_setup.php';
     include 'include/header.php';
     include 'include/nav.php'; 
 ?>

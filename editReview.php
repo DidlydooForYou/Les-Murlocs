@@ -1,5 +1,5 @@
 <?php
-include "include/html_setup.php";
+include "include/php_setup.php";
 require_once 'DAL/ReviewDAL.php';
 
 if (!IS_AUTH) {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: reviews.php?id=$idItem");
     exit;
 }
-
+include 'include/html_setup.php';
 include "include/header.php";
 include "include/nav.php";
 

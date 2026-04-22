@@ -1,5 +1,5 @@
 <?php
-include 'include/html_setup.php';
+include 'include/php_setup.php';
 require_once 'DAL/EnigmaDAL.php';
 
 if (!IS_ADMIN) {
@@ -27,10 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['type'] === "formEnigme") {
         }
 
         $correctIndex = 1;
-        if ($_POST['categorie'] == "magie"){
+        if ($_POST['categorie'] == "magie") {
             $difficulte = 'd';
-        }
-        else {
+        } else {
             $difficulte = $_POST['difficulte'];
         }
 
@@ -43,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['type'] === "formEnigme") {
             $correctIndex
         );
 
-        echo "<p style='color:green;'>Énigme ajoutée avec succès!</p>";
+        $successMessage = "Énigme ajoutée avec succès!";
     }
 }
 
@@ -53,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['type'] === "formEnigme") {
 <title>DarQuest - Ajout Énigma</title>
 
 <?php
+include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>
@@ -67,7 +67,7 @@ include 'include/nav.php';
             style="display: none; padding: 4px;">
             <input type="hidden" name="type" value="formEnigme">
             <h2>Ajouter une énigme</h2>
-            <label for="enonce">Énoncé : </label> <br>
+            <label for="enonce">Énoncé : </label>
             <textarea name="enonce" id="enonce" autofocus cols="40" rows="10" style="resize : none;"
                 required></textarea><br>
             <label for="categorie">Catégorie :</label>
@@ -80,7 +80,7 @@ include 'include/nav.php';
                 <option value="magie">Magie</option>
                 <option value="monde">Monde</option>
             </select><br>
-            <label>Réponses :</label><br>
+            <label>Réponses :</label>
 
             <div class="reponse-block">
                 <input type="text" name="correct" placeholder="Bonne réponse" required>
@@ -98,60 +98,21 @@ include 'include/nav.php';
                 <input type="text" name="faux[]" placeholder="Mauvaise réponse 3" required>
             </div><br>
 
-            <p>Difficulté : </p>
-            <label for="facile"> Facile </label> 
+            <label>Difficulté : </label>
+            <label for="facile"> Facile </label>
             <input type="radio" id="facile" name="difficulte" value="f" checked>
-            <label for="moyenne">Moyenne </label> 
+            <label for="moyenne">Moyenne </label>
             <input type="radio" id="moyenne" name="difficulte" value="m">
-            <label for="difficile">Difficile </label> 
-            <input type="radio" id="difficile" name="difficulte" value="d"><br>
+            <label for="difficile">Difficile </label>
+            <input type="radio" id="difficile" name="difficulte" value="d"><br><br>
             <input type="submit" value="Ajouter">
         </form>
     </div>
-
-    <form action="ajoutEnigma.php" method="POST" id="formEnigme" enctype="multipart/form-data"
-        style="display: none; padding: 4px;">
-        <input type="hidden" name="type" value="formEnigme">
-        <h2>Ajouter une énigme</h2>
-        <label for="enonce">Énoncé : </label> <br>
-        <textarea name="enonce" id="enonce" autofocus cols="40" rows="10" style="resize : none;"
-            required></textarea><br>
-        <label for="categorie">Catégorie :</label>
-        <select id="categorie" name="categorie" required>
-            <option value="" disabled selected>Choisir une catégorie</option>
-            <option value="armure">Armure</option>
-            <option value="arme">Arme</option>
-            <option value="potion">Potion</option>
-            <option value="magie">Magie</option>
-            <option value="monde">Monde</option>
-        </select><br>
-        <label>Réponses :</label><br>
-
-        <div class="reponse-block">
-            <input type="text" name="correct" placeholder="Bonne réponse" required>
-        </div><br>
-
-        <div class="reponse-block">
-            <input type="text" name="faux[]" placeholder="Mauvaise réponse 1" required>
-        </div><br>
-
-        <div class="reponse-block">
-            <input type="text" name="faux[]" placeholder="Mauvaise réponse 2" required>
-        </div> <br>
-
-        <div class="reponse-block">
-            <input type="text" name="faux[]" placeholder="Mauvaise réponse 3" required>
-        </div><br>
-
-        <p>Difficulté ?</p>
-        <input type="radio" id="facile" name="difficulte" value="f" checked>
-        <label for="facile"> Facile </label> <br>
-        <input type="radio" id="moyenne" name="difficulte" value="m">
-        <label for="moyenne">Moyenne </label> <br>
-        <input type="radio" id="difficile" name="difficulte" value="d">
-        <label for="difficile">Difficile </label> <br>
-        <input type="submit" value="Ajouter">
-    </form>
+    <?php if (!empty($successMessage)): ?>
+        <p class="success-message">
+            <?= $successMessage ?>
+        </p>
+    <?php endif; ?>
 </main>
 
 <script>

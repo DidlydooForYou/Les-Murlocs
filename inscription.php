@@ -1,5 +1,5 @@
 <?php
-include 'include/html_setup.php';
+include 'include/php_setup.php';
 doitEtreDeco();
 
 
@@ -113,6 +113,7 @@ if (isset($validite)) {
 <title>DarQuest - Inscription</title>
 
 <?php
+include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>
