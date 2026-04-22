@@ -8,7 +8,7 @@ class Database
             "dbName" => "DbDarquest",
             "dbUser" => "root",
             "dbPass" => "",
-            "dbPort" => 3306,
+            "dbPort" => 3307,
             "dbParams" => [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_CASE => PDO::CASE_NATURAL,
