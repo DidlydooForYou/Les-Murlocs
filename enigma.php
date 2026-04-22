@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 include 'include/header.php';
 include 'include/nav.php';
 ?>
+<script src="scripts/enigma.js"></script>
 <link rel="stylesheet" href="public/css/enigma.css">
 <main class="main">
     <div class="enigma-container">
@@ -110,7 +111,7 @@ include 'include/nav.php';
             echo "<p>Félicitations, vous avez répondu à 3 bonnes réponses de mage, vous devenez mage !";
             $_SESSION['bonneMage'] = 0;
         }
-        if ($pdv == 0){
+        if ($pdv == 0) {
             header('Location:mort.php');
             exit;
         }
@@ -118,15 +119,21 @@ include 'include/nav.php';
         ?>
         <div>
             <div class="enigma-actions">
+                
                 <?php
+                   if (isset($message)) {
+                        echo "<div> $message </div> <br>";
+                    }
                 if (!IS_MAGE) {
-        
+
                     echo "<button class='buttonEnigma' onclick='afficherMage()'>Devenir mage</button>";
                 }
 
                 ?>
                 <button class="buttonEnigma" onclick="afficherDifficulté()">Répondre
                     pour gagner de l'argent</button>
+                <button class="buttonEnigma" onclick="afficherStats()"> Voir ses
+                    statistiques</button>
             </div>
             <div id="questionMage" style="<?php if (isset($continuation) && $continuation) {
                 echo "display : block;";
@@ -136,7 +143,7 @@ include 'include/nav.php';
 
             ?>">
                 <h3>Veuillez répondre à 3 questions pour devenir mage</h3>
-                <form action="enigma.php" onsubmit="return submitEnigma()" method="POST">
+                <form action="enigma.php" onsubmit="return submitEnigmaMagie()" method="POST">
                     <input type="hidden" name="formType" value="mage">
                     <?php
 
@@ -167,6 +174,7 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'>ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0</span></p>";
                         }
                     }
+                    
 
                     ?>
                     <input class="buttonEnvoyer" type="submit">
@@ -193,15 +201,15 @@ include 'include/nav.php';
                     switch ($difficulte) {
                         case 'f':
                             $difficulte = 'facile';
-                            $pdv <=3 ? $attentionVie = true : $attentionVie = false;
+                            $pdv <= 3 ? $attentionVie = true : $attentionVie = false;
                             break;
                         case 'm':
                             $difficulte = 'moyenne';
-                           $pdv <=6 ? $attentionVie = true : $attentionVie = false;
+                            $pdv <= 6 ? $attentionVie = true : $attentionVie = false;
                             break;
                         case 'd':
                             $difficulte = 'difficile';
-                            $pdv <=10 ? $attentionVie = true : $attentionVie = false;
+                            $pdv <= 10 ? $attentionVie = true : $attentionVie = false;
                             break;
 
                     }
@@ -224,9 +232,42 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'> ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0 </span></p>";
                         }
                     }
+                 
                     ?>
                     <input class="buttonEnvoyer" type="submit">
                 </form>
+            </div>
+            <div id="stats" style="display: none;">
+                <h3> Vos statistiques </h3>
+                <?php
+                require_once "core/Database.php";
+                $connexion = Database::getConnexion();
+                $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
+                if (!$stats || count($stats) == 0) {
+                    echo "<p> Vous n'avez pas encore de statistiques </p>";
+                } else {
+                    $bonneReponse = $stats['bonneReponse'];
+                    $mauvaiseReponse = $stats['mauvaiseReponse'];
+                    $bonneReponseDifficileAffile = $stats['bonneReponseDifficile'];
+                    $questionFacile = $stats['questionsFacile'];
+                    $questionMoyenne = $stats['questionsMoyenne'];
+                    $questionDifficile = $stats['questionsDifficile'];
+                    $bonneReponseFacile = $stats['reponsesFacile'];
+                    $bonneReponseMoyenne = $stats['reponsesMoyenne'];
+                    $bonneReponseDifficile = $stats['reponsesFacile'];
+                    echo "<p> Bonnes réponses :  $bonneReponse   </p>";
+                    echo "<p> Mauvaises réponses $mauvaiseReponse </p>";
+                    echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " . 3 - $bonneReponseDifficileAffile . " </p>";
+                    echo "<p> Questions faciles répondues : $questionFacile</p>";
+                    echo "<p> Questions moyennes répondues : $questionMoyenne</p>";
+                    echo "<p> Questions difficiles répondues : $questionDifficile </p>";
+                    echo "<p> Bonnes réponses aux questions faciles : $bonneReponseFacile </p>";
+                    echo "<p> Bonnes réponses aux questions moyennes : $bonneReponseMoyenne </p>";
+                    echo "<p> Bonnes réponses aux questions difficiles : $bonneReponseDifficile </p>";
+
+                }
+
+                ?>
             </div>
         </div>
         <?php
@@ -235,19 +276,16 @@ include 'include/nav.php';
                 echo "<p style='color:red'> Erreur, vous n'avez pas choisi une réponse, veuillez recommencer </p>";
             }
         }
-        if (isset($message)) {
-            echo "<p> $message </p>";
-        }
         if (isset($messageBonus)) {
             echo "<p> $messageBonus </p>";
         }
-        
+
 
 
         ?>
+
         <p id="remplir" style="color : red;"></p>
     </div>
 </main>
 
 <?php include 'include/footer.php' ?>
-<script src="scripts/enigma.js"></script>

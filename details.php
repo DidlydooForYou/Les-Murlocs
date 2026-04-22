@@ -164,7 +164,7 @@ include "include/nav.php";
                                 </div>
 
                                 <div class="col-md-2">
-                                    <div class="purchase-box p-3">
+                                    <div id="purchase-box" class="purchase-box p-3">
                                         <p class="price-title">Achat unique</p>
 
                                         <div class="coins-container mb-3">
@@ -178,16 +178,19 @@ include "include/nav.php";
                                             <span><?= $product['prixBronze'] ?></span>
                                         </div>
 
-                                        <?php if ($product['qttItem'] > 0): ?>
+                                        <?php if ($product['qttItem'] > 10): ?>
                                             <p class="in-stock">En stock</p>
+                                        <?php elseif ($product['qttItem'] > 0 ): ?>
+                                            <p class="almost-out-of-stock">Il n'en reste que <?=$product['qttItem']?></p>
                                         <?php else: ?>
                                             <p class="out-of-stock">Rupture de stock</p>
                                         <?php endif; ?>
 
-                                        <?php if (IS_AUTH):  //  Si connecté ?>
+                                   <?php if (IS_AUTH):  //  Si connecté ?>
                                             <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
                                                 <a href="enigma.php" class="btn btn-boot mt-auto"
                                                     style="background-color: #b3b3b3; display: flex; justify-content: center;">
+
                                                     Devenez mage pour acheter le sort
                                                 </a>
                                             <?php else: ?>
@@ -196,14 +199,25 @@ include "include/nav.php";
                                                     <div class="btn btn-boot mt-auto"
                                                         style="background-color: #b3b3b3; display: flex; justify-content: center;">
                                                         <div class="quantity-container">
-                                                            <button class="quantity-element quantity-button"
-                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+
+                                                            <button 
+                                                                class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)"
+                                                            >
+                                                                -
+                                                            </button>
                                                             <input id="input_<?= $product['idItem'] ?>"
-                                                                class="quantity-element quantity-input" type="number"
+                                                                class="quantity-element quantity-input" 
+                                                                type="number"
                                                                 value="<?= $itemQuantite ?>"
-                                                                onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
-                                                            <button class="quantity-element quantity-button"
-                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                                                                onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)"
+                                                            >
+                                                            <button 
+                                                                class="quantity-element quantity-button"
+                                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)"
+                                                            >
+                                                                +
+                                                            </button>
                                                         </div>
                                                     </div>
 
@@ -231,7 +245,7 @@ include "include/nav.php";
 
             <?php endforeach; ?>
         </div>
-        <script src="scripts/fonctionsPanier.js"> </script>
+        <script src="scripts/fonctions_Details.js"> </script>
         <br>
 </main>
 

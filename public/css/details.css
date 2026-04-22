@@ -131,6 +131,11 @@
     font-weight: bold;
 }
 
+.almost-out-of-stock{
+    color: #ffbf00;
+    font-weight: bold;
+}
+
 .out-of-stock {
     color: red;
     font-weight: bold;

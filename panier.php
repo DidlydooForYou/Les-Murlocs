@@ -32,9 +32,14 @@
     include 'include/nav.php'; 
 ?>
 
-<main id="main" class="main">
+<main id="main" class="main" style="padding: 20px;">
+    <h1 class="py-3 mt-3" style="text-align: center;">Panier</h1>
     <?php if($products == null) : ?>
-    <div id="aucunItem"> Vous n'avez pas d'item dans votre panier </div>
+
+        <h3 id="aucunItem" style="text-align:center;">Votre panier est vide.</h3>
+        <div style="text-align:center;">
+            <a class="btn btn-boot mt-auto" href="index.php">Revenir</a>
+        </div>
 
     <?php else : ?>
     <div id="panier" class="panier-Container">

@@ -115,6 +115,13 @@ class EnigmaDAL
         }
     }
 
+    public static function getStats(PDO $connexion, $JoueursJeu_idJoueur){
+        $sql = "SELECT * FROM statistiques where JoueursJeu_idJoueur = :JoueursJeu_idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('JoueursJeu_idJoueur', $JoueursJeu_idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
 
 ?>
