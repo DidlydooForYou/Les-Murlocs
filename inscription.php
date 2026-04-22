@@ -116,7 +116,7 @@ include 'include/nav.php';
 <main class="main">
     <div class="container">
         <div class="connexion-wrapper">
-            <h3>S'inscrire à Darquest</h3>
+            <h3>S'inscrire à Darquesst</h3>
             <form action="inscription.php" style="padding-left: 4px;" enctype="multipart/form-data" method="POST"
                 onsubmit="return validationInscription()">
                 <label for="prenom"> Prénom :</label>
