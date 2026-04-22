@@ -27,12 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['type'] === "formEnigme") {
         }
 
         $correctIndex = 1;
+        if ($_POST['categorie'] == "magie"){
+            $difficulte = 'd';
+        }
+        else {
+            $difficulte = $_POST['difficulte'];
+        }
 
         EnigmaDAL::ajouterEnigme(
             $connexion,
             $_POST['enonce'],
             $_POST['categorie'],
-            $_POST['difficulte'],
+            $difficulte,
             $reponses,
             $correctIndex
         );
@@ -67,7 +73,6 @@ include 'include/nav.php';
             <option value="armure">Armure</option>
             <option value="arme">Arme</option>
             <option value="potion">Potion</option>
-            <option value="sort">Sort</option>
             <option value="magie">Magie</option>
             <option value="monde">Monde</option>
         </select><br>
