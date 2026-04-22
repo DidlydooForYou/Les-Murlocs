@@ -108,10 +108,17 @@ include "include/nav.php";
 
                             <div class="comment"><?= $product['commentaire'] ?></div>
 
-                            <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id']): ?>
-                                <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $_SESSION['id'] ?>" class="edit-btn">✎
-                                    Modifier</a>
-                            <?php endif; ?>
+                            <div class="modification-comments">
+                                <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id']): ?>
+                                    <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $_SESSION['id'] ?>"
+                                        class="edit-btn">✎ Modifier</a>
+                                <?php endif; ?>
+                                <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id']): ?>
+                                    <a class="edit-btn"
+                                        onclick="confirmDelete(<?= $product['Item_idItem'] ?>, <?= $product['JoueursJeu_idJoueur'] ?>)">⛔
+                                        Retirer</a>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -121,6 +128,14 @@ include "include/nav.php";
         </div>
     </div>
 </main>
+
+<script>
+    function confirmDelete(idItem, idJoueur) {
+        if (confirm("Voulez-vous vraiment retirer votre évaluation ?")) {
+            window.location.href = "deleteReview.php?idItem=" + idItem + "&idJoueur=" + idJoueur;
+        }
+    }
+</script>
 
 
 <?php include_once INCLUDE_FILE . '/footer.php'; ?>

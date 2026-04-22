@@ -199,3 +199,12 @@ label{
     background-color: #ffd27f;
     color: black;
 }
+
+.type-buttons{
+    align-self:center;
+}
+
+.success-message{
+    color:#169a49;
+    text-align:center;
+}

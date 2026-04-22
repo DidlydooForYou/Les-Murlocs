@@ -180,5 +180,8 @@
     gap: 6px;
 }
 
-
-
+.modification-comments{
+    flex:1;
+    flex-direction:row;
+    align-self:flex-end;
+}
