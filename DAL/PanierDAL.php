@@ -2,7 +2,7 @@
 class PanierDAL{
     public static function selectByUser(PDO $connexion, int $idJoueur): array {
         $sql = "SELECT photoItem, nomItem, i.description, p.Item_idItem as idItem, qtPanier, prixOr, prixArgent, prixBronze
-                FROM Panier p INNER JOIN Item i ON p.Item_idItem = i.idItem
+                FROM panier p INNER JOIN item i ON p.Item_idItem = i.idItem
                 WHERE p.JoueursJeu_idJoueur = :idJoueur
                 ORDER BY nomItem";
 

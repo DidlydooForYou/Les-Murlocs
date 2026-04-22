@@ -1,8 +1,7 @@
 <?php 
-include 'include/html_setup.php';
 doitEtreCo();
 ?>
-
+<?php include 'include/html_setup.php'; ?>
 <title>DarQuest - Aide</title>
 
 <?php 

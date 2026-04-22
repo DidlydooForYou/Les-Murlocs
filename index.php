@@ -1,9 +1,9 @@
 <?php
-include "include/html_setup.php";
 
+require_once "core/initialization.php";
 require_once 'DAL/VitrineDAL.php';
 require_once 'DAL/PanierDAL.php';
-
+require_once 'core/Database.php';
 $connexion = Database::getConnexion();
 
 if (!empty($_GET['sortPrice'])) {
@@ -36,7 +36,7 @@ if (isset($idJoueur)) {
     }
 }
 ?>
-
+<?php include "include/html_setup.php"; ?>
 <link rel="stylesheet" href="public/css/vitrine.css">
 <title>DarQuest - Vitrine</title>
 

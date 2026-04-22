@@ -1,5 +1,5 @@
 <?php
-include 'include/html_setup.php';
+include 'php/html_setup.php';
 
 if (!IS_ADMIN) {
     header('Location:accesRefuse.php');
@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 }
 ?>
-
+<?php include 'include/html_setup.php'; ?>
 <title>DarQuest - Ajout</title>
 
 <?php
