@@ -46,6 +46,27 @@ form *{
 
     text-align: right;
 }
+
+.pdv-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+}
+
+.heart {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.heart.full {
+    color: #ff4d4d; 
+}
+
+.heart.empty {
+    color: #333; 
+}
+
+
 /* end header*/
 
 /* Nav */
@@ -640,5 +661,14 @@ html, body {
 
         padding: 5px;
         margin: 5px;
+    }
+
+    .pdv-container{
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+    }
+
+    .heart{
+        line-height: 1;
     }
 }

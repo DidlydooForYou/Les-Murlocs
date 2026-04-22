@@ -19,7 +19,7 @@
         $stockInsuffisant = PanierDAL::stocks_Insuffisants($connexion, $idJoueur);
 
         if($stockInsuffisant){
-            $result= "Erreur: Stocks insuffisants\n"."Il manque les produits suivants :\n";
+            $result= "Erreur: Stocks insuffisants\n"."Vous avez ces produits en trop :\n";
 
             foreach($stockInsuffisant as $itemManquant){
                 $result = $result.$itemManquant."\n";
