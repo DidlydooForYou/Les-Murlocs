@@ -75,7 +75,7 @@ function deleteItem(idJoueur, idItem){
     console.log('deleteItem function reached');
 
     $.ajax({
-        url: '/scripts/ajax/ajax-panier-effacer.php',
+        url: 'scripts/ajax/ajax-panier-effacer.php',
         type: 'POST',
         data: {
             idItem: idItem,

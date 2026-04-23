@@ -74,7 +74,7 @@ class EnigmaDAL
     public static function ajouterEnigme(PDO $connexion, string $enonce, string $categorie, string $difficulte, array $reponses, int $correct)
     {
         // Insert question
-        $sql = "INSERT INTO Questions (enonce, categorie, difficulte)
+        $sql = "INSERT INTO questions (enonce, categorie, difficulte)
             VALUES (:enonce, :categorie, :difficulte)";
         $stmt = $connexion->prepare($sql);
         $stmt->execute([
@@ -86,7 +86,7 @@ class EnigmaDAL
         $idQuestion = $connexion->lastInsertId();
 
         // Insert responses
-        $sqlRep = "INSERT INTO Reponses (reponse, correct)
+        $sqlRep = "INSERT INTO reponses (reponse, correct)
                VALUES (:reponse, :correct)";
         $stmtRep = $connexion->prepare($sqlRep);
 
