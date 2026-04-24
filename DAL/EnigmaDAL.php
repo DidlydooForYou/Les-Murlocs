@@ -42,7 +42,7 @@ class EnigmaDAL
     }
     public static function devenirMage(PDO $connexion, $idJoueur)
     {
-        $sql = "UPDATE joueursJeu set mage = 1 where idJoueur = :idJoueur";
+        $sql = "UPDATE joueursjeu set mage = 1 where idJoueur = :idJoueur";
         $stmt = $connexion->prepare($sql);
         $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
         $stmt->execute();
