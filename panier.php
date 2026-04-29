@@ -35,6 +35,12 @@
 
 <main id="main" class="main" style="padding: 20px;">
     <h1 class="py-3 mt-3" style="text-align: center;">Panier</h1>
+
+    <fieldset id="result-fieldset">
+        <legend id="result-legend" class="success">Erreur</legend>
+        <div id="result-desc" class="success">Test</div>
+    </fieldset>
+
     <?php if($products == null) : ?>
 
         <h3 id="aucunItem" style="text-align:center;">Votre panier est vide.</h3>

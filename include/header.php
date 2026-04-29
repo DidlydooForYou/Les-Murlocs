@@ -20,8 +20,9 @@
             <div class="pdv-container">
                 <?php
                 $maxPdv = 10;
-                $currentPdv = $pdv['PointsDeVie'] / 3;
-
+                $currentPdv = floor($pdv['PointsDeVie'] / 3);
+                
+                
                 for ($i = 0; $i < $currentPdv; $i++) {
                     echo '<span class="heart full">❤️</span>';
                 }
@@ -29,6 +30,7 @@
                 for ($i = $currentPdv; $i < $maxPdv; $i++) {
                     echo '<span class="heart empty">🖤</span>';
                 }
+                
                 ?>
             </div>
 

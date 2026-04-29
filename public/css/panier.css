@@ -1,3 +1,20 @@
+#result-fieldset{
+    display: none;
+
+    width:75%;
+    min-width:300px; 
+    margin: auto; 
+    border-radius:10px;
+
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+#result-desc{
+    white-space: pre-line;
+}
+
+
 .panier-Container{
     
     margin: 10px;   
@@ -113,6 +130,13 @@
     grid-column: 5;
 }
 
+.success{
+    color:rgb(0, 180, 0);
+}
+
+.error{
+    color:red;
+}
 
 /************************************************/
 

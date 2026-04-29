@@ -62,7 +62,7 @@ class VitrineDAL{
                 ORDER BY i.prixOr ASC, i.prixArgent ASC, i.prixBronze ASC";
     } else if($sortWay === "price_desc"){
         $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, 
-                       i.description, i.photoItem, 
+                       i.description, i.photoItem, i.qttItem,
                        AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type
                 FROM item i 
                 LEFT JOIN evaluations e ON i.idItem = e.Item_idItem
@@ -79,7 +79,7 @@ class VitrineDAL{
         if($alphab === "alpha_asc"){
             $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY nomItem";
         }else if($alphab === "alpha_desc"){
-            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY nomItem DESC";
+            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY nomItem DESC";
         }
 
         $statement = $connexion->prepare($sql);

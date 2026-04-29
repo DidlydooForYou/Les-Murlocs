@@ -49,7 +49,7 @@ function addingItemQuantite(idJoueur, idItem, addition){
     } 
 }
 
-function localRefresh(){
+function localRefresh(callback){
     $.ajax({
         url: "panier.php",
         success: function(response) {
@@ -64,6 +64,8 @@ function localRefresh(){
                 $('#panel-total').html(html.find('#panel-total').html());
                 $('#tableau-total').html(html.find('#tableau-total').html());
             }
+
+            if(callback) callback();
         }
     });
 }
@@ -102,18 +104,34 @@ function acheterPanier(idJoueur, prixTotal){
         success: function(response) {
             let data = JSON.parse(response);
 
-            if(data.success){
-                alert("Achat complété !");
-                localRefresh();
-
-            } else {
-                alert(data.error);
-            }
-            
-            
+            localRefresh(function() {
+                afficherResultat(data.success, data.error);
+            });
         },
         error: function(xhr, status, error) {
             console.log("error: L'achat des items à échoué (" + error + ")");
         }
     });
+}
+
+function afficherResultat(success, error){
+    document.getElementById("result-fieldset").style.display = "block";
+    let legend = document.getElementById("result-legend");
+    let description = document.getElementById("result-desc");
+
+    if(success){
+        legend.classList.add('success');
+        description.classList.add('success');
+
+        legend.textContent = "Confirmation";
+        description.textContent = "Achat complété !";
+    } else {
+        legend.classList.add('error');
+        description.classList.add('error');
+
+        legend.textContent = "Erreur";
+        description.textContent = error;
+
+        closePanel();
+    }
 }
