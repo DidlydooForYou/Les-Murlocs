@@ -14,7 +14,15 @@
 <link rel="stylesheet" href="public/css/enigma.css">
 <main class="main">
     <div class="profilMain">
-     
+     <?php include_once "DAL/JoueurDAL.php";
+     $connexion = Database::getConnexion();
+     $infos = JoueurDAL::getInfos($connexion,$_SESSION['id']);
+     $alias = Database::obtenir_alias($_SESSION['id']);
+     echo "Nom : ". $infos['nom']. "<br>";
+     echo  "Prenom : " . $infos['prenom']. "<br>";
+     echo "Email : " . $infos['email']. "<br>";
+     echo "Alias : " . $alias;
+     ?>
      </div>
 </main>
 
