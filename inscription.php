@@ -48,46 +48,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_FILES['url'])) {
         if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
             $chemin = "public/images/profilBase.webp";
-        } else if (
-            $_FILES['url']['type'] == "image/avif"
-            //$_FILES['url']['type'] == "image/jpeg" ||
-            //$_FILES['url']['type'] == "image/png" ||
-            //$_FILES['url']['type'] == "image/jpg" ||
-            //$_FILES['url']['type'] == "image/webp"
-        ) {
+        }
+        else {
 
             $repertoire = 'public/images/';
+            $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
+            if ($extension != "avif"){
+                $chemin = "public/images/profilBase.webp";
+            }
+            else{
             $chemin = $repertoire . $_FILES['url']['name'];
-            $extension = $_FILES['url']['type'];
-
             if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
-                /*
-                switch ($extension) {
-                    case 'image/jpeg':
-                    case 'image/jpg':
-                        $image = imagecreatefromjpeg($chemin);
-                        break;
-                    case 'image/png':
-                        $image = imagecreatefrompng($chemin);
-                        break;
-                    case 'image/webp':
-                        $image = imagecreatefromwebp($chemin);
-                        break;
-                }
-
-                $image = imagescale($image, 640);
-                $cheminAvif = pathinfo($chemin, PATHINFO_DIRNAME) . "/" . pathinfo($chemin, PATHINFO_FILENAME) . ".avif";
-                imageavif($image, $cheminAvif, 90);
-                unlink($chemin);
-                $chemin = $cheminAvif;
-                */
-                
-
             } else {
                 $validite = false;
             }
-        } else {
-            $validite = false;
+
+
+            }
+         
+        
         }
 
     }
@@ -98,12 +77,6 @@ if (isset($validite)) {
         if ($erreur) {
             header('Location:connexion.php');
             exit;
-        } else {
-            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-            } else {
-                unlink($chemin);
-            }
         }
     }
 }

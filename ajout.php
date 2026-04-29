@@ -1,5 +1,5 @@
 <?php
-include 'php/php_setup.php';
+include 'include/php_setup.php';
 
 if (!IS_ADMIN) {
     header('Location:accesRefuse.php');
@@ -40,49 +40,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     ) {
         if (isset($_FILES['url'])) {
             if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-                $chemin = "lorem.png";
-            } else if (
-                $_FILES['url']['type'] == "image/jpeg" ||
-                $_FILES['url']['type'] == "image/png" ||
-                $_FILES['url']['type'] == "image/jpg" ||
-                $_FILES['url']['type'] == "image/webp"
-            ) {
+                $chemin = "public/images/profilBase.webp";
+            } else {
 
                 $repertoire = 'public/images/';
-                $chemin = $repertoire . $_FILES['url']['name'];
-                $extension = $_FILES['url']['type'];
-
-                if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
-
-                    switch ($extension) {
-                        case 'image/jpeg':
-                        case 'image/jpg':
-                            $image = imagecreatefromjpeg($chemin);
-                            break;
-                        case 'image/png':
-                            $image = imagecreatefrompng($chemin);
-                            break;
-                        case 'image/webp':
-                            $image = imagecreatefromwebp($chemin);
-                            break;
+                $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
+                if ($extension != "avif") {
+                    $chemin = "public/images/profilBase.webp";
+                } else {
+                    $chemin = $repertoire . $_FILES['url']['name'];
+                    if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+                    } else {
+                        $validite = false;
                     }
 
 
-                    $image = imagescale($image, 640);
-                    $cheminAvif = pathinfo($chemin, PATHINFO_DIRNAME) . "/" . pathinfo($chemin, PATHINFO_FILENAME) . ".avif";
-                    imageavif($image, $cheminAvif, 90);
-                    unlink($chemin);
-                    $chemin = $cheminAvif;
-
-
-                } else {
-                    $validite = false;
                 }
-            } else {
-                $validite = false;
+
+
             }
 
         }
+
+
         if (
             strlen($_POST['nom']) <= 80 && strlen($_POST['nom']) >= 1 &&
             $_POST['prix'] <= 5000 && $_POST['prix'] >= 1 &&
@@ -114,17 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                     if ($validite) {
                         $genre = $_POST['genre'];
-                        $erreur = Database::ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
-                        }
+                        } 
                     }
                 }
                 break;
@@ -143,17 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = Database::ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
-                        }
+                        } 
                     }
                 }
                 break;
@@ -173,16 +141,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = Database::ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
                         }
                     }
 
@@ -204,16 +166,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = Database::ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
                         }
                     }
                 } else {
@@ -270,7 +226,7 @@ include 'include/nav.php';
             <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
             <label for="image">Image :</label><br>
             <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
-            <input type="file" id="image" name="url" accept="image/*"><br>
+            <input type="file" id="image" name="url" accept=".avif,image/avif"><br>
             <input type="submit" value="Ajouter">
 
         </form>
@@ -293,7 +249,7 @@ include 'include/nav.php';
             <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
             <label for="image">Image :</label><br>
             <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
-            <input type="file" id="image" name="url" accept="image/*" required><br>
+            <input type="file" id="image" name="url" accept=".avif,image/avif" required><br>
             <input type="submit" value="Ajouter">
         </form>
         <form action="ajout.php" method="POST" id="formPotion" style="display: none;padding: 4px;"
@@ -315,7 +271,7 @@ include 'include/nav.php';
             <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
             <label for="image">Image :</label><br>
             <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
-            <input type="file" id="image" name="url" accept="image/*" required><br>
+            <input type="file" id="image" name="url" accept=".avif,image/avif" required><br>
             <input type="submit" value="Ajouter">
         </form>
         <form action="ajout.php" method="POST" id="formSort" style="display: none; padding: 4px;"
@@ -340,7 +296,7 @@ include 'include/nav.php';
             <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
             <label for="image">Image :</label><br>
             <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
-            <input type="file" id="image" name="url" accept="image/*" required><br>
+            <input type="file" id="image" name="url" accept=".avif,image/avif" required><br>
             <input type="submit" value="Ajouter">
         </form>
         <?php

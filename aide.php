@@ -1,7 +1,5 @@
-<?php 
-doitEtreCo();
-?>
-<?php include 'include/php_setup.php'; ?>
+<?php include 'include/php_setup.php'; 
+doitEtreCo()?>
 <title>DarQuest - Aide</title>
 
 <?php 
