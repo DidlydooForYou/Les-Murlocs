@@ -73,7 +73,7 @@ include 'include/nav.php';
     </form>
 
     <div class="container text-center">
-        <div id="allItemsContainer" class="row justify-content-center">
+        <div id="allItemsContainer" class="row justify-content-center" style="padding: 0 20px;">
             <?php foreach ($products as $product):
                 if (isset($cartItems[$product['idItem']])) {
                     $isInCart = true;
@@ -84,8 +84,7 @@ include 'include/nav.php';
 
                 ?>
 
-                <div id="card_<?= $product['idItem'] ?>" class="col-6 col-lg-3 d-flex align-items-stretch"
-                    style="flex-driection: row;">
+                <div id="card_<?= $product['idItem'] ?>" class="col-10 col-lg-3 d-flex align-items-stretch" style="flex-driection: row;">
                     <div class="card mt-4 w-100 backgroundImage">
                         <a href="details.php?id=<?= $product['idItem'] ?>" class="image-wrapper">
                             <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid"
@@ -129,32 +128,35 @@ include 'include/nav.php';
 
                             <br>
                             <!-- Button Section -->
-                            <?php if(IS_AUTH) : //  Si connecté?>
-                               <?php if ($product['type'] == 'sort' && !IS_MAGE) :?>
-                                    <a href="enigma.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
-                                    Devenez mage pour acheter le sort
-                                </a>
-                                <?php else : ?>
-                                
-                                <?php if($isInCart) :// Si item est dans le cart?>
-                                    <div class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">
-                                        <div class="quantity-container">
-                                            <button class="quantity-element quantity-button"
-                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
-                                            <input id="input_<?= $product['idItem'] ?>" class="quantity-element quantity-input"
-                                                type="number" value="<?= $itemQuantite ?>"
-                                                onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
-                                            <button class="quantity-element quantity-button"
-                                                onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+                            <?php if (IS_AUTH):  //  Si connecté ?>
+                                <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
+                                    <a href="enigma.php" class="btn btn-boot mt-auto"
+                                        style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                        Devenez mage pour acheter le sort
+                                    </a>
+                                <?php else: ?>
+
+                                    <?php if ($isInCart): // Si item est dans le cart ?>
+                                        <div class="btn btn-boot mt-auto"
+                                            style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                            <div class="quantity-container">
+                                                <button class="quantity-element quantity-button"
+                                                    onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                                                <input id="input_<?= $product['idItem'] ?>" class="quantity-element quantity-input"
+                                                    type="number" value="<?= $itemQuantite ?>"
+                                                    onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
+                                                <button class="quantity-element quantity-button"
+                                                    onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+                                            </div>
                                         </div>
-                                    </div>
 
 
-                                <?php else :         // Si item est pas dans le cart?>
-                                    <button onclick="ajouter_panierAJAX(<?=$idJoueur?>,<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
-                                <?php endif;?>
-                                <?php endif;?>
-                                 
+                                    <?php else:          // Si item est pas dans le cart ?>
+                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
+                                            class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
 
                             <?php else:         //  Si pas connecté ?>
                                 <a href="connexion.php" class="btn btn-boot mt-auto"
