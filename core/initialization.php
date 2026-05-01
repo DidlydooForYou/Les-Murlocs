@@ -27,6 +27,7 @@ $dbConfig = [
 
 const CSS = URL_ROOT . 'css';
 const VITRINE_IMG = URL_ROOT . 'upload';
+const SRC = ROOT . '/src';
 
 define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));

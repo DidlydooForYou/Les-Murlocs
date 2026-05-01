@@ -1,8 +1,10 @@
 <?php
 require_once 'DAL/EnigmaDAL.php';
 require_once 'core/initialization.php';
+require_once 'core/Email.php';
 require_once 'core/Database.php';
 include 'include/php_setup.php';
+
 @session_start();
 doitEtreDeco();
 $erreur = false;
@@ -11,23 +13,23 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
     $mdp = $_POST['password'];
 
-    if (Database::obtenir_joueur($email, $mdp)) {
+    $joueur = Database::obtenir_joueur($email, $mdp);
+
+    if (!is_array($joueur)) {
+        $erreur = "Courriel ou mot de passe incorrect.";
+    } else if ((int) $joueur["confirmed"] === 0) {
+        $erreur = "Veuillez confirmer votre courriel avant de vous connecter.";
+    } else {
         $_SESSION["connexion"] = true;
-        $_SESSION["id"] = Database::obtenir_id($email)["JoueursJeu_idJoueur"];
-        $_SESSION['role'] = Database::administrateur($_SESSION["id"])["administrateur"];
+        $_SESSION["id"] = $joueur["JoueursJeu_idJoueur"];
+        $_SESSION["role"] = Database::administrateur($_SESSION["id"])["administrateur"];
+
         $connexion = Database::getConnexion();
         $mage = EnigmaDAL::estMage($connexion, $_SESSION["id"]);
-        if ($mage['mage'] == 1) {
-            $_SESSION["mage"] = true;
-        } else {
-            $_SESSION["mage"] = false;
-        }
+        $_SESSION["mage"] = ($mage["mage"] == 1);
 
         header('Location:index.php');
-
         exit;
-    } else {
-        $erreur = true;
     }
 }
 ?>
@@ -35,7 +37,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
 <link rel="stylesheet" href="public/css/connexion.css">
 <title>DarQuest - Connexion</title>
-<?php 
+<?php
 include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
@@ -60,8 +62,9 @@ include 'include/nav.php';
                 <input type="submit" value="Se connecter">
 
                 <?php if ($erreur): ?>
-                    <p class="error">Courriel et/ou mot de passe incorrect</p>
+                    <p class="error"><?= $erreur ?></p>
                 <?php endif; ?>
+
 
             </form>
 
