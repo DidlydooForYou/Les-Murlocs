@@ -126,6 +126,14 @@ include 'include/nav.php';
                                 </div>
                             </div>
 
+                            <?php if ($product['qttItem'] > 10): ?>
+                                <p></p>
+                            <?php elseif ($product['qttItem'] > 0 ): ?>
+                                <p class="almost-out-of-stock">Il n'en reste que <?=$product['qttItem']?></p>
+                            <?php else: ?>
+                                <p class="out-of-stock">Rupture de stock</p>
+                            <?php endif; ?>
+
                             <br>
                             <!-- Button Section -->
                             <?php if (IS_AUTH):  //  Si connecté ?>
