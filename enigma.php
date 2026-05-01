@@ -88,12 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
 }
- $pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
-        $pdv = $pdv['PointsDeVie'];
-  if ($pdv == 0) {
-            header('Location:mort.php');
-            exit;
-        }
+$pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
+$pdv = $pdv['PointsDeVie'];
+if ($pdv == 0) {
+    header('Location:mort.php');
+    exit;
+}
 
 ?>
 
@@ -101,11 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 <title>DarQuest - Énigma</title>
 
 <?php
-include 'include/html_setup.php'; 
+include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>
 <script src="scripts/enigma.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <link rel="stylesheet" href="public/css/enigma.css">
 <main class="main">
     <div class="enigma-container">
@@ -121,11 +122,11 @@ include 'include/nav.php';
         ?>
         <div>
             <div class="enigma-actions">
-                
+
                 <?php
-                   if (isset($message)) {
-                        echo "<div> $message </div> <br>";
-                    }
+                if (isset($message)) {
+                    echo "<div> $message </div> <br>";
+                }
                 if (!IS_MAGE) {
 
                     echo "<button class='buttonEnigma' onclick='afficherMage()'>Devenir mage</button>";
@@ -176,7 +177,7 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'>ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0</span></p>";
                         }
                     }
-                    
+
 
                     ?>
                     <input class="buttonEnvoyer" type="submit">
@@ -234,17 +235,21 @@ include 'include/nav.php';
                             echo "<p><span class='attentionVie'> ATTENTION RÉPONDRE MAL À CETTE QUESTION MET VOS P.V À 0 </span></p>";
                         }
                     }
-                 
+
                     ?>
                     <input class="buttonEnvoyer" type="submit">
                 </form>
             </div>
             <div id="stats" style="display: none;">
                 <h3> Vos statistiques </h3>
+                <canvas id="graphBonne" style="width: 100%;max-width:700px"></canvas>
+                <canvas id="graphRépondu" style="width: 100%;max-width:700px"></canvas>
+                <canvas id="graphBonneDifficulte" style="width: 100%;max-width:700px"></canvas>
                 <?php
                 require_once "core/Database.php";
                 $connexion = Database::getConnexion();
                 $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
+
                 if (!$stats || count($stats) == 0) {
                     echo "<p> Vous n'avez pas encore de statistiques </p>";
                 } else {
@@ -257,19 +262,80 @@ include 'include/nav.php';
                     $bonneReponseFacile = $stats['reponsesFacile'];
                     $bonneReponseMoyenne = $stats['reponsesMoyenne'];
                     $bonneReponseDifficile = $stats['reponsesFacile'];
-                    echo "<p> Bonnes réponses :  $bonneReponse   </p>";
-                    echo "<p> Mauvaises réponses $mauvaiseReponse </p>";
-                    echo "<p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " . 3 - $bonneReponseDifficileAffile . " </p>";
-                    echo "<p> Questions faciles répondues : $questionFacile</p>";
-                    echo "<p> Questions moyennes répondues : $questionMoyenne</p>";
-                    echo "<p> Questions difficiles répondues : $questionDifficile </p>";
-                    echo "<p> Bonnes réponses aux questions faciles : $bonneReponseFacile </p>";
-                    echo "<p> Bonnes réponses aux questions moyennes : $bonneReponseMoyenne </p>";
-                    echo "<p> Bonnes réponses aux questions difficiles : $bonneReponseDifficile </p>";
+                    echo "<br> <p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " . 3 - $bonneReponseDifficileAffile . " </p>";
 
                 }
-
                 ?>
+                <script>
+                    var xValues1 = ["Bonnes réponses", "Mauvaises Réponses"];
+                    var yValues1 = [<?php echo $bonneReponse?> ,<?php echo $mauvaiseReponse?>];
+                    var barColors1 = [
+                        "#32cd32   ", //Green
+                        "#ff0000   " // Rouge
+                    ];
+                    var xValues2 = ["Questions faciles répondues","Questions moyennes répondues","Questions difficiles répondues"];
+                    var yValues2 = [<?php echo $questionFacile?> ,<?php echo $questionMoyenne?>, <?php echo $questionDifficile?>];
+                     var barColors2 = [
+                        "#009fb7   ", //IDK
+                        "#fed766  ", //Green
+                        "#fe4a49 " //Red
+                    ];
+                    var xValues3 = ["Bonnes réponses aux questions faciles", "Bonnes réponses aux questions moyennes", "Bonnes réponses aux questions difficiles"];
+                    var yValues3 = [<?php echo $bonneReponseFacile?> ,<?php echo $bonneReponseMoyenne?>, <?php echo $bonneReponseMoyenne?>];
+                    var barColors3 = [
+                        "#009FB7   ", //IDK
+                        "#FED766  ", //Green
+                        "#FE4A49 "  //Red
+                    ];
+                    new Chart("graphBonne", {
+                        type: "pie",
+                        data: {
+                            labels: xValues1,
+                            datasets: [{
+                                backgroundColor: barColors1,
+                                data: yValues1
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: "Réussite des questions"
+                            }
+                        }
+                    });
+                     new Chart("graphRépondu", {
+                        type: "pie",
+                        data: {
+                            labels: xValues2,
+                            datasets: [{
+                                backgroundColor: barColors2,
+                                data: yValues2
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: "Questions répondus par difficulté"
+                            }
+                        }
+                    });
+                     new Chart("graphBonneDifficulte", {
+                        type: "pie",
+                        data: {
+                            labels: xValues3,
+                            datasets: [{
+                                backgroundColor: barColors3,
+                                data: yValues3
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: "Bonnes réponses aux questions par difficulté"
+                            }
+                        }
+                    });
+                </script>
             </div>
         </div>
         <?php
