@@ -16,6 +16,20 @@ form *{
   margin-bottom: 10px;
 }
 
+fieldset {
+  border: 1px solid #ccc;
+  padding: 10px;
+  padding-top: 0px;
+  margin-bottom: 1rem;
+}
+
+legend {
+  float:none;
+  width: auto;
+  display: inline-block;
+  padding:0 8px;
+}
+
 /* Header */
 .headerContainer{
     background-image: linear-gradient(#f8f8f8 0%,#355872 95%);
@@ -37,6 +51,7 @@ form *{
 
 .header-alias{
     text-align: right;
+    font-weight: bold;
 }
 
 #header-coins{
