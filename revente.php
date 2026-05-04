@@ -4,7 +4,6 @@ require_once "core/initialization.php";
 require_once 'DAL/ReventeDAL.php';
 require_once 'DAL/PanierDAL.php';
 require_once 'core/Database.php';
-include_once 'include/php_setup.php';
 $connexion = Database::getConnexion();
 
 if (!empty($_GET['sortPrice'])) {
@@ -43,13 +42,11 @@ if (isset($idJoueur)) {
 }
 doitEtreCo();
 ?>
-
+<?php include "include/html_setup.php"; ?>
 <link rel="stylesheet" href="public/css/vitrine.css">
-
 <title>DarQuest - Revente</title>
 
 <?php
-include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>
@@ -57,7 +54,7 @@ include 'include/nav.php';
 <main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
     <form class="search-sort-container searchBarContainer" role="search" action="index.php">
         <input name="research" id="liveSearch" class="search-sort-element form-control search-bar" type="search"
-            placeholder="Recherche sur DarQuest">
+            placeholder="Recherche sur Marketplace">
 
         <select name="sortPrice" id="sortPrice" class="search-sort-element form-select sort-element">
             <option value="" hidden>Trier par prix</option>
@@ -207,7 +204,7 @@ include 'include/nav.php';
 
         allItems.style.display = "none";
 
-        fetch("search.php?search=" + encodeURIComponent(query))
+        fetch("searchRevente.php?search=" + encodeURIComponent(query))
             .then(r => r.text())
             .then(html => {
                 results.innerHTML = html;

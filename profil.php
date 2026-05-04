@@ -12,11 +12,15 @@ include 'include/header.php';
 include 'include/nav.php';
 
 include_once "DAL/JoueurDAL.php";
-$connexion = Database::getConnexion();
-$infos = JoueurDAL::getInfos($connexion, $_SESSION['id']);
-$alias = Database::obtenir_alias($_SESSION['id']);
 
-$inventaire = Database::obtenir_inventaire_joueur($_SESSION['id']);
+$connexion = Database::getConnexion();
+
+$idProfil = isset($_GET['id']) ? intval($_GET['id']) : $_SESSION['id'];
+
+$infos = JoueurDAL::getInfos($connexion, $idProfil);
+$alias = Database::obtenir_alias($idProfil);
+
+$inventaire = Database::obtenir_inventaire_joueur($idProfil);
 $groupes = [];
 
 foreach ($inventaire as $item) {
