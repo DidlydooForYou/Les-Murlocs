@@ -1,4 +1,4 @@
-<nav class="navContainer" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
+<nav class="navContainer" style="">
 
     <span class="navLinkContainer">
         <a class="navElement navLink" href="index.php">Vitrine</a>
