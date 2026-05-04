@@ -20,14 +20,15 @@
             <div class="pdv-container">
                 <?php
                 $maxPdv = 10;
-                $currentPdv = $pdv['PointsDeVie'] / 3;
+                $coeurPlein = intdiv($pdv['PointsDeVie'], 3);
+                $coeurNoir = $maxPdv - $coeurPlein;
 
-                for ($i = 0; $i < $currentPdv; $i++) {
-                    echo '<span class="heart full">❤️</span>';
+                for ($i = 0; $i < $coeurPlein; $i++) {
+                    echo "<span title='Il vous reste " . $pdv['PointsDeVie']. " points de vie' class='heart full'>❤️</span>";
                 }
 
-                for ($i = $currentPdv; $i < $maxPdv; $i++) {
-                    echo '<span class="heart empty">🖤</span>';
+                for ($i = 0; $i < $coeurNoir; $i++) {
+                    echo "<span title='Il vous reste " . $pdv['PointsDeVie']. " points de vie' class='heart empty'>🖤</span>";
                 }
                 ?>
             </div>
