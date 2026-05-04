@@ -247,9 +247,8 @@ include 'include/nav.php';
                 $connexion = Database::getConnexion();
                 $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
 
-                if (!$stats || count($stats) == 0) {
-                    echo "<p> Vous n'avez pas encore de statistiques </p>";
-                } else {
+                if ($stats && count($stats) !== 0) {
+            
                     $bonneReponse = $stats['bonneReponse'];
                     $mauvaiseReponse = $stats['mauvaiseReponse'];
                     $bonneReponseDifficileAffile = $stats['bonneReponseDifficile'];
@@ -260,17 +259,17 @@ include 'include/nav.php';
                     $bonneReponseMoyenne = $stats['reponsesMoyenne'];
                     $bonneReponseDifficile = $stats['reponsesFacile'];
                     echo "<br> <p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " . 3 - $bonneReponseDifficileAffile . " </p>";
-                    echo `
+                }
+                ?>
+                <?php if (!$stats || count($stats) == 0) : ?>
+                        <p>Vous n'avez pas encore de statistiques</p>
+                <?php else : ?>
                     <canvas id="graphBonne" style="width: 100%;max-width:700px"></canvas>
                     <canvas id="graphRépondu" style="width: 100%;max-width:700px"></canvas>
                     <canvas id="graphBonneDifficulte" style="width: 100%;max-width:700px"></canvas>
-                    
-                    
-                    
-                    `;
 
-                }
-                ?>
+                <?php endif;?>
+
                 <script>
                     var xValues1 = ["Bonnes réponses", "Mauvaises Réponses"];
                     var yValues1 = [<?php echo $bonneReponse ?>, <?php echo $mauvaiseReponse ?>];
