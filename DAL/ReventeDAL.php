@@ -137,5 +137,27 @@ class ReventeDAL
 
         return $stmt->fetchAll();
     }
+
+    public static function decrementQuantity(PDO $connexion, int $idItem): bool
+    {
+        $sql = "UPDATE revente 
+            SET qttItem = qttItem - 1 
+            WHERE idItem = :idItem AND qttItem > 0";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public static function deleteIfEmpty(PDO $connexion, int $idItem): bool
+    {
+        $sql = "DELETE FROM revente WHERE idItem = :idItem AND qttItem <= 0";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+
 }
 ?>
