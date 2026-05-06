@@ -90,6 +90,10 @@ legend {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     min-height: 50px;
     background-color: #355872;
+    
+    border:5px solid #c9a86a; 
+    border-top:none; 
+    border-bottom:none;
     width:100%;
     align-items: center;
 }
@@ -141,11 +145,6 @@ legend {
     background-color: #f9f9f9;
     border-radius: 10px;
     overflow: hidden;
-}
-
-.dropdown:hover {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 .dropdown:hover .dropdown-content-container {
@@ -671,6 +670,7 @@ html, body {
         width: 100%;
 
         overflow-x: auto;
+        overflow-y: visible;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
         align-self: center;
