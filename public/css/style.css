@@ -87,14 +87,17 @@ legend {
 /* Nav */
 .navContainer{
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     min-height: 50px;
     background-color: #355872;
     
     border:5px solid #c9a86a; 
     border-top:none; 
     border-bottom:none;
+    width:100%;
+    align-items: center;
 }
+
 
 .navLinkContainer{
     display: flex;
@@ -105,13 +108,14 @@ legend {
     border: 1px solid black;
     border-radius: 12px;
 
-    flex:1;
+    flex: 0 0 auto;
 
     padding: 15px;
 
     margin: 40px;
     margin-bottom: 15px;
     margin-top: 15px;
+    min-width: 195px;
 }
 
 .navLink{
@@ -669,6 +673,7 @@ html, body {
         overflow-y: visible;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
+        align-self: center;
     }
 
     .navElement{

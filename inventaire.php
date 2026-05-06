@@ -4,6 +4,7 @@ require_once 'core/initialization.php';
 require_once 'DAL/Page.php';
 require_once 'core/Database.php';
 require_once 'DAL/InventoryDAL.php';
+require_once 'DAL/ReventeDAL.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
@@ -16,16 +17,17 @@ if (isset($_POST['vendre']) && isset($_POST['idItem'])) {
 }
 ?>
 
-<?php 
-    include "include/php_setup.php";
+<?php
+include "include/php_setup.php";
 ?>
 
 <link rel="stylesheet" href="public/css/inventaire.css">
+<title>DarQuest - Inventaire</title>
 
-<?php 
-    include "include/html_setup.php";
-    include "include/header.php"; 
-    include "include/nav.php";
+<?php
+include "include/html_setup.php";
+include "include/header.php";
+include "include/nav.php";
 ?>
 
 <?php
@@ -35,6 +37,41 @@ $groupes = [];
 if (isset($_SESSION['id'])) {
     $inventaire = Database::obtenir_inventaire_joueur($_SESSION['id']);
 }
+
+if (isset($_POST['vendreMarket']) && isset($_POST['idItem']) && isset($_SESSION['id'])) {
+
+    $connexion = Database::getConnexion();
+    $idItem = $_POST['idItem'];
+    $idJoueur = $_SESSION['id'];
+
+    $item = InventoryDAL::selectById($connexion, $idItem, $_SESSION['id']);
+
+    $joueur = JoueurDAL::getInfos($connexion, $idJoueur);
+    $alias = Database::obtenir_alias($idJoueur);
+    $photoProfil = $joueur['photoProfil'];
+
+    ReventeDAL::ajouterRevente(
+        $connexion,
+        $idJoueur,
+        $idItem,
+        $item['nomItem'],
+        $item['prixOr'],
+        $item['prixArgent'],
+        $item['prixBronze'],
+        $item['photoItem'],
+        1,
+        $item['type'],
+        $photoProfil,
+        $alias
+    );
+
+
+    InventoryDAL::vendreItem($connexion, $idItem, $idJoueur);
+
+    header("Location: inventaire.php");
+    exit;
+}
+
 
 foreach ($inventaire as $item) {
     if ($item['qtInventaire'] > 0) {
@@ -101,6 +138,7 @@ foreach ($inventaire as $item) {
                         <form method="post">
                             <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
                             <button type="submit" name="vendre" class="btn btn-boot mt-auto">Vendre</button>
+                            <button type="submit" name="vendreMarket" class="btn btn-boot mt-auto">Revendre sur marketplace</button>
                         </form>
 
                     </div>

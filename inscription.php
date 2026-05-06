@@ -1,5 +1,12 @@
 <?php
+require_once 'core/Email.php';
+
 include 'include/php_setup.php';
+
+require_once 'upload/PHPMailer/src/Exception.php';
+require_once 'upload/PHPMailer/src/PHPMailer.php';
+require_once 'upload/PHPMailer/src/SMTP.php';
+
 doitEtreDeco();
 
 
@@ -48,25 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_FILES['url'])) {
         if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
             $chemin = "public/images/profilBase.webp";
-        }
-        else {
+        } else {
 
             $repertoire = 'public/images/';
             $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
-            if ($extension != "avif"){
+            if ($extension != "avif") {
                 $chemin = "public/images/profilBase.webp";
-            }
-            else{
-            $chemin = $repertoire . $_FILES['url']['name'];
-            if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
             } else {
-                $validite = false;
-            }
+                $chemin = $repertoire . $_FILES['url']['name'];
+                if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+                } else {
+                    $validite = false;
+                }
 
 
             }
-         
-        
+
+
         }
 
     }
@@ -75,9 +80,19 @@ if (isset($validite)) {
     if ($validite) {
         $erreur = Database::ajouter_joueur($nom, $prenom, $email, $mdp, $chemin, $alias);
         if ($erreur) {
+
+            Email::readConfig($_SERVER['DOCUMENT_ROOT'] . '/gmail.ini');
+
+            $subject = "Bienvenue sur DarQuest!";
+            $message = "<h1>Merci d'avoir créé un compte, $prenom!</h1>
+            <p>Veuillez confirmer votre adresse courriel :</p>
+            <p><a href='http://darquestgud:8080/valider.php?email=$email'>Cliquez ici pour valider</a></p>";
+
+            Email::send($email, $subject, $message);
             header('Location:connexion.php');
             exit;
         }
+
     }
 }
 ?>
@@ -93,7 +108,7 @@ include 'include/nav.php';
 <main class="main">
     <div class="container">
         <div class="connexion-wrapper">
-            <h3>S'inscrire à Darquesst</h3>
+            <h3>S'inscrire à Darquest</h3>
             <form action="inscription.php" style="padding-left: 4px;" enctype="multipart/form-data" method="POST"
                 onsubmit="return validationInscription()">
                 <label for="prenom"> Prénom :</label>

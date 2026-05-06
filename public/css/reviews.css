@@ -4,11 +4,11 @@
     background-color: #517189;
     border-radius: 12px;
     padding: 20px;
-    margin: 20px auto; /* centers the card */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    margin: 20px auto; 
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* text aligned left */
+    align-items: flex-start; 
     color: white;
     border: 3px solid #c9a86a; 
 }
@@ -184,4 +184,71 @@
     flex:1;
     flex-direction:row;
     align-self:flex-end;
+}
+
+.reviews-layout {
+    display: flex;
+    gap: 30px;
+    margin:20px;
+    text-align:center;
+}
+
+.reviews-summary {
+    width: 300px;
+    flex-shrink: 0;
+    margin-top:40px;
+}
+
+.average {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.total {
+    color: gray;
+    margin-bottom: 20px;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.bar {
+    flex: 1;
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: orange;
+}
+
+
+.reviews-list {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+    margin-left: 100px;
+}
+
+.reviews-wrapper {
+    width: 100%;
+    max-width: 800px;
+}
+
+.bar-row {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.bar-row:hover {
+    opacity: 0.8;
 }

@@ -242,17 +242,13 @@ include 'include/nav.php';
             </div>
             <div id="stats" style="display: none;">
                 <h3> Vos statistiques </h3>
-                <canvas id="graphBonne" style="width: 100%;max-width:700px"></canvas>
-                <canvas id="graphRépondu" style="width: 100%;max-width:700px"></canvas>
-                <canvas id="graphBonneDifficulte" style="width: 100%;max-width:700px"></canvas>
                 <?php
                 require_once "core/Database.php";
                 $connexion = Database::getConnexion();
                 $stats = EnigmaDAL::getStats($connexion, $_SESSION['id']);
 
-                if (!$stats || count($stats) == 0) {
-                    echo "<p> Vous n'avez pas encore de statistiques </p>";
-                } else {
+                if ($stats && count($stats) !== 0) {
+            
                     $bonneReponse = $stats['bonneReponse'];
                     $mauvaiseReponse = $stats['mauvaiseReponse'];
                     $bonneReponseDifficileAffile = $stats['bonneReponseDifficile'];
@@ -263,25 +259,33 @@ include 'include/nav.php';
                     $bonneReponseMoyenne = $stats['reponsesMoyenne'];
                     $bonneReponseDifficile = $stats['reponsesFacile'];
                     echo "<br> <p> Réponses correctes aux questions difficiles avant d'avoir le bonus : " . 3 - $bonneReponseDifficileAffile . " </p>";
-
                 }
                 ?>
+                <?php if (!$stats || count($stats) == 0) : ?>
+                        <p>Vous n'avez pas encore de statistiques</p>
+                <?php else : ?>
+                    <canvas id="graphBonne" style="width: 100%;max-width:700px"></canvas>
+                    <canvas id="graphRépondu" style="width: 100%;max-width:700px"></canvas>
+                    <canvas id="graphBonneDifficulte" style="width: 100%;max-width:700px"></canvas>
+
+                <?php endif;?>
+
                 <script>
                     var xValues1 = ["Bonnes réponses", "Mauvaises Réponses"];
-                    var yValues1 = [<?php echo $bonneReponse?> ,<?php echo $mauvaiseReponse?>];
+                    var yValues1 = [<?php echo $bonneReponse ?>, <?php echo $mauvaiseReponse ?>];
                     var barColors1 = [
                         "#32cd32   ", //Green
                         "#ff0000   " // Rouge
                     ];
-                    var xValues2 = ["Questions faciles répondues","Questions moyennes répondues","Questions difficiles répondues"];
-                    var yValues2 = [<?php echo $questionFacile?> ,<?php echo $questionMoyenne?>, <?php echo $questionDifficile?>];
-                     var barColors2 = [
+                    var xValues2 = ["Questions faciles répondues", "Questions moyennes répondues", "Questions difficiles répondues"];
+                    var yValues2 = [<?php echo $questionFacile ?>, <?php echo $questionMoyenne ?>, <?php echo $questionDifficile ?>];
+                    var barColors2 = [
                         "#009fb7   ", //IDK
                         "#fed766  ", //Green
                         "#fe4a49 " //Red
                     ];
                     var xValues3 = ["Bonnes réponses aux questions faciles", "Bonnes réponses aux questions moyennes", "Bonnes réponses aux questions difficiles"];
-                    var yValues3 = [<?php echo $bonneReponseFacile?> ,<?php echo $bonneReponseMoyenne?>, <?php echo $bonneReponseMoyenne?>];
+                    var yValues3 = [<?php echo $bonneReponseFacile ?>, <?php echo $bonneReponseMoyenne ?>, <?php echo $bonneReponseMoyenne ?>];
                     var barColors3 = [
                         "#009FB7   ", //IDK
                         "#FED766  ", //Green
@@ -297,13 +301,17 @@ include 'include/nav.php';
                             }]
                         },
                         options: {
+
+                                legend : {
+                                    display : false
+                                },
                             title: {
                                 display: true,
                                 text: "Réussite des questions"
                             }
                         }
                     });
-                     new Chart("graphRépondu", {
+                    new Chart("graphRépondu", {
                         type: "pie",
                         data: {
                             labels: xValues2,
@@ -316,10 +324,13 @@ include 'include/nav.php';
                             title: {
                                 display: true,
                                 text: "Questions répondus par difficulté"
+                            },
+                            legend : {
+                                display : false
                             }
                         }
                     });
-                     new Chart("graphBonneDifficulte", {
+                    new Chart("graphBonneDifficulte", {
                         type: "pie",
                         data: {
                             labels: xValues3,
@@ -332,6 +343,9 @@ include 'include/nav.php';
                             title: {
                                 display: true,
                                 text: "Bonnes réponses aux questions par difficulté"
+                            },
+                            legend : {
+                                display : false
                             }
                         }
                     });

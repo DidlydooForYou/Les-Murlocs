@@ -33,22 +33,45 @@
 <link rel="stylesheet" href="public/css/profil.css">
 <title>DarQuest - Profil</title>
 
-<?php 
-    include 'include/html_setup.php';
-    include 'include/header.php';
-    include 'include/nav.php'; 
+<?php
+include 'include/html_setup.php';
+include 'include/header.php';
+include 'include/nav.php';
+
+include_once "DAL/JoueurDAL.php";
+
+$connexion = Database::getConnexion();
+
+$idProfil = isset($_GET['id']) ? intval($_GET['id']) : $_SESSION['id'];
+
+$infos = JoueurDAL::getInfos($connexion, $idProfil);
+$alias = Database::obtenir_alias($idProfil);
+
+$inventaire = Database::obtenir_inventaire_joueur($idProfil);
+$groupes = [];
+
+foreach ($inventaire as $item) {
+    if ($item['qtInventaire'] > 0) {
+        $groupes[$item['type']][] = $item;
+    }
+}
 ?>
 
 <main class="main">
     <div class="profilMain">
-        <div class="donnees">
-            <?php 
-                echo '<img class ="imageProfil"src="' . $infos["photoProfil"] . '" alt="' . $alias . '">';
-                echo "<div class='donnee'><span class='label'>Nom :</span> <span>".$infos['nom']."</span></div>";
-                echo "<div class='donnee'><span class='label'>Prenom :</span> <span>".$infos['prenom']."</span></div>";
-                echo "<div class='donnee'><span class='label'>Email :</span> <span>".$infos['email']."</span></div>";
-                echo "<div class='donnee'><span class='label'>Alias :</span> <span>".$alias."</span></div>";
-            ?>
+        <div class="profilRow">
+            <img class="imageProfil" src="<?= $infos['photoProfil'] ?>" alt="<?= $alias ?>">
+
+            <div class="donnees">
+                <div class='donnee'><span class='label'>Nom :</span> <span
+                        class='textDonees'><?= $infos['nom'] ?></span></div>
+                <div class='donnee'><span class='label'>Prenom :</span> <span
+                        class='textDonees'><?= $infos['prenom'] ?></span></div>
+                <div class='donnee'><span class='label'>Email :</span> <span
+                        class='textDonees'><?= $infos['email'] ?></span></div>
+                <div class='donnee'><span class='label'>Alias :</span> <span class='textDonees'><?= $alias ?></span>
+                </div>
+            </div>
         </div>
 
         <div class="modif">
@@ -188,6 +211,21 @@
             </form>
         </div>
 
+        <div class="vitrine-profil">
+            <?php foreach ($groupes as $type => $items) { ?>
+                <?php foreach ($items as $item) { ?>
+                    <div class="profil-item">
+                        <img src="<?= htmlspecialchars($item['photoItem']) ?>">
+                        <div class="carte-header">
+                            <strong><?= htmlspecialchars($item['nomItem']) ?></strong>
+                            <div class="quantite">x<?= $item['qtInventaire'] ?></div>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+        </div>
+        </div>
+
 
     </div>
 
@@ -217,5 +255,6 @@
         }
     </script>
 </main>
+
 
 <?php include 'include/footer.php' ?>

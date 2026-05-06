@@ -48,8 +48,7 @@ class ReviewDAL
 
     public static function selectReview(PDO $connexion, int $idItem, int $idJoueur)
     {
-        $sql = "SELECT * FROM evaluations 
-            WHERE Item_idItem = :item AND JoueursJeu_idJoueur = :user";
+        $sql = "SELECT * FROM evaluations WHERE Item_idItem = :item AND JoueursJeu_idJoueur = :user";
 
         $stmt = $connexion->prepare($sql);
         $stmt->bindValue(':item', $idItem, PDO::PARAM_INT);
@@ -58,6 +57,17 @@ class ReviewDAL
 
         return $stmt->fetch();
     }
+
+    public static function selectByNumber(PDO $connexion, int $idItem, int $etoiles){
+    $sql = "SELECT e.*, jj.alias, jj.photoProfil FROM evaluations e INNER JOIN joueursjeu jj on e.JoueursJeu_idJoueur = jj.idJoueur WHERE Item_idItem = :idItem AND etoiles = :etoiles";
+
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindValue(':etoiles', $etoiles, PDO::PARAM_INT);
+    $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(); 
+}
 
     public static function updateReview(PDO $connexion, int $idItem, int $idJoueur, string $comment, int $stars)
     {

@@ -11,7 +11,9 @@
     display: flex;
     justify-content: center;
 
-    flex-direction: column;
+    display: flex;
+    flex-direction: column; 
+    gap: 30px;
 
 }
 .donnees{
@@ -118,3 +120,86 @@
     flex-direction: column;
     width: 100%;
 }
+
+
+
+
+.donnees {
+    flex: 1;              
+    align-self: stretch;  
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.imageProfil {
+    width: 250px;     
+    height: 250px;
+    border-radius: 12px;
+    border: 3px solid #7AAACE;
+    object-fit: cover;
+}
+
+.donnee{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    
+}
+.label {
+    width: 120px;
+    font-weight: bold;
+    color: #c9a86a;
+}
+
+.profilBox{
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(201, 168, 106, 0.4);
+    padding: 3px;
+    background-color: #7AAACE;
+    color:white;
+}
+
+.textDonees{
+    color:white;
+}
+
+.profilRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.profil-item {
+    width: 150px;
+    background: #7AAACE;
+    border: 2px solid #c9a86a;
+    color: white;
+    padding: 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    border-radius: 12px;
+    margin:0;
+}
+
+.vitrine-profil {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    width: 100%;
+    margin-left: 70px;
+}
+
+.item-inventaire{
+    flex:1;
+    flex-direction:row;
+}
+
+
