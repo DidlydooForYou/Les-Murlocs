@@ -10,11 +10,11 @@
 
     if(IS_POST){
         // Init
-        $nouvelAlias = $alias;
         $erreurAlias = "";
+        $erreurMDP = "";
 
         // Checks
-        if(isset($_POST['alias'])){
+        if(isset($_POST['alias']) && $_POST['alias'] != ""){
             if(strlen($_POST['alias']) < 2 || strlen($_POST['alias']) > 50){
                 $erreurAlias = $erreurAlias."L'alias doit contenir entre 2 et 50 charactères \n";
             }
@@ -22,10 +22,17 @@
                 $erreurAlias = $erreurAlias."Cet alias est déjà pris";
             }
             if($erreurAlias === ""){
-                $nouvelAlias = $_POST['alias'];
+                JoueurDAL::modifAlias($connexion,$_SESSION['id'], $_POST['alias']);
             }
         }
 
+        if( (isset($_POST['current-mdp']) && $_POST['current-mdp'] != "") ||
+            (isset($_POST['nouv-mdp']) && $_POST['nouv-mdp'] != "") ||
+            (isset($_POST['nouv-mdp-con']) && $_POST['nouv-mdp-con'] != "")) {
+            
+            
+
+        }
         
     }
 ?>
@@ -63,19 +70,29 @@ foreach ($inventaire as $item) {
             <img class="imageProfil" src="<?= $infos['photoProfil'] ?>" alt="<?= $alias ?>">
 
             <div class="donnees">
-                <div class='donnee'><span class='label'>Nom :</span> <span
-                        class='textDonees'><?= $infos['nom'] ?></span></div>
-                <div class='donnee'><span class='label'>Prenom :</span> <span
-                        class='textDonees'><?= $infos['prenom'] ?></span></div>
-                <div class='donnee'><span class='label'>Email :</span> <span
-                        class='textDonees'><?= $infos['email'] ?></span></div>
-                <div class='donnee'><span class='label'>Alias :</span> <span class='textDonees'><?= $alias ?></span>
+                <div class='donnee'>
+                    <span class='label'>Nom :</span> 
+                    <span class='textDonees'><?= $infos['nom'] ?></span>
+                </div>
+                <div class='donnee'>
+                    <span class='label'>Prenom :</span> 
+                    <span class='textDonees'><?= $infos['prenom'] ?></span>
+                </div>
+                <div class='donnee'>
+                    <span class='label'>Email :</span> 
+                    <span class='textDonees'><?= $infos['email'] ?></span>
+                </div>
+                <div class='donnee'>
+                    <span class='label'>Alias :</span> 
+                    <span class='textDonees'><?= $alias ?></span>
+                </div>
+                <div class="donnee" style="border-bottom:none; justify-content: end;">
+                    <button class="btn btn-boot mt-auto" onclick="toggleDisplay('modif-container')">Modifier mon profil</button>
                 </div>
             </div>
         </div>
 
         <div class="modif">
-            <button class="btn btn-boot mt-auto" onclick="toggleDisplay('modif-container')">Modifier mon profil</button>
 
             <form id="modif-container" action="profil.php" method="POST">
 
@@ -89,7 +106,7 @@ foreach ($inventaire as $item) {
 
                     <div class="modif-data">
                         <label for="alias" class="modif-label"> Nouvel alias :</label>
-                        <input name="alias" type="text" class="modif-input" placeholder="Entrez votre nouvel alias"/>
+                        <input name="alias" type="text" class="modif-input" placeholder="Entrez votre nouvel alias" minlength="2" maxlength="50"/>
                         
                         <?php if(isset($erreurAlias)) : ?>
                             <div style="color:red;"><?=$erreurAlias?></div>
@@ -105,17 +122,17 @@ foreach ($inventaire as $item) {
                     
                     <div class="modif-data">
                         <label for="current-mdp" class="modif-label"> Mot de passe actuel :</label>
-                        <input name="current-mdp" type="password" class="modif-input" placeholder="Entrez votre mot de passe actuel"/>
+                        <input name="current-mdp" type="password" class="modif-input" placeholder="Entrez votre mot de passe actuel" />
                     </div>
 
                     <div class="modif-data">
                         <label for="nouv-mdp" class="modif-label"> Nouveau mot de passe :</label>
-                        <input name="nouv-mdp" type="password" class="modif-input" placeholder="Entrez votre nouveau mot de passe"/>
+                        <input name="nouv-mdp" type="password" class="modif-input" placeholder="Entrez votre nouveau mot de passe" minlength="8" maxlength="50"/>
                     </div>
 
                     <div class="modif-data">
                         <label for="nouv-mdp-con" class="modif-label"> Confirmer nouveau mot de passe :</label>
-                        <input name="nouv-mdp-con" type="password" class="modif-input" placeholder="Confirmez votre nouveau mot de passe"/>
+                        <input name="nouv-mdp-con" type="password" class="modif-input" placeholder="Confirmez votre nouveau mot de passe" minlength="8" maxlength="50"/>
                         
                         <?php if(isset($erreurMdp)) : ?>
                             <div style="color:red;"><?=$erreurMdp?></div>
@@ -135,7 +152,7 @@ foreach ($inventaire as $item) {
 
                     <div class="modif-data">
                         <label for="email" class="modif-label"> Nouvelle adresse courriel :</label>
-                        <input name="email" type="text" class="modif-input" placeholder="Entrez votre nouvelle adresse courriel"/>
+                        <input name="email" type="text" class="modif-input" placeholder="Entrez votre nouvelle adresse courriel" minlength="6" maxlength="254"/>
                         
                         <?php if(isset($erreurCourriel)) : ?>
                             <div style="color:red;"><?=$erreurCourriel?></div>
@@ -156,7 +173,7 @@ foreach ($inventaire as $item) {
 
                     <div class="modif-data">
                         <label for="nom" class="modif-label"> Nouveau nom :</label>
-                        <input name="nom" type="text" class="modif-input" placeholder="Entrez votre nouveau nom"/>
+                        <input name="nom" type="text" class="modif-input" placeholder="Entrez votre nouveau nom" minlength="2" maxlength="25"/>
                         
                         <?php if(isset($erreurNom)) : ?>
                             <div style="color:red;"><?=$erreurNom?></div>
@@ -171,7 +188,7 @@ foreach ($inventaire as $item) {
 
                     <div class="modif-data">
                         <label for="prenom" class="modif-label"> Nouveau prénom :</label>
-                        <input name="prenom" type="text" class="modif-input" placeholder="Entrez votre nouveau prénom"/>
+                        <input name="prenom" type="text" class="modif-input" placeholder="Entrez votre nouveau prénom" minlength="2" maxlength="25"/>
                         
                         <?php if(isset($erreurPrenom)) : ?>
                             <div style="color:red;"><?=$erreurPrenom?></div>

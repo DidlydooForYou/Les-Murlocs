@@ -20,6 +20,16 @@ class JoueurDAL{
         $statement->execute();
 
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
 
+    public static function modifAlias(PDO $connexion, int $idJoueur, string $alias){
+        $sql = "UPDATE joueursjeu set alias = :alias where idJoueur = :idJoueur";
+
+        $stmt = $connexion->prepare($sql);
+        
+        $stmt->bindValue('alias', $alias, PDO::PARAM_STR);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
     }
 }
