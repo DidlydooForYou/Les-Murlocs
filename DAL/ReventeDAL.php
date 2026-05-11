@@ -158,6 +158,28 @@ class ReventeDAL
         return $stmt->execute();
     }
 
+    public static function selectByUser(PDO $connexion, int $idJoueur): array
+    {
+        $sql = "SELECT 
+                r.idItem, r.idJoueur, r.nomItem, r.prixOr, r.prixArgent, r.prixBronze,
+                r.photoItem, r.qttItem, r.type, r.qtRevente,
+                j.alias AS vendeur_alias,
+                j.photoProfil AS vendeur_photo
+            FROM revente r
+            LEFT JOIN evaluations e ON r.idItem = e.Item_idItem
+            LEFT JOIN joueursjeu j ON r.idJoueur = j.idJoueur
+            WHERE r.idJoueur LIKE :idJoueur
+            GROUP BY r.idItem, r.nomItem, r.photoItem, j.alias, j.photoProfil";
 
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
 }
 ?>

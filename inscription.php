@@ -83,14 +83,15 @@ if (isset($validite)) {
 
             Email::readConfig($_SERVER['DOCUMENT_ROOT'] . '/gmail.ini');
 
+
             $subject = "Bienvenue sur DarQuest!";
             $message = "<h1>Merci d'avoir créé un compte, $prenom!</h1>
             <p>Veuillez confirmer votre adresse courriel :</p>
             <p><a href='http://darquestgud:8080/valider.php?email=$email'>Cliquez ici pour valider</a></p>";
 
             Email::send($email, $subject, $message);
-            header('Location:connexion.php');
-            exit;
+            exit; // <-- REMOVE the redirect so you can see PHPMailer debug
+
         }
 
     }

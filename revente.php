@@ -113,7 +113,7 @@ include 'include/nav.php';
                                 </div>
                             </div>
 
-                            <br> 
+                            <br>
                             <?php if ($product['qttItem'] > 10): ?>
                                 <p></p>
                             <?php elseif ($product['qttItem'] > 0): ?>
@@ -160,7 +160,8 @@ include 'include/nav.php';
 
 
                                     <?php else:          // Si item est pas dans le cart ?>
-                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)"></button>
+                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
+                                            class="btn btn-boot mt-auto">Ajouter au panier</button>
                                     <?php endif; ?>
                                 <?php endif; ?>
 
