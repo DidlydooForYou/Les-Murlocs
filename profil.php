@@ -109,6 +109,31 @@
             }
         }
         #endregion
+
+        #region Checks Images
+
+        if (isset($_FILES['url']) && $_FILES['url']['name'] != '') {
+
+            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+                $chemin = "public/images/profilBase.webp";
+            } else {
+                $repertoire = 'public/images/';
+                $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
+                if ($extension != "avif") {
+                    $chemin = "public/images/profilBase.webp";
+                } else {
+                    $chemin = $repertoire . $_FILES['url']['name'];
+                    if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+                    } else {
+                        $validite = false;
+                    }
+                }
+            }
+            JoueurDAL::modifPhotoProfil($connexion,$_SESSION['id'], $chemin);
+        }
+        
+
+        #endregion
     }
 ?>
 
@@ -168,7 +193,7 @@ foreach ($inventaire as $item) {
 
         <div class="modif">
 
-            <form id="modif-container" action="profil.php" method="POST">
+            <form id="modif-container" action="profil.php" method="POST" enctype="multipart/form-data">
 
                 <button type="button" class="modif-subtitle" onclick="toggleDisplay('modif-alias')">Alias</button>
                 <div id="modif-alias" class="modif-subcontainer">
@@ -182,7 +207,7 @@ foreach ($inventaire as $item) {
                         <label for="alias" class="modif-label"> Nouvel alias :</label>
                         <input name="alias" type="text" class="modif-input" placeholder="Entrez votre nouvel alias" minlength="2" maxlength="50"/>
                         
-                        <?php if(isset($erreurAlias)) : ?>
+                        <?php if(isset($erreurAlias) && $erreurAlias != "") : ?>
                             <div style="color:red;"><?=$erreurAlias?></div>
                             <script>
                                 document.getElementById('modif-alias').style.display = "block";
@@ -212,7 +237,7 @@ foreach ($inventaire as $item) {
                         <label for="nouv-mdp-con" class="modif-label"> Confirmer nouveau mot de passe :</label>
                         <input name="nouv-mdp-con" type="password" class="modif-input" placeholder="Confirmez votre nouveau mot de passe" minlength="8" maxlength="50"/>
                         
-                        <?php if(isset($erreurMdp)) : ?>
+                        <?php if(isset($erreurMdp) && $erreurMdp != "") : ?>
                             <div style="color:red;"><?=$erreurMdp?></div>
                             <script>
                                 document.getElementById('modif-mdp').style.display = "block";
@@ -236,7 +261,7 @@ foreach ($inventaire as $item) {
                         <label for="email" class="modif-label"> Nouvelle adresse courriel :</label>
                         <input name="email" type="email" class="modif-input" placeholder="Entrez votre nouvelle adresse courriel" minlength="6" maxlength="254"/>
                         
-                        <?php if(isset($erreurCourriel)) : ?>
+                        <?php if(isset($erreurCourriel) && $erreurCourriel != "") : ?>
                             <div style="color:red;"><?=$erreurCourriel?></div>
                             <script>
                                 document.getElementById('modif-courriel').style.display = "block";
@@ -261,7 +286,7 @@ foreach ($inventaire as $item) {
                         <label for="nom" class="modif-label"> Nouveau nom :</label>
                         <input name="nom" type="text" class="modif-input" placeholder="Entrez votre nouveau nom" minlength="2" maxlength="25"/>
                         
-                        <?php if(isset($erreurNom)) : ?>
+                        <?php if(isset($erreurNom) && $erreurNom != "") : ?>
                             <div style="color:red;"><?=$erreurNom?></div>
                             <script>
                                 document.getElementById('modif-nom').style.display = "block";
@@ -280,7 +305,7 @@ foreach ($inventaire as $item) {
                         <label for="prenom" class="modif-label"> Nouveau prénom :</label>
                         <input name="prenom" type="text" class="modif-input" placeholder="Entrez votre nouveau prénom" minlength="2" maxlength="25"/>
                         
-                        <?php if(isset($erreurPrenom)) : ?>
+                        <?php if(isset($erreurPrenom) && $erreurPrenom != "") : ?>
                             <div style="color:red;"><?=$erreurPrenom?></div>
                             <script>
                                 document.getElementById('modif-nom').style.display = "block";
@@ -312,7 +337,7 @@ foreach ($inventaire as $item) {
                             <img id="pfp-preview" class="pfp-preview" style="display:none;">
                         </div>
                         
-                        <?php if(isset($erreurPhotos)) : ?>
+                        <?php if(isset($erreurPhoto) && $erreurPhoto) : ?>
                             <div style="color:red;"><?=$erreurPhoto?></div>
                         <?php endif;?>
                     </div>
