@@ -32,4 +32,59 @@ class JoueurDAL{
         
         $stmt->execute();
     }
+
+    public static function checkPassword(PDO $connexion, int $idJoueur, string $password) : bool {
+        $sql = "SELECT motDePasse FROM joueursinfo WHERE JoueursJeu_idJoueur = :idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+        $correctMdp = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return password_verify($password, $correctMdp['motDePasse']);
+    }
+
+    public static function modifPasword(PDO $connexion, int $idJoueur, string $password){
+        
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE joueursinfo set motDePasse = :mdp where JoueursJeu_idJoueur = :idJoueur";
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue('mdp', $hashed, PDO::PARAM_STR);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
+    }
+
+    public static function modifEmail(PDO $connexion, int $idJoueur, string $email){
+        $sql = "UPDATE joueursinfo set email = :email where JoueursJeu_idJoueur = :idJoueur";
+
+        $stmt = $connexion->prepare($sql);
+        
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
+    }
+
+    public static function modifNom(PDO $connexion, int $idJoueur, string $nom){
+        $sql = "UPDATE joueursinfo set nom = :nom where JoueursJeu_idJoueur = :idJoueur";
+
+        $stmt = $connexion->prepare($sql);
+        
+        $stmt->bindValue('nom', $nom, PDO::PARAM_STR);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
+    }
+
+    public static function modifPrenom(PDO $connexion, int $idJoueur, string $prenom){
+        $sql = "UPDATE joueursinfo set prenom = :prenom where JoueursJeu_idJoueur = :idJoueur";
+
+        $stmt = $connexion->prepare($sql);
+        
+        $stmt->bindValue('prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
+    }
 }
