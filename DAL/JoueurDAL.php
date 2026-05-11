@@ -87,4 +87,15 @@ class JoueurDAL{
         
         $stmt->execute();
     }
+
+        public static function modifPhotoProfil(PDO $connexion, int $idJoueur, $photoProfil){
+        $sql = "UPDATE joueursjeu set photoProfil = :photo where idJoueur = :idJoueur";
+
+        $stmt = $connexion->prepare($sql);
+        
+        $stmt->bindValue('photo', $photoProfil, PDO::PARAM_STR);
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
 }

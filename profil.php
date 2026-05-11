@@ -109,6 +109,30 @@
             }
         }
         #endregion
+
+        #region Checks Images
+
+        if (isset($_FILES['url'])) {
+            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
+                $chemin = "public/images/profilBase.webp";
+            } else {
+                $repertoire = 'public/images/';
+                $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
+                if ($extension != "avif") {
+                    $chemin = "public/images/profilBase.webp";
+                } else {
+                    $chemin = $repertoire . $_FILES['url']['name'];
+                    if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+                    } else {
+                        $validite = false;
+                    }
+                }
+            }
+            JoueurDAL::modifPhotoProfil($connexion,$_SESSION['id'], $chemin);
+        }
+        
+
+        #endregion
     }
 ?>
 
@@ -168,7 +192,7 @@ foreach ($inventaire as $item) {
 
         <div class="modif">
 
-            <form id="modif-container" action="profil.php" method="POST">
+            <form id="modif-container" action="profil.php" method="POST" enctype="multipart/form-data">
 
                 <button type="button" class="modif-subtitle" onclick="toggleDisplay('modif-alias')">Alias</button>
                 <div id="modif-alias" class="modif-subcontainer">
