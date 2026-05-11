@@ -11,12 +11,15 @@
     if(IS_POST){
         // Init
         $erreurAlias = "";
-        $erreurMDP = "";
+        $erreurMdp = "";
+        $erreurCourriel = "";
+        $erreurNom = "";
+        $erreurPrenom = "";
 
-        // Checks
+        #region Alias Checks
         if(isset($_POST['alias']) && $_POST['alias'] != ""){
-            if(strlen($_POST['alias']) < 2 || strlen($_POST['alias']) > 50){
-                $erreurAlias = $erreurAlias."L'alias doit contenir entre 2 et 50 charactères \n";
+            if(strlen($_POST['alias']) < 2 || strlen($_POST['alias']) > 40){
+                $erreurAlias = $erreurAlias."L'alias doit contenir entre 2 et 40 charactères <br>";
             }
             if(Database::alias_pris($_POST['alias'])){
                 $erreurAlias = $erreurAlias."Cet alias est déjà pris";
@@ -25,15 +28,87 @@
                 JoueurDAL::modifAlias($connexion,$_SESSION['id'], $_POST['alias']);
             }
         }
+        #endregion
 
-        if( (isset($_POST['current-mdp']) && $_POST['current-mdp'] != "") ||
-            (isset($_POST['nouv-mdp']) && $_POST['nouv-mdp'] != "") ||
-            (isset($_POST['nouv-mdp-con']) && $_POST['nouv-mdp-con'] != "")) {
-            
+        #region MDP Checks
+        $mdpAllParamsSet = 0;
+        $mdpCorrect;
+
+        if(isset($_POST['current-mdp']) && $_POST['current-mdp'] != "") {
+            $mdpAllParamsSet++;
+
+            // Verif
             
 
+            $mdpCorrect = JoueurDAL::checkPassword($connexion, $_SESSION['id'], $_POST['current-mdp']);
+
+
+            if(!$mdpCorrect) { 
+                $erreurMdp = $erreurMdp."Le mot de passe saisi est incorrect <br>";
+            }  
+        }
+
+        if(isset($_POST['nouv-mdp']) && $_POST['nouv-mdp'] != "") {
+            $mdpAllParamsSet++;
+
+            // Verif
+            if (strlen($_POST['nouv-mdp']) < 8 || strlen($_POST['nouv-mdp']) > 50){
+                $erreurMdp = $erreurMdp."Votre nouveau mot de passe doit contenir entre 8 et 50 charactères <br>";
+            }
+        }
+
+        if(isset($_POST['nouv-mdp-con']) && $_POST['nouv-mdp-con'] != "") {
+            $mdpAllParamsSet++;
+
+            // Verif
+            if($_POST['nouv-mdp-con'] != $_POST['nouv-mdp']){
+                $erreurMdp = $erreurMdp."Les nouveaux mots de passe doivent être identiques <br>";
+            }
         }
         
+        if($mdpAllParamsSet > 0 && $mdpAllParamsSet < 3){
+            $erreurMdp = "Veuillez compléter tous les champs <br>".$erreurMdp;
+        }
+        elseif($mdpAllParamsSet == 3 && $erreurMdp === ""){
+            JoueurDAL::modifPasword($connexion, $_SESSION['id'], $_POST['nouv-mdp']);
+        }
+        #endregion
+
+        #region Checks Adresse Courriel
+        if(isset($_POST['email']) && $_POST['email'] != ""){
+            if(strlen($_POST['email']) < 6 || strlen($_POST['email']) > 60){
+                $erreurCourriel = $erreurCourriel."L'adresse courriel devrait être entre 6 et 60 charactères<br>";
+            }
+            if(Database::email_pris($_POST['email'])){
+                $erreurCourriel = $erreurCourriel."Cette adresse courriel possède déjà un compte";
+            }
+            if($erreurCourriel === ""){
+                JoueurDAL::modifEmail($connexion, $_SESSION['id'], $_POST['email']);
+            }
+        }
+        #endregion
+        
+        #region Checks Nom
+        if(isset($_POST['nom']) && $_POST['nom'] != ""){
+            if(strlen($_POST['nom']) < 2 || strlen($_POST['nom']) > 40){
+                $erreurNom = $erreurNom."Votre nom devrait être entre 2 et 40 charactères<br>";
+            }
+            if($erreurCourriel === ""){
+                JoueurDAL::modifNom($connexion, $_SESSION['id'], $_POST['nom']);
+            }
+        }
+        #endregion
+
+        #region Checks Prenom
+        if(isset($_POST['prenom']) && $_POST['prenom'] != ""){
+            if(strlen($_POST['prenom']) < 2 || strlen($_POST['prenom']) > 40){
+                $erreurPrenom = $erreurPrenom."Votre prénom devrait être entre 2 et 40 charactères<br>";
+            }
+            if($erreurCourriel === ""){
+                JoueurDAL::modifPrenom($connexion, $_SESSION['id'], $_POST['prenom']);
+            }
+        }
+        #endregion
     }
 ?>
 
@@ -63,7 +138,6 @@ foreach ($inventaire as $item) {
     }
 }
 ?>
-
 <main class="main">
     <div class="profilMain">
         <div class="profilRow">
@@ -110,6 +184,10 @@ foreach ($inventaire as $item) {
                         
                         <?php if(isset($erreurAlias)) : ?>
                             <div style="color:red;"><?=$erreurAlias?></div>
+                            <script>
+                                document.getElementById('modif-alias').style.display = "block";
+                                document.getElementById('modif-container').style.display = "block";
+                            </script>
                         <?php endif;?>
                     </div>
 
@@ -136,6 +214,10 @@ foreach ($inventaire as $item) {
                         
                         <?php if(isset($erreurMdp)) : ?>
                             <div style="color:red;"><?=$erreurMdp?></div>
+                            <script>
+                                document.getElementById('modif-mdp').style.display = "block";
+                                document.getElementById('modif-container').style.display = "block";
+                            </script>
                         <?php endif;?>
                     </div>
 
@@ -152,10 +234,14 @@ foreach ($inventaire as $item) {
 
                     <div class="modif-data">
                         <label for="email" class="modif-label"> Nouvelle adresse courriel :</label>
-                        <input name="email" type="text" class="modif-input" placeholder="Entrez votre nouvelle adresse courriel" minlength="6" maxlength="254"/>
+                        <input name="email" type="email" class="modif-input" placeholder="Entrez votre nouvelle adresse courriel" minlength="6" maxlength="254"/>
                         
                         <?php if(isset($erreurCourriel)) : ?>
                             <div style="color:red;"><?=$erreurCourriel?></div>
+                            <script>
+                                document.getElementById('modif-courriel').style.display = "block";
+                                document.getElementById('modif-container').style.display = "block";
+                            </script>
                         <?php endif;?>
                     </div>
 
@@ -177,6 +263,10 @@ foreach ($inventaire as $item) {
                         
                         <?php if(isset($erreurNom)) : ?>
                             <div style="color:red;"><?=$erreurNom?></div>
+                            <script>
+                                document.getElementById('modif-nom').style.display = "block";
+                                document.getElementById('modif-container').style.display = "block";
+                            </script>
                         <?php endif;?>
                     </div>
 
@@ -192,6 +282,10 @@ foreach ($inventaire as $item) {
                         
                         <?php if(isset($erreurPrenom)) : ?>
                             <div style="color:red;"><?=$erreurPrenom?></div>
+                            <script>
+                                document.getElementById('modif-nom').style.display = "block";
+                                document.getElementById('modif-container').style.display = "block";
+                            </script>
                         <?php endif;?>
                     </div>
 
