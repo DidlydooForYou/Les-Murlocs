@@ -181,5 +181,22 @@ class ReventeDAL
 
         return $result;
     }
+
+    public static function selectByUserAndItem($conn, $idJoueur, $idItem)
+    {
+        $sql = "SELECT * FROM revente WHERE idJoueur = ? AND idItem = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$idJoueur, $idItem]);
+        return $stmt->fetch();
+    }
+
+    public static function updateQuantite($conn, $idJoueur, $idItem, $qt)
+    {
+        $sql = "UPDATE revente SET qttItem = ? WHERE idJoueur = ? AND idItem = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$qt, $idJoueur, $idItem]);
+    }
+
+
 }
 ?>

@@ -77,7 +77,7 @@ if ($idJoueur) {
     $revente = ReventeDAL::selectByUser($connexion, $idJoueur);
 
     foreach ($revente as $item) {
-        $cartItems[$item['idItem']] = $item['qtRevente'];
+        $cartItems[$item['idItem']] = $item['qttItem'];
     }
 }
 
@@ -157,7 +157,7 @@ foreach ($inventaire as $item) {
                                         -
                                     </button>
 
-                                    <input id="InputQte<?= $item['idItem'] ?>" value="<?= $itemQuantite ?>" type="number"
+                                    <input id="InputQte<?= $item['idItem'] ?>" value="<?= $itemQuantite ?>" type="number" data-max="<?= $item['qtInventaire'] ?>"
                                         onblur="changeReventeQuantite(<?= $idJoueur ?>, <?= $item['idItem'] ?>, this.value)">
 
                                     <button type="button" onclick="addingReventeQuantite(<?= $idJoueur ?>, <?= $item['idItem'] ?>, 1)">
