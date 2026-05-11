@@ -264,10 +264,11 @@ include 'include/nav.php';
                 <?php if (!$stats || count($stats) == 0) : ?>
                         <p>Vous n'avez pas encore de statistiques</p>
                 <?php else : ?>
+                    <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
                     <canvas id="graphBonne" style="width: 100%;max-width:700px"></canvas>
                     <canvas id="graphRépondu" style="width: 100%;max-width:700px"></canvas>
                     <canvas id="graphBonneDifficulte" style="width: 100%;max-width:700px"></canvas>
-
+                    </div>
                 <?php endif;?>
 
                 <script>
