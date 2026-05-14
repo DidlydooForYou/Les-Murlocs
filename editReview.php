@@ -13,8 +13,10 @@ $idItem = $_GET['idItem'];
 $idJoueur = $_GET['idJoueur'];
 
 $review = ReviewDAL::selectReview($connexion, $idItem, $idJoueur);
+if (IS_ADMIN){
 
-if (!$review || $idJoueur != $_SESSION['id']) {
+}
+else if (!$review || $idJoueur != $_SESSION['id']) {
     header("Location: reviews.php?id=$idItem");
     exit;
 }
@@ -41,7 +43,7 @@ if (!empty($_GET['id'])) {
 }
 
 ?>
-
+<Title>DarQuest - Modifier Reviews</Title>
 <link rel="stylesheet" href="public/css/reviews.css">
 
 <main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">

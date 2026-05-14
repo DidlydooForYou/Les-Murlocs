@@ -33,7 +33,7 @@ class Email
         try {
             $mail->isSMTP();
             $mail->SMTPAuth = true;
-            $mail->SMTPDebug = 2;
+            $mail->SMTPDebug = 0;
             $mail->Debugoutput = 'html';
 
 
