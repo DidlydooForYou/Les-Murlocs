@@ -80,6 +80,43 @@ class InventoryDAL
         $stmt->execute();
     }
 
+    public static function decreaseInventory(PDO $connexion, int $idJoueur, int $idItem, int $amount)
+    {
+        $sql = "
+        UPDATE inventaire
+        SET qttItem = qttItem - :amount
+        WHERE JoueursJeu_idJoueur = :idJoueur
+        AND Item_idItem = :idItem
+        AND qttItem >= :amount
+    ";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':amount', $amount, PDO::PARAM_INT);
+        $stmt->bindValue(':idJoueur', $idJoueur, PDO::PARAM_INT);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+    public static function increaseInventory(PDO $connexion, int $idJoueur, int $idItem, int $amount)
+    {
+        $sql = "
+        UPDATE inventaire
+        SET qttItem = qttItem + :amount
+        WHERE JoueursJeu_idJoueur = :idJoueur
+        AND Item_idItem = :idItem
+    ";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':amount', $amount, PDO::PARAM_INT);
+        $stmt->bindValue(':idJoueur', $idJoueur, PDO::PARAM_INT);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+
+
 }
 
 

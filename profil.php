@@ -7,6 +7,7 @@
     $connexion = Database::getConnexion();
     $infos = JoueurDAL::getInfos($connexion,$_SESSION['id']);
     $alias = Database::obtenir_alias($_SESSION['id']);
+    $idProfil = isset($_GET['id']) ? intval($_GET['id']) : $_SESSION['id'];
 
     if(IS_POST){
         // Init
@@ -185,9 +186,11 @@ foreach ($inventaire as $item) {
                     <span class='label'>Alias :</span> 
                     <span class='textDonees'><?= $alias ?></span>
                 </div>
+                <?php if ($idProfil === $_SESSION['id']) : ?>
                 <div class="donnee" style="border-bottom:none; justify-content: end;">
                     <button class="btn btn-boot mt-auto" onclick="toggleDisplay('modif-container')">Modifier mon profil</button>
                 </div>
+                <?php endif ?>
             </div>
         </div>
 
