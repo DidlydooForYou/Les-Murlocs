@@ -56,7 +56,7 @@ class JoueurDAL{
     }
 
     public static function modifEmail(PDO $connexion, int $idJoueur, string $email){
-        $sql = "UPDATE joueursinfo set email = :email where JoueursJeu_idJoueur = :idJoueur";
+        $sql = "UPDATE joueursinfo set email = :email, confirmed = 0 where JoueursJeu_idJoueur = :idJoueur";
 
         $stmt = $connexion->prepare($sql);
         
