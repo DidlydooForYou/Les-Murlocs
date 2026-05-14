@@ -111,7 +111,6 @@
         #endregion
 
         #region Checks Images
-
         if (isset($_FILES['url']) && $_FILES['url']['name'] != '') {
 
             if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
@@ -131,8 +130,6 @@
             }
             JoueurDAL::modifPhotoProfil($connexion,$_SESSION['id'], $chemin);
         }
-        
-
         #endregion
     }
 ?>

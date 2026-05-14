@@ -639,6 +639,8 @@ html, body {
         min-width: none;
     }
 
+    
+
     /*Modified header*/
     .headerContainer{
         height: auto;
@@ -667,7 +669,10 @@ html, body {
 
     .navContainer{
         /*border: 1px solid red;/**/
+        display: flex;
+
         width: 100%;
+        height: 50px;
 
         overflow-x: auto;
         overflow-y: visible;
@@ -678,6 +683,9 @@ html, body {
 
     .navElement{
         flex:0 0 auto;
+
+        
+        min-width: 0;
 
         padding: 5px;
         margin: 5px;

@@ -1,4 +1,4 @@
-<nav class="navContainer" style="">
+<nav class="navContainer">
 
     <span class="navLinkContainer">
         <a class="navElement navLink" href="index.php">Vitrine</a>
@@ -66,5 +66,4 @@
             </div>
         </div>
     </div>
-
 </nav>
