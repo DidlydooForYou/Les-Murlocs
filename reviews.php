@@ -216,13 +216,14 @@ foreach ($starsCount as $star => $count) {
 
                                     <div class="modification-comments">
                                         <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id'] || IS_ADMIN): ?>
-                                            <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $_SESSION['id'] ?>"
+                                            <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $product['JoueursJeu_idJoueur']?>"
                                                 class="edit-btn">✎ Modifier</a>
                                         <?php endif; ?>
                                         <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id'] || IS_ADMIN): ?>
                                             <a class="edit-btn"
-                                                onclick="confirmDelete(<?= $product['Item_idItem'] ?>, <?= $product['JoueursJeu_idJoueur'] ?>)">⛔
-                                                Retirer</a>
+                                                href="deleteReview.php?idItem=<?= $product['Item_idItem'] ?>&idJoueur=<?= $product['JoueursJeu_idJoueur'] ?>">
+                                                ⛔ Retirer
+                                            </a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
