@@ -39,10 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "error" => $result
         ]);
     } else {
+        $items = PanierDAL::selectByUser($connexion, $idJoueur);
         $result = PanierDAL::acheterItem($connexion, $idJoueur);
 
         if ($result) {
-            $items = PanierDAL::selectByUser($connexion, $idJoueur);
+           
 
             foreach ($items as $item) {
                 AchatDAL::insertPurchase($connexion, $item['idItem'], $idJoueur);

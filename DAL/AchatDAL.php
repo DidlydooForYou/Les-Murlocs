@@ -19,7 +19,7 @@ class AchatDAL{
     $statement = $connexion->prepare($sql);
 
     $statement->bindValue(':idItem', $idItem, PDO::PARAM_INT);
-    $statement->bindValue(':achat', true, PDO::PARAM_BOOL); 
+    $statement->bindValue(':achat', 1, PDO::PARAM_INT); 
     $statement->bindValue(':idJoueur', $idJoueur, PDO::PARAM_INT);
 
     return $statement->execute();
