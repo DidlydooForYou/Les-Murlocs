@@ -137,5 +137,66 @@ class ReventeDAL
 
         return $stmt->fetchAll();
     }
+
+    public static function decrementQuantity(PDO $connexion, int $idItem): bool
+    {
+        $sql = "UPDATE revente 
+            SET qttItem = qttItem - 1 
+            WHERE idItem = :idItem AND qttItem > 0";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public static function deleteIfEmpty(PDO $connexion, int $idItem): bool
+    {
+        $sql = "DELETE FROM revente WHERE idItem = :idItem AND qttItem <= 0";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public static function selectByUser(PDO $connexion, int $idJoueur): array
+    {
+        $sql = "SELECT 
+                r.idItem, r.idJoueur, r.nomItem, r.prixOr, r.prixArgent, r.prixBronze,
+                r.photoItem, r.qttItem, r.type, r.qtRevente,
+                j.alias AS vendeur_alias,
+                j.photoProfil AS vendeur_photo
+            FROM revente r
+            LEFT JOIN evaluations e ON r.idItem = e.Item_idItem
+            LEFT JOIN joueursjeu j ON r.idJoueur = j.idJoueur
+            WHERE r.idJoueur LIKE :idJoueur
+            GROUP BY r.idItem, r.nomItem, r.photoItem, j.alias, j.photoProfil";
+
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue('idJoueur', $idJoueur, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public static function selectByUserAndItem($conn, $idJoueur, $idItem)
+    {
+        $sql = "SELECT * FROM revente WHERE idJoueur = ? AND idItem = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$idJoueur, $idItem]);
+        return $stmt->fetch();
+    }
+
+    public static function updateQuantite($conn, $idJoueur, $idItem, $qt)
+    {
+        $sql = "UPDATE revente SET qttItem = ? WHERE idJoueur = ? AND idItem = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$qt, $idJoueur, $idItem]);
+    }
+
+
 }
 ?>

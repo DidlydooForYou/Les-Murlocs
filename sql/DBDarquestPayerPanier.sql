@@ -20,13 +20,16 @@ BEGIN
   declare v_qttItem int;
   declare v_qtPanier int;
 
+  declare v_fromRevente int;
+
   -- curseur sur le panier
   declare done int default 0; -- condition du curseur
   declare v_erreur int default 0;
   declare cur_items cursor for 
-    select Item_idItem, qtPanier 
-    from Panier 
+    select Item_idItem, qtPanier, fromRevente
+    from Panier
     where JoueursJeu_idJoueur = p_idJoueur;
+
 
   declare continue handler for not found set done = 1; 
 
@@ -41,7 +44,7 @@ BEGIN
   open cur_items;
 
   read_loop: loop
-    fetch cur_items into v_idItem, v_qtPanier;
+    fetch cur_items into v_idItem, v_qtPanier, v_fromRevente;
 
     if done then
       leave read_loop;
@@ -75,28 +78,49 @@ BEGIN
       open cur_items;
 
       read_loop2: loop
-        fetch cur_items into v_idItem, v_qtPanier;
+        fetch cur_items into v_idItem, v_qtPanier, v_fromRevente;
 
         if done then
           leave read_loop2;
         end if;
 
-        -- verifier la quantite de l'item
-        SELECT qttItem
-        INTO v_qttItem
-        FROM Item
+        IF v_fromRevente = 1 THEN
+        -- check le stock revente
+        SELECT qttItem INTO v_qttItem
+        FROM revente
         WHERE idItem = v_idItem;
 
-        -- si quantite insuffisante, annuler toute la transaction
         IF v_qttItem < v_qtPanier THEN
           SET v_erreur = 1;
-          leave read_loop2;
+          LEAVE read_loop2;
         END IF;
 
-        -- reduire la quantite dans item
-        UPDATE Item
+        -- reduire le stock dans revente
+        UPDATE revente
         SET qttItem = qttItem - v_qtPanier
         WHERE idItem = v_idItem;
+
+        -- delete si empty
+        DELETE FROM revente
+        WHERE idItem = v_idItem AND qttItem <= 0;
+
+        ELSE
+          -- check le stock items
+          SELECT qttItem INTO v_qttItem
+          FROM Item
+        WHERE idItem = v_idItem;
+
+        IF v_qttItem < v_qtPanier THEN
+          SET v_erreur = 1;
+          LEAVE read_loop2;
+        END IF;
+
+          -- reduire stock items
+          UPDATE Item
+          SET qttItem = qttItem - v_qtPanier
+          WHERE idItem = v_idItem;
+        END IF;
+
 
         -- ajouter l'item dans inventaire
         INSERT INTO Inventaire(JoueursJeu_idJoueur, Item_idItem, qtInventaire)

@@ -71,7 +71,7 @@ function removeItem(idJoueur, idItem){
 
 function localRefresh(idItem){
     $.ajax({
-        url: "index.php",
+        url: window.location.pathname.includes("revente.php") ? "revente.php" : "index.php",
         success: function(response) {
             let html = $("<div>").html(response);
 

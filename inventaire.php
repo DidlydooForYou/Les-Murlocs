@@ -15,22 +15,19 @@ if (isset($_POST['vendre']) && isset($_POST['idItem'])) {
     header("Location: inventaire.php");
     exit;
 }
-?>
 
-<?php
 include "include/php_setup.php";
 ?>
 
 <link rel="stylesheet" href="public/css/inventaire.css">
+<link rel="stylesheet" href="public/css/panier.css">
 <title>DarQuest - Inventaire</title>
 
 <?php
 include "include/html_setup.php";
 include "include/header.php";
 include "include/nav.php";
-?>
 
-<?php
 $inventaire = [];
 $groupes = [];
 
@@ -65,13 +62,24 @@ if (isset($_POST['vendreMarket']) && isset($_POST['idItem']) && isset($_SESSION[
         $alias
     );
 
-
     InventoryDAL::vendreItem($connexion, $idItem, $idJoueur);
 
     header("Location: inventaire.php");
     exit;
 }
 
+$idJoueur = $_SESSION["id"] ?? null;
+
+$cartItems = [];
+
+if ($idJoueur) {
+    $connexion = Database::getConnexion();
+    $revente = ReventeDAL::selectByUser($connexion, $idJoueur);
+
+    foreach ($revente as $item) {
+        $cartItems[$item['idItem']] = $item['qttItem'];
+    }
+}
 
 foreach ($inventaire as $item) {
     if ($item['qtInventaire'] > 0) {
@@ -83,15 +91,19 @@ foreach ($inventaire as $item) {
 <main class="main">
     <h1 class="py-3 mt-3">Inventaire</h1>
 
-    <?php if (!empty($groupes)) { ?>
+    <?php if (!empty($groupes)): ?>
 
-        <?php foreach ($groupes as $type => $items) { ?>
+        <?php foreach ($groupes as $type => $items): ?>
 
             <h2 class="section-title"><?= ucfirst($type) ?></h2>
 
             <div class="vitrine">
 
-                <?php foreach ($items as $item) { ?>
+                <?php foreach ($items as $item):
+
+                    $isInCart = isset($cartItems[$item['idItem']]);
+                    $itemQuantite = $isInCart ? $cartItems[$item['idItem']] : 0;
+                    ?>
 
                     <div class="carte-item">
 
@@ -105,59 +117,84 @@ foreach ($inventaire as $item) {
 
                             <p class="description"><?= htmlspecialchars($item['description']) ?></p>
 
-                            <?php if ($type === 'arme') { ?>
+                            <?php if ($type === 'arme'): ?>
                                 <div class="label">Efficacité</div>
                                 <div><?= $item['efficacite'] ?? '' ?></div>
 
                                 <div class="label">Type</div>
                                 <div><?= $item['genreArme'] ?? '' ?></div>
 
-                            <?php } elseif ($type === 'armure') { ?>
+                            <?php elseif ($type === 'armure'): ?>
                                 <div class="label">Matière</div>
                                 <div><?= $item['matiere'] ?? '' ?></div>
 
                                 <div class="label">Taille</div>
                                 <div><?= $item['taille'] ?? '' ?></div>
 
-                            <?php } elseif ($type === 'potion') { ?>
+                            <?php elseif ($type === 'potion'): ?>
                                 <div class="label">Effet</div>
                                 <div><?= $item['effet'] ?? '' ?></div>
 
                                 <div class="label">Durée</div>
                                 <div><?= $item['duree'] ?? '' ?></div>
 
-                            <?php } elseif ($type === 'sort') { ?>
+                            <?php elseif ($type === 'sort'): ?>
                                 <div class="label">Instantané</div>
                                 <div><?= ($item['instantane'] ?? 0) ? 'Oui' : 'Non' ?></div>
 
                                 <div class="label">Dommage</div>
                                 <div><?= $item['dommage'] ?? '' ?></div>
-                            <?php } ?>
+                            <?php endif; ?>
                         </div>
 
-                        <form method="post">
-                            <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
-                            <button type="submit" name="vendre" class="btn btn-boot mt-auto">Vendre</button>
-                            <button type="submit" name="vendreMarket" class="btn btn-boot mt-auto">Revendre sur marketplace</button>
-                        </form>
+                        <?php if ($isInCart): ?>
+
+                            <div class="btn btn-boot mt-auto"
+                                style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                <div class="quantity-container">
+                                    <button type="button"
+                                        onclick="console.log('CLICK -'); addingReventeQuantite(<?= $idJoueur ?>, <?= $item['idItem'] ?>, -1)">
+                                        -
+                                    </button>
+
+                                    <input id="InputQte<?= $item['idItem'] ?>" value="<?= $itemQuantite ?>" type="number" data-max="<?= $item['qtInventaire'] ?>"
+                                        onblur="changeReventeQuantite(<?= $idJoueur ?>, <?= $item['idItem'] ?>, this.value)">
+
+                                    <button type="button" onclick="addingReventeQuantite(<?= $idJoueur ?>, <?= $item['idItem'] ?>, 1)">
+                                        +
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        <?php else: ?>
+                            <form method="post">
+                                <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
+                                <button type="submit" name="vendre" class="btn btn-boot mt-auto">Vendre</button>
+                                <button type="submit" name="vendreMarket" class="btn btn-boot mt-auto">Revendre sur marketplace</button>
+                            </form>
+
+                        <?php endif; ?>
 
                     </div>
 
-                <?php } ?>
+                <?php endforeach; ?>
 
             </div>
 
-        <?php } ?>
+        <?php endforeach; ?>
 
-    <?php } else { ?>
+    <?php else: ?>
 
         <h3 style="text-align:center;">Votre inventaire est vide.</h3>
         <div style="text-align:center;">
             <a class="btn btn-boot mt-auto" href="index.php">Revenir</a>
         </div>
 
-    <?php } ?>
+    <?php endif; ?>
 
 </main>
+
+<script src="scripts/fonctions_Revente.js"></script>
 
 <?php include_once INCLUDE_FILE . '/footer.php'; ?>

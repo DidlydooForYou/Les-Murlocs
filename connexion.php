@@ -64,6 +64,14 @@ include 'include/nav.php';
                 <?php if ($erreur): ?>
                     <p class="error"><?= $erreur ?></p>
                 <?php endif; ?>
+                <?php
+                    if (isset($_SESSION['confirEmail'] )){
+                        if ($_SESSION['confirEmail'] ){
+                            echo "<p>Veuillez confirmer votre email pour vous connecter";
+                            $_SESSION['confirEmail'] = false;
+                        }
+                    }
+                ?>
 
 
             </form>

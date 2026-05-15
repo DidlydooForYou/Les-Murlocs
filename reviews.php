@@ -149,9 +149,8 @@ foreach ($starsCount as $star => $count) {
                                         <input type="radio" name="stars" id="star4" value="4"><label for="star4">★</label>
                                         <input type="radio" name="stars" id="star3" value="3"><label for="star3">★</label>
                                         <input type="radio" name="stars" id="star2" value="2"><label for="star2">★</label>
-                                        <input type="radio" name="stars" id="star1" value="1"><label for="star1">★</label>
-                                        <input type="radio" name="stars" id="star0" value="0" checked><label for="star0"
-                                            hidden>☆</label>
+                                        <input checked type="radio" name="stars" id="star1" value="1"><label for="star1">★</label>
+                                 
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-boot send-btn">Envoyer</button>
@@ -216,13 +215,14 @@ foreach ($starsCount as $star => $count) {
 
                                     <div class="modification-comments">
                                         <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id'] || IS_ADMIN): ?>
-                                            <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $_SESSION['id'] ?>"
+                                            <a href="editReview.php?idItem=<?= $id ?>&idJoueur=<?= $product['JoueursJeu_idJoueur']?>"
                                                 class="edit-btn">✎ Modifier</a>
                                         <?php endif; ?>
                                         <?php if (IS_AUTH && $product['JoueursJeu_idJoueur'] == $_SESSION['id'] || IS_ADMIN): ?>
                                             <a class="edit-btn"
-                                                onclick="confirmDelete(<?= $product['Item_idItem'] ?>, <?= $product['JoueursJeu_idJoueur'] ?>)">⛔
-                                                Retirer</a>
+                                                href="deleteReview.php?idItem=<?= $product['Item_idItem'] ?>&idJoueur=<?= $product['JoueursJeu_idJoueur'] ?>">
+                                                ⛔ Retirer
+                                            </a>
                                         <?php endif; ?>
                                     </div>
                                 </div>

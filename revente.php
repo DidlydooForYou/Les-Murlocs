@@ -113,6 +113,7 @@ include 'include/nav.php';
                                 </div>
                             </div>
 
+                            <br>
                             <?php if ($product['qttItem'] > 10): ?>
                                 <p></p>
                             <?php elseif ($product['qttItem'] > 0): ?>

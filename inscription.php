@@ -62,7 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($extension != "avif") {
                 $chemin = "public/images/profilBase.webp";
             } else {
+                var_dump(is_dir(__DIR__ . '/public/images'));
+var_dump(is_writable(__DIR__ . '/public/images'));
                 $chemin = $repertoire . $_FILES['url']['name'];
+                $chemin = __DIR__ . '/' . $chemin;
                 if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
                 } else {
                     $validite = false;
@@ -81,16 +84,19 @@ if (isset($validite)) {
         $erreur = Database::ajouter_joueur($nom, $prenom, $email, $mdp, $chemin, $alias);
         if ($erreur) {
 
-            Email::readConfig($_SERVER['DOCUMENT_ROOT'] . '/gmail.ini');
+            Email::readConfig(__DIR__ . '/gmail.ini');
+           
 
             $subject = "Bienvenue sur DarQuest!";
             $message = "<h1>Merci d'avoir créé un compte, $prenom!</h1>
             <p>Veuillez confirmer votre adresse courriel :</p>
-            <p><a href='http://darquestgud:8080/valider.php?email=$email'>Cliquez ici pour valider</a></p>";
+            <p><a href='http://158.69.48.57/~darquest13/valider.php?email=$email'>Cliquez ici pour valider</a></p>";
 
             Email::send($email, $subject, $message);
+            $_SESSION['confirEmail'] = true;
             header('Location:connexion.php');
             exit;
+
         }
 
     }
