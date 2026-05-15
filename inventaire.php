@@ -8,12 +8,15 @@ require_once 'DAL/ReventeDAL.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
+function headerInventaire(){
+     header("Location: inventaire.php");
+    exit;
+}
 
 if (isset($_POST['vendre']) && isset($_POST['idItem'])) {
     $connexion = Database::getConnexion();
     InventoryDAL::vendreItem($connexion, $_POST['idItem'], $_SESSION['id']);
-    header("Location: inventaire.php");
-    exit;
+   headerInventaire();
 }
 
 include "include/php_setup.php";
@@ -64,8 +67,7 @@ if (isset($_POST['vendreMarket']) && isset($_POST['idItem']) && isset($_SESSION[
 
     InventoryDAL::vendreItem($connexion, $idItem, $idJoueur);
 
-    header("Location: inventaire.php");
-    exit;
+   headerInventaire();
 }
 
 $idJoueur = $_SESSION["id"] ?? null;
