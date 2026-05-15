@@ -116,7 +116,7 @@ legend {
     margin: 40px;
     margin-bottom: 15px;
     margin-top: 15px;
-    min-width: 195px;
+    width: 195px;
 }
 
 .navLink{
@@ -691,7 +691,7 @@ html, body {
         padding:10px;
         margin:2px;
 
-        min-width: 0;
+        width: auto;
         box-sizing: border-box;
         /*
         flex:0 0 auto;
