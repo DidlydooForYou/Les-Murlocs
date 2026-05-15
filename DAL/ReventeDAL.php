@@ -3,23 +3,33 @@ class ReventeDAL
 {
 
     public static function selectAll(PDO $connexion): array
-    {
-        $sql = "SELECT 
-                r.idItem, r.idJoueur, r.nomItem, r.prixOr, r.prixArgent, r.prixBronze,
-                r.photoItem, r.qttItem, r.type,
+{
+    $sql = "SELECT 
+                r.idVente,
+                r.idItem,
+                r.idJoueur,
+                r.nomItem,
+                r.prixOr,
+                r.prixArgent,
+                r.prixBronze,
+                r.photoItem,
+                r.qttItem,
+                r.type,
                 j.alias AS vendeur_alias,
-                j.photoProfil AS vendeur_photo
+                j.photoProfil AS vendeur_photo,
+                inv.qtInventaire
             FROM revente r
-            LEFT JOIN evaluations e ON r.idItem = e.Item_idItem
-            LEFT JOIN joueursjeu j ON r.idJoueur = j.idJoueur
-            GROUP BY r.idItem, r.nomItem, r.photoItem, j.alias, j.photoProfil";
-
-        $stmt = $connexion->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
-
-
+            JOIN joueursjeu j ON r.idJoueur = j.idJoueur
+            JOIN inventaire inv 
+                ON inv.JoueursJeu_idJoueur = r.idJoueur
+                AND inv.Item_idItem = r.idItem
+            WHERE inv.qtInventaire > 0
+            GROUP BY r.idVente";
+    
+    $stmt = $connexion->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     public static function ajouterRevente(PDO $connexion, $idJoueur, $idItem, $nomItem, $prixOr, $prixArgent, $prixBronze, $photoItem, $qttItem, $type, $photoProfil, $alias): bool
     {
         $sql = "INSERT INTO revente 

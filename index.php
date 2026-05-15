@@ -160,8 +160,9 @@ include 'include/nav.php';
 
 
                                     <?php else:          // Si item est pas dans le cart ?>
-                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
-                                            class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>, <?= $product['idItem'] ?>, null,  0)"
+                                            class="btn btn-boot mt-auto">Ajouter au panier
+                                        </button>
                                     <?php endif; ?>
                                 <?php endif; ?>
 

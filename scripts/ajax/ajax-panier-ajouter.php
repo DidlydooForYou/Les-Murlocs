@@ -1,18 +1,24 @@
 <?php
-    require_once '../../core/initialization.php';
-    require_once '../../core/Database.php';
-    require_once '../../DAL/VitrineDAL.php';
+require_once '../../core/initialization.php';
+require_once '../../core/Database.php';
+require_once '../../DAL/PanierDAL.php';
 
-    $connexion = Database::getConnexion();
+$connexion = Database::getConnexion();
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $idItem = (int)$_POST['idItem'];
-        $idJoueur = (int)$_POST['idJoueur'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $result = VitrineDAL::AjouterPanier($connexion, $idJoueur, $idItem);
+    $idItem  = $_POST['idItem']  ?? null;
+    $idVente = $_POST['idVente'] ?? null;
+    $idJoueur = (int) $_POST['idJoueur'];
+    $fromRevente = isset($_POST['fromRevente']) ? (int) $_POST['fromRevente'] : 0;
 
-        echo json_encode([
-            "success" => $result
-        ]);
-    }
+    if ($fromRevente === 1 && $idVente !== null) {
+        $result = PanierDAL::ajouterPanierRevente($connexion, $idJoueur, $idVente);
+    } 
+    else if ($fromRevente === 0 && $idItem !== null) {
+        $result = PanierDAL::ajouterPanierVitrine($connexion, $idJoueur, $idItem);
+    } 
+
+    echo json_encode(["success" => $result]);
+}
 ?>

@@ -115,11 +115,20 @@ include 'include/nav.php';
 
                             <br>
                             <?php if ($product['qttItem'] > 10): ?>
-                                <p></p>
+                                <p> En stock : <?= htmlspecialchars($product['qttItem']) ?></p>
                             <?php elseif ($product['qttItem'] > 0): ?>
-                                <p class="almost-out-of-stock">Il n'en reste que <?= $product['qttItem'] ?></p>
+                                <p class="almost-out-of-stock">
+                                    Il n'en reste que : <?= htmlspecialchars($product['qttItem']) ?>
+                                </p>
                             <?php else: ?>
                                 <p class="out-of-stock">Rupture de stock</p>
+                            <?php endif; ?>
+
+                            <!-- Optional: show seller inventory -->
+                            <?php if (isset($product['vendeur_stock'])): ?>
+                                <p class="seller-stock">
+                                    Stock du vendeur : <?= htmlspecialchars($product['vendeur_stock']) ?>
+                                </p>
                             <?php endif; ?>
 
                             <p style="font-weight:bold;">Revendu par :</p>
@@ -160,12 +169,11 @@ include 'include/nav.php';
 
 
                                     <?php else:          // Si item est pas dans le cart ?>
-                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
-                                            class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>, null, <?= $product['idVente'] ?>, 1)"
+                                            class="btn btn-boot mt-auto">Ajouter au panier
+                                        </button>
                                     <?php endif; ?>
                                 <?php endif; ?>
-
-
                             <?php else:         //  Si pas connecté ?>
                                 <a href="connexion.php" class="btn btn-boot mt-auto"
                                     style="background-color: #b3b3b3; display: flex; justify-content: center;">
