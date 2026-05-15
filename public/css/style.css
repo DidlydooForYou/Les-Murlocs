@@ -137,6 +137,11 @@ legend {
     z-index: 1000;
 }
 
+.dropdown:hover,
+.activeDropdown {
+    z-index: 9999;
+}
+
 .dropdownToggle{
     all: unset;
     display: none;
@@ -164,6 +169,8 @@ legend {
     padding: 10px;
     display: block;
     border-radius: 0;
+
+    z-index: 1002;
 }
 
 .dropdown-element:first-child {

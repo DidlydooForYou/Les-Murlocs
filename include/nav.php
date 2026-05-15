@@ -48,6 +48,7 @@
                 let enigmaDropdownContent = document.getElementById("enigmaDropdownContent");
                 enigmaDropdown.addEventListener("click", (e) => {
                     e.preventDefault();
+                    enigmaDropdown.parentElement.classList.toggle("activeDropdown");
                     enigmaDropdownContent.classList.toggle("open");
                 });
             </script>
@@ -87,6 +88,7 @@
                 let inventaireDropdownContent = document.getElementById("inventaireDropdownContent");
                 inventaireDropdown.addEventListener("click", (e) => {
                     e.preventDefault();
+                    inventaireDropdown.parentElement.classList.toggle("activeDropdown");
                     inventaireDropdownContent.classList.toggle("open");
                 });
             </script>
@@ -147,6 +149,7 @@
         let paramDropdownContent = document.getElementById("paramDropdownContent");
         paramDropdown.addEventListener("click", (e) => {
             e.preventDefault();
+            paramDropdown.parentElement.classList.toggle("activeDropdown");
             paramDropdownContent.classList.toggle("open");
         });
     </script>
