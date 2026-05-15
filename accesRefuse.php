@@ -1,8 +1,9 @@
-<?php include 'include/html_setup.php' ?>
+<?php include 'include/php_setup.php' ?>
 
 <title>Vitrine</title>
 
 <?php 
+    include 'include/html_setup.php';
     include 'include/header.php';
     include 'include/nav.php'; 
 ?>

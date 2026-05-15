@@ -3,11 +3,12 @@
 require "source/initialization.php";
 doitEtreCo();
 ?>
-<?php include 'include/html_setup.php' ?>
+<?php include 'include/php_setup.php' ?>
 
 <title>DarQuest - Revente</title>
 
 <?php 
+    include 'include/html_setup.php';
     include 'include/header.php';
     include 'include/nav.php'; 
 ?>

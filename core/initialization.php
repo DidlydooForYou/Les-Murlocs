@@ -1,6 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    @session_start();
 }
 
 define('ROOT', dirname(__DIR__));
@@ -27,6 +27,7 @@ $dbConfig = [
 
 const CSS = URL_ROOT . 'css';
 const VITRINE_IMG = URL_ROOT . 'upload';
+const SRC = ROOT . '/src';
 
 define('IS_POST', $_SERVER['REQUEST_METHOD'] === 'POST');
 define('IS_AUTH', isset($_SESSION['id']));
@@ -44,6 +45,19 @@ function doitEtreCo(){
     if (!IS_AUTH){
         header('Location:connexion.php');
         exit;
+    }
+}
+function doitEtreEnVie(){
+    if (IS_AUTH){
+        require_once "core/Database.php";
+        $connexion = Database::getConnexion();
+        require_once "DAL/JoueurDAL.php";
+        $point = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
+        $point = $point['PointsDeVie'];
+        if ($point == 0){
+            header('Location:mort.php');
+            exit;
+        }
     }
 }
 

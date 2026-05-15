@@ -15,7 +15,7 @@
         ?>
 
 
-            <h3 class="header-alias"><?= $userAlias ?></h3>
+            <h3 class="header-alias" style="color: #c9a86a;"><?= $userAlias ?></h3>
 
             <div class="pdv-container">
                 <?php
@@ -36,13 +36,13 @@
 
             <div class="coins-container" style="padding:10px; padding-right:0px">
                 <img class="coin-image" src="public/images/gold-coin.png" alt="gold-coin">
-                <span class="coin-amount"><?= $userBank['Or'] ?></span>
+                <span class="coin-amount" style="color: #FFD700"><?= $userBank['Or'] ?></span>
 
                 <img class="coin-image" src="public/images/silver-coin.png" alt="silver-coin">
-                <span class="coin-amount"><?= $userBank['Argent'] ?></span>
+                <span class="coin-amount" style="color: #d7e2eb"><?= $userBank['Argent'] ?></span>
 
                 <img class="coin-image" src="public/images/bronze-coin.png" alt="bronze-coin">
-                <span class="coin-amount"><?= $userBank['Bronze'] ?></span>
+                <span class="coin-amount" style="color: #cb823a"><?= $userBank['Bronze'] ?></span>
             </div>
 
         <?php endif; ?>

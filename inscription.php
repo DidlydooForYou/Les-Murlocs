@@ -1,5 +1,12 @@
 <?php
-include 'include/html_setup.php';
+require_once 'core/Email.php';
+
+include 'include/php_setup.php';
+
+require_once 'upload/PHPMailer/src/Exception.php';
+require_once 'upload/PHPMailer/src/PHPMailer.php';
+require_once 'upload/PHPMailer/src/SMTP.php';
+
 doitEtreDeco();
 
 
@@ -75,6 +82,17 @@ if (isset($validite)) {
     if ($validite) {
         $erreur = Database::ajouter_joueur($nom, $prenom, $email, $mdp, $chemin, $alias);
         if ($erreur) {
+
+            Email::readConfig(__DIR__ . '/gmail.ini');
+           
+
+            $subject = "Bienvenue sur DarQuest!";
+            $message = "<h1>Merci d'avoir créé un compte, $prenom!</h1>
+            <p>Veuillez confirmer votre adresse courriel :</p>
+            <p><a href='http://158.69.48.57/~darquest13/valider.php?email=$email'>Cliquez ici pour valider</a></p>";
+
+            Email::send($email, $subject, $message);
+            $_SESSION['confirEmail'] = true;
             header('Location:connexion.php');
             exit;
         }
@@ -86,6 +104,7 @@ if (isset($validite)) {
 <title>DarQuest - Inscription</title>
 
 <?php
+include 'include/html_setup.php';
 include 'include/header.php';
 include 'include/nav.php';
 ?>
@@ -104,26 +123,25 @@ include 'include/nav.php';
                 <label for="email">Adresse courriel : </label>
                 <input type="email" id="email" name="email" required minlength="6" maxlength="254">
                 <br>
-                <label for="alias">Alias :</label>
+                <label for="alias">Alias : </label>
                 <input type="text" name="alias" id="alias" required minlength="2" maxlength="50">
                 <br>
                 <label for="mdp">Mot de passe : </label>
                 <input type="password" name="mdp" id="mdp" required minlength="8" maxlength="50">
                 <br>
-                <label for="mdpConfirm">Confirmer le mot de passe :</label>
+                <label for="mdpConfirm">Confirmer le mot de passe : </label>
                 <input type="password" name="mdpConfirm" id="mdpConfirm" required minlength="8" maxlength="50">
                 <br>
-                <label for="url">Image :</label>
+                <label for="url">Image : </label>
 
                 <label for="url" class="upload-btn">Choisir une image</label>
                 <input type="file" id="url" name="url" accept=".avif,image/avif">
 
                 <div class="file-name" id="file-name">Aucune image sélectionnée</div>
+                <div class="image-section">
+                    <img id="pfp-preview" class="pfp-preview" style="display:none;">
+                </div>
 
-                <img id="pfp-preview" class="pfp-preview" src="#" alt="Preview">
-
-                <br>
-                <br>
                 <input type="submit" value="S'inscrire">
                 <span id="erreur" style="color: red;"></span>
             </form>
@@ -145,5 +163,18 @@ include 'include/nav.php';
 <?php include 'include/footer.php' ?>
 
 <script src="scripts/inscriptionValidation.js"></script>
+<script>
+    document.getElementById("url").addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("pfp-preview");
+        const fileName = document.getElementById("file-name");
+
+        if (!file) return;
+
+        fileName.textContent = "";
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    });
+</script>
 
 </html>

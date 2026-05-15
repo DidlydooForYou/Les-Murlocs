@@ -1,35 +1,64 @@
+#result-fieldset{
+    display: none;
+
+    width:75%;
+    min-width:300px; 
+    margin: auto; 
+    border-radius:10px;
+
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+#result-desc{
+    white-space: pre-line;
+}
+
+
 .panier-Container{
-    border: 1px solid black;
+    
     margin: 10px;   
 }
 
 .panier-row{
-    gap: 1px;
-    background-color: black;
+    background-color: #517189;
+    border:3px solid #c9a86a;
+    color:white;
+    border-radius: 10px;
+
     display: grid;
     grid-auto-rows: auto;
+
+    margin-bottom: 10px;
+
     grid-template-columns: 7% minmax(0,1fr) 200px 200px 200px;
 }
 
 .panier-content{
-    background-color: #f7f8f0;
     padding: 20px;
-    margin: 1px;
     text-align: center;
+
+    border-left: 2px solid #c9a86a;
+
+    display: flex;
+    align-items: center;
 }
 
 .panier-title{
-    background-color: #f7f8f0;
     padding: 10px;
-    margin: 1px;
     font-weight: bold;
     text-align: center;
+
+    border-left: 2px solid #c9a86a;
+}
+
+.panier-title:first-child{
+    border-left:none;
 }
 
 .panier-image-box{
     grid-column: 1;
-    background-color: #f7f8f0;
-    margin: 1px;
+    margin: 4px;
     
     display: flex;
     align-items: center;
@@ -37,6 +66,10 @@
 }
 
 .panier-image{
+    background-color: white;
+    border: 2px solid #7AAACE;
+    border-radius: 10px;
+
     height: 75px;
     width: 100%;
     object-fit: contain;
@@ -45,6 +78,7 @@
 .panier-nom{
     grid-column: 2;
     text-align:left;
+    font-weight:bold;
 }
 
 .panier-desc{
@@ -96,6 +130,13 @@
     grid-column: 5;
 }
 
+.success{
+    color:rgb(0, 180, 0);
+}
+
+.error{
+    color:red;
+}
 
 /************************************************/
 
@@ -148,6 +189,7 @@
 }
 
 .btn-cancel{
+    border:1px solid gray;
     background-color: #b3b3b3;
 }
 
@@ -167,19 +209,17 @@
     }
 
     .panier-row{
-        margin-bottom: 20px;
-        gap:none;
-        border: 1px solid black;
-
-        
         grid-template-areas: 
         "image nom"
         "image desc"
-        "image prix-un"
         "qte prix";
 
         grid-template-columns: 45% 55%;
-        grid-template-rows: auto 1fr auto auto;
+        grid-template-rows: auto auto auto;
+    }
+
+    .panier-content{
+        border-top: 2px solid #c9a86a;
     }
 
     .panier-image-box{
@@ -194,6 +234,7 @@
 
     .panier-nom{
         grid-area: nom;
+        border-top:none;
     }
 
     .panier-desc{
@@ -202,18 +243,48 @@
 
         display: block;
         overflow-y: auto;
-        grid: desc;
+        grid-area: desc;
     }
 
     .panier-prix-unitaire{
-        grid-area: prix-un
+        display: none;
     }
 
     .panier-quantite{
         grid-area: qte;
+        border-left: none;
     }
 
     .panier-prix{
         grid-area: prix;
+    }
+
+    .confirmation-panel{
+        height: 50%;
+        width: 75%;
+    }
+
+    .panel-bottom{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        grid-template-areas: 
+        "panel-total panel-total"
+        "button1 button2";
+
+        justify-items: center;
+        align-items: center;
+    }
+
+    #panel-total{
+        grid-area: panel-total;
+    }
+
+    .panel-button:nth-of-type(1){
+        grid-area: button1;
+    }
+
+    .panel-button:nth-of-type(2){
+        grid-area: button2;
     }
 }

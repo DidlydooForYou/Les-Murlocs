@@ -16,6 +16,20 @@ form *{
   margin-bottom: 10px;
 }
 
+fieldset {
+  border: 1px solid #ccc;
+  padding: 10px;
+  padding-top: 0px;
+  margin-bottom: 1rem;
+}
+
+legend {
+  float:none;
+  width: auto;
+  display: inline-block;
+  padding:0 8px;
+}
+
 /* Header */
 .headerContainer{
     background-image: linear-gradient(#f8f8f8 0%,#355872 95%);
@@ -37,6 +51,7 @@ form *{
 
 .header-alias{
     text-align: right;
+    font-weight: bold;
 }
 
 #header-coins{
@@ -46,18 +61,47 @@ form *{
 
     text-align: right;
 }
+
+.pdv-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+}
+
+.heart {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.heart.full {
+    color: #ff4d4d; 
+}
+
+.heart.empty {
+    color: #333; 
+}
+
+
 /* end header*/
 
 /* Nav */
 .navContainer{
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     min-height: 50px;
     background-color: #355872;
+    
+    border:5px solid #c9a86a; 
+    border-top:none; 
+    border-bottom:none;
+    width:100%;
+    align-items: center;
 }
+
 
 .navLinkContainer{
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 
@@ -65,13 +109,14 @@ form *{
     border: 1px solid black;
     border-radius: 12px;
 
-    flex:1;
+    flex: 0 0 auto;
 
     padding: 15px;
 
     margin: 40px;
     margin-bottom: 15px;
     margin-top: 15px;
+    min-width: 195px;
 }
 
 .navLink{
@@ -90,6 +135,12 @@ form *{
     /*border: 1px solid red;/**/
 
     position: relative;
+    z-index: 1000;
+}
+
+.dropdownToggle{
+    all: unset;
+    display: none;
 }
 
 .dropdown-content-container {
@@ -101,11 +152,8 @@ form *{
     background-color: #f9f9f9;
     border-radius: 10px;
     overflow: hidden;
-}
 
-.dropdown:hover {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    z-index: 1001;
 }
 
 .dropdown:hover .dropdown-content-container {
@@ -141,7 +189,13 @@ form *{
 /* Main */
 .main{
     background-color: #f7f8f0;
-    flex:1
+    flex:1;
+
+    width:100%;
+
+    border:5px solid #c9a86a; 
+    border-top:none; 
+    border-bottom:none;
 }
 
 .button{
@@ -163,8 +217,15 @@ form *{
 
 .coins-container{
     display: flex;
+    justify-content: center;
     align-items: center;
     justify-content:flex-end;
+}
+
+.coins-container-details{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
 }
 
 .coins-container .coin-amount:last-of-type {
@@ -246,10 +307,6 @@ html, body {
 
 .comment-input::placeholder {
     color: #aaa;
-}
-
-.card-title {
-    margin-bottom: 1rem;
 }
 
 .image-wrapper {
@@ -418,6 +475,11 @@ html, body {
 
 .product-details {
     padding-left: 20px;
+    flex: 1;
+}
+
+.product-details p{
+    height:100%;
 }
 
 .product-title {
@@ -431,21 +493,25 @@ html, body {
     gap: 10px;
     font-size: 1.4rem;
     font-weight: bold;
+    margin-bottom: 12px;
 }
 
 .product-image {
-    max-width: 100%;
-    height: auto;
+    width:100%;
+    height: 100%;
     object-fit: contain;
     align-self:center;
     border-radius:12px;
     border:3px solid #7AAACE;
+    background-color:white;
 }
 
 .purchase-box {
     border-radius: 8px;
     background: #c9a86a;
+    border:3px solid #b89a63;
     align-content:center;
+    height:100%;
 }
 
 .in-stock {
@@ -524,7 +590,6 @@ html, body {
     height: 28px;         
 }
 
-
 /* end details */
 
 
@@ -572,19 +637,11 @@ html, body {
   --bs-btn-disabled-bg: #7AAACE;
   --bs-btn-disabled-border-color: #7AAACE;
 }
-.buttonEnigma {
-    border: none;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-}
 
 .container {
     max-width: 100%;
     padding: 0;
 }
-
-
 
 @media (max-width: 800px) {
     body{
@@ -613,23 +670,55 @@ html, body {
         position: relative;
         margin:auto;
         margin-top: 8px;
-        margin-right: 0px;        
+        margin-right: 0px;       
     }
     /**/
 
     .navContainer{
         /*border: 1px solid red;/**/
-        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
 
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
+        justify-content: center;
+
+        gap:5px;
+        padding: 2px;
+        
+        min-height: 50px;
     }
 
     .navElement{
+        padding:10px;
+        margin:2px;
+
+        min-width: 0;
+        box-sizing: border-box;
+        /*
         flex:0 0 auto;
+
+        
+        
 
         padding: 5px;
         margin: 5px;
+        */
+    }
+
+    .dropdownToggle{
+        margin-left: 3px;
+        display: block;
+    }
+
+    .dropdown-content-container.open{
+        display: block;
+    }
+
+    .pdv-container{
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+    }
+
+    .heart{
+        line-height: 1;
     }
 }

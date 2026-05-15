@@ -1,12 +1,8 @@
-<?php 
-<<<<<<< Updated upstream
-include 'include/html_setup.php';
-=======
+<?php
 include 'include/php_setup.php'; 
 require_once 'core/Database.php';
 require_once 'DAL/aideDAL.php';
 
->>>>>>> Stashed changes
 doitEtreCo();
 
 $connexion = Database::getConnexion();
@@ -46,9 +42,13 @@ if (isset($_POST['accepter'])) {
 
 ?>
 
+<?php include 'include/php_setup.php'; 
+doitEtreCo()?>
+      
 <title>DarQuest - Aide</title>
 
 <?php 
+    include 'include/html_setup.php';
     include 'include/header.php';
     include 'include/nav.php'; 
 ?>

@@ -1,6 +1,8 @@
 <?php
-class ReviewDAL{
-    public static function selectAllReviews(PDO $connexion, int $id){
+class ReviewDAL
+{
+    public static function selectAllReviews(PDO $connexion, int $id)
+    {
         $sql = "SELECT e.*, jj.alias, jj.photoProfil FROM evaluations e INNER JOIN joueursjeu jj on e.JoueursJeu_idJoueur = jj.idJoueur WHERE Item_idItem = :id";
 
         $statement = $connexion->prepare($sql);
@@ -14,10 +16,11 @@ class ReviewDAL{
         return $result;
     }
 
-    public static function insertReview(PDO $connexion, int $idItem, int $idJoueur, string $commentaire, int $etoiles){
+    public static function insertReview(PDO $connexion, int $idItem, int $idJoueur, string $commentaire, int $etoiles)
+    {
         $sql = "INSERT INTO evaluations (commentaire, etoiles, JoueursJeu_idJoueur, Item_idItem) VALUES (:commentaire, :etoiles, :idJoueur, :idItem)";
 
-        $statement = $connexion -> prepare($sql);
+        $statement = $connexion->prepare($sql);
 
         $statement->bindValue(':commentaire', $commentaire);
         $statement->bindValue(':idJoueur', $idJoueur);
@@ -31,5 +34,64 @@ class ReviewDAL{
         return $result;
     }
 
-    
+    public static function userHasReview(PDO $connexion, int $idItem, int $idJoueur): bool
+    {
+        $sql = "SELECT COUNT(*) FROM evaluations WHERE Item_idItem = :item AND JoueursJeu_idJoueur = :user";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':item', $idItem, PDO::PARAM_INT);
+        $stmt->bindValue(':user', $idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public static function selectReview(PDO $connexion, int $idItem, int $idJoueur)
+    {
+        $sql = "SELECT * FROM evaluations WHERE Item_idItem = :item AND JoueursJeu_idJoueur = :user";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':item', $idItem, PDO::PARAM_INT);
+        $stmt->bindValue(':user', $idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+
+    public static function selectByNumber(PDO $connexion, int $idItem, int $etoiles){
+    $sql = "SELECT e.*, jj.alias, jj.photoProfil FROM evaluations e INNER JOIN joueursjeu jj on e.JoueursJeu_idJoueur = jj.idJoueur WHERE Item_idItem = :idItem AND etoiles = :etoiles";
+
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindValue(':etoiles', $etoiles, PDO::PARAM_INT);
+    $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(); 
+}
+
+    public static function updateReview(PDO $connexion, int $idItem, int $idJoueur, string $comment, int $stars)
+    {
+        $sql = "UPDATE evaluations 
+            SET commentaire = :comment, etoiles = :stars
+            WHERE Item_idItem = :item AND JoueursJeu_idJoueur = :user";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':comment', $comment);
+        $stmt->bindValue(':stars', $stars, PDO::PARAM_INT);
+        $stmt->bindValue(':item', $idItem, PDO::PARAM_INT);
+        $stmt->bindValue(':user', $idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public static function deleteReview(PDO $connexion, int $idItem, int $idJoueur){
+        $sql = "DELETE FROM evaluations where Item_idItem = :item AND JoueursJeu_idJoueur = :user";
+
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue(':item', $idItem, PDO::PARAM_INT);
+        
+        $stmt->bindValue(':user', $idJoueur, PDO::PARAM_INT);
+        
+        $stmt->execute();
+    }
 }

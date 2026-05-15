@@ -1,0 +1,210 @@
+.titre {
+    padding-left: 4px;
+    font-weight: bold;
+    font-size: x-large;
+    padding-bottom: 10px;
+    
+}
+.buttonEnvoyer{
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #355872;
+    border-radius: 12px;
+    color: white;
+   margin-bottom: 10px;
+}
+.buttonEnigma {
+    border: none;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.enigmaMain {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.attentionVie {
+    background-color:#ffee00;
+    font-weight: bold;
+    display: inline-block;
+    color: rgb(224, 42, 42);
+}
+
+.enigma-container{
+    background: #517189;
+    border: 3px solid #c9b27c;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.enigma-title{
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.buttonEnigma, .buttonEnvoyer{
+    background: #c9a86a;
+    border: 2px solid #b89a63;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+    color:white;
+}
+
+.buttonEnigma{
+    background-color:#7AAACE;
+    border: 2px solid #355872;
+    align-self:center;
+}
+
+.buttonEnvoyer{
+    align-self:flex-end;
+}
+
+.buttonEnvoyer:hover{
+    background: #ffd27f;
+}
+
+.buttonEnigma:hover{
+    background: #b4ccde;
+}
+
+#questionMage, #questionArgent, #stats{
+    background: #7AAACE;
+    border: 2px solid #b89a63;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    color:white;
+}
+
+label{
+    cursor: pointer;
+}
+
+.enigma-actions{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 800px){
+    .enigma-container{
+        padding: 12px;
+    }
+    .enigma-title{
+        font-size: 22px;
+    }
+    .enigma-actions{
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.profilMain  {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.enigmaAjout-container {
+    width: 100%;
+    max-width: 550px;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: #4f6a80; /* slightly darker than connexion */
+    border-radius: 12px;
+    border: 3px solid #c9a86a; /* gold accent */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.enigmaAjout-container h3 {
+    text-align: center;
+    font-size: 1.9rem;
+    margin-bottom: 10px;
+    color: #ffd27f;
+}
+
+.enigmaAjout-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.enigmaAjout-container textarea,
+.enigmaAjout-container select,
+.enigmaAjout-container input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 2px solid #c9a86a;
+    background-color: white;
+    color: black;
+    font-size: 1rem;
+    outline: none;
+}
+
+.enigmaAjout-container textarea:focus,
+.enigmaAjout-container select:focus,
+.enigmaAjout-container input[type="text"]:focus {
+    border-color: #ffd27f;
+    box-shadow: 0 0 6px rgba(255,210,127,0.6);
+}
+
+.difficulty-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.enigmaAjout-container input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #7AAACE;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid #c9a86a;
+}
+
+.enigmaAjout-container input[type="submit"]:hover {
+    background-color: #ffd27f;
+    color: black;
+}
+
+.type-buttons{
+    align-self:center;
+}
+
+.success-message{
+    color:#169a49;
+    text-align:center;
+}

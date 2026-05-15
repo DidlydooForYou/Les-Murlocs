@@ -1,15 +1,17 @@
-function ajouter_panierAJAX(idJoueur, idItem){
+function ajouter_panierAJAX(idJoueur, idItem, idVente, fromRevente){
     $.ajax({
         url: 'scripts/ajax/ajax-panier-ajouter.php',
         type: 'POST',
         data: {
             idJoueur: idJoueur,
-            idItem: idItem
+            idItem: idItem,
+            idVente: idVente,
+            fromRevente: fromRevente
         },
         success: function() {
-            localRefresh(idItem);
+            localRefresh(idItem || idVente);
         }
-    })
+    });
 }
 
 
@@ -71,7 +73,7 @@ function removeItem(idJoueur, idItem){
 
 function localRefresh(idItem){
     $.ajax({
-        url: "index.php",
+        url: window.location.pathname.includes("revente.php") ? "revente.php" : "index.php",
         success: function(response) {
             let html = $("<div>").html(response);
 
