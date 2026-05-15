@@ -6,6 +6,7 @@
         <!-- Banque totale des joueurs ? -->
         <?php if (isset($_SESSION['id'])):
             require_once 'DAL/JoueurDAL.php';
+            require_once 'core/utilitaire.php';
 
             $connexion = Database::getConnexion();
             $userBank = Database::obtenir_capital($_SESSION['id']);

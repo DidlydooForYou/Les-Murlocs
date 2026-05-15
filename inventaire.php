@@ -8,7 +8,7 @@ require_once 'DAL/ReventeDAL.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
-?>
+
 function headerInventaire(){
      header("Location: inventaire.php");
     exit;

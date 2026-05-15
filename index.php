@@ -72,21 +72,6 @@ include 'include/nav.php';
         </form>
         
 <!---->
-        <div class="container text-center">
-            <div class="row justify-content-center">
-        <select id="sortCatego" name="sortCatego" class="search-sort-element form-select sort-element">
-            <option value="" hidden>Filtrer par catégorie</option>
-            <option value="sorts">Sorts</option>
-            <option value="armors">Armures</option>
-            <option value="weapons">Armes</option>
-            <option value="potions">Potions</option>
-        </select>
-
-        <select id="sortAlphabete" name="sortAlphabete" class="search-sort-element form-select sort-element">
-            <option value="" hidden>Trier par ordre alphabétique</option>
-            <option value="alpha_asc">A à Z</option>
-            <option value="alpha_desc">Z à A</option>
-        </select>
     </form>
 
     <div class="container text-center">
@@ -97,17 +82,7 @@ include 'include/nav.php';
                     $itemQuantite = $cartItems[$product['idItem']];
                 } else {
                     $isInCart = false;
-                }
-
-                <?php foreach($products as $product) : 
-                    if(isset($cartItems[$product['idItem']])){
-                        $isInCart = true;
-                        $itemQuantite = $cartItems[$product['idItem']];
-                    }
-                    else{
-                        $isInCart = false;
-                    }
-                        
+                }       
                 ?>
 
                 <div id="card_<?= $product['idItem'] ?>" class="col-10 col-lg-3 d-flex align-items-stretch" style="flex-driection: row;">
