@@ -28,7 +28,7 @@
 
             <div class="navLinkContainer dropdown navElement navLink">
 
-                <a href="enigma.php" style="text-decoration: none; color:black;">
+                <a href="enigma.php" style="text-decoration: none; color:black; ">
                     Énigma
                 </a>
                 <button id="enigmaDropdown" class="dropdownToggle">
