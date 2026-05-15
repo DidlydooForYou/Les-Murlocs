@@ -42,7 +42,7 @@ function addingReventeQuantite(idJoueur, idItem, addition){
 }
 
 
-function localRefresh (callback) {
+function localRefresh () {
   $.ajax({
     url: 'revente.php',
     success: function (response) {
@@ -53,8 +53,7 @@ function localRefresh (callback) {
       } else {
         $('#allItemsContainer').html(html.find('#allItemsContainer').html())
       }
-
-      if (callback) callback()
     }
   })
 }
+

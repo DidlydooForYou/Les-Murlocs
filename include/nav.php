@@ -1,4 +1,4 @@
-<nav class="navContainer" style="">
+<nav class="navContainer">
 
     <span class="navLinkContainer">
         <a class="navElement navLink" href="index.php">Vitrine</a>
@@ -6,11 +6,17 @@
 
     <?php if (IS_AUTH): ?>
         <?php if (!IS_ADMIN): ?>
+
+
+
             <span class="navLinkContainer">
                 <a class="navElement navLink" href="enigma.php">Énigma</a>
             </span>
+
         <?php else: ?>
-            <div class="navLinkContainer" style="z-index: 9999;" onclick="window.location='enigma.php'">
+
+            <!--
+            <div class="navLinkContainer" onclick="window.location='enigma.php'">
                 <div class="dropdown navElement navLink">
                     Énigma
                     <div class="dropdown-content-container">
@@ -18,6 +24,34 @@
                     </div>
                 </div>
             </div>
+            -->
+
+            <div class="navLinkContainer dropdown navElement navLink">
+
+                <a href="enigma.php" style="text-decoration: none; color:black; ">
+                    Énigma
+                </a>
+                <button id="enigmaDropdown" class="dropdownToggle">
+                    ▼
+                </button>
+
+                <div id="enigmaDropdownContent" class="dropdown-content-container">
+                        <a href='ajoutEnigma.php' class='dropdown-element navLink'> Ajout </a>
+                </div>
+
+            </div>
+
+            <script>
+                let enigmaDropdown = document.getElementById("enigmaDropdown");
+                let enigmaDropdownContent = document.getElementById("enigmaDropdownContent");
+                enigmaDropdown.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    enigmaDropdownContent.classList.toggle("open");
+                });
+            </script>
+
+        <!---->
+
         <?php endif; ?>
 
         <span class="navLinkContainer">
@@ -48,23 +82,41 @@
 
     <?php endif; ?>
 
-    <div class="navLinkContainer" style="z-index: 9999;">
-        <div class="dropdown navElement navLink">
+
+    <div class="navLinkContainer dropdown navElement navLink">
+
+        <div style="text-decoration: none; color:black;">
             Paramètres
-            <div class="dropdown-content-container">
-
-                <?php if (IS_ADMIN): ?>
-                    <a href='ajout.php' class='dropdown-element navLink'> Ajout </a>
-                <?php endif; ?>
-
-                <?php if (IS_AUTH): ?>
-                    <a href="profil.php" class="dropdown-element navLink"> Profil </a>
-                <?php endif; ?>
-
-                <a href="aide.php" class="dropdown-element navLink dropdown-bottom"> Aide </a>
-
-            </div>
         </div>
+
+        <button id="paramDropdown" class="dropdownToggle">
+            ▼
+        </button>
+
+        <div id="paramDropdownContent" class="dropdown-content-container">
+
+            <?php if (IS_ADMIN): ?>
+                <a href='ajout.php' class='dropdown-element navLink'> Ajout </a>
+            <?php endif; ?>
+
+            <?php if (IS_AUTH): ?>
+                <a href="profil.php" class="dropdown-element navLink"> Profil </a>
+            <?php endif; ?>
+
+            <a href="aide.php" class="dropdown-element navLink dropdown-bottom"> Aide </a>
+
+        </div>
+
     </div>
 
+    <script>
+        let paramDropdown = document.getElementById("paramDropdown");
+        let paramDropdownContent = document.getElementById("paramDropdownContent");
+        paramDropdown.addEventListener("click", (e) => {
+            e.preventDefault();
+            paramDropdownContent.classList.toggle("open");
+        });
+    </script>
+
 </nav>
+

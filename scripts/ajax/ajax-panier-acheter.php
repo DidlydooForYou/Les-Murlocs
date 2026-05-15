@@ -43,10 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = PanierDAL::acheterItem($connexion, $idJoueur);
 
         if ($result) {
-           
+
 
             foreach ($items as $item) {
                 AchatDAL::insertPurchase($connexion, $item['idItem'], $idJoueur);
+                if ($item['fromRevente'] == 1) {
+                    InventoryDAL::removeItem($connexion, $item['idItem']);
+                }
             }
 
             echo json_encode([

@@ -115,7 +115,13 @@ class InventoryDAL
         $stmt->execute();
     }
 
-
+    public static function removeItem(PDO $connexion, int $idItem): bool
+    {
+        $sql = "DELETE FROM inventaire WHERE Item_idItem = :idItem";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 
 }
 
