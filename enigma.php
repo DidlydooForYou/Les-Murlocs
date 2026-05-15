@@ -75,7 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
 }
-
+ $pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
+        $pdv = $pdv['PointsDeVie'];
+  if ($pdv == 0) {
+            header('Location:mort.php');
+            exit;
+        }
 
 ?>
 
@@ -86,6 +91,21 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 include 'include/header.php';
 include 'include/nav.php';
 ?>
+<<<<<<< Updated upstream
+=======
+<script src="scripts/enigma.js"></script>
+<link rel="stylesheet" href="public/css/enigma.css">
+<main class="main">
+    <div class="enigma-container">
+        <div class="enigma-title">Bienvenue sur Énigma !</div>
+        <?php
+        $pdv = JoueurDAL::selectPdv($connexion, $_SESSION['id']);
+        $pdv = $pdv['PointsDeVie'];
+        if (isset($_SESSION['bonneMage']) && $_SESSION['bonneMage'] >= 3) {
+            echo "<p>Félicitations, vous avez répondu à 3 bonnes réponses de mage, vous devenez mage !";
+            $_SESSION['bonneMage'] = 0;
+        }
+>>>>>>> Stashed changes
 
 <main class="main" style="padding-left : 4px">
     <h3>Bienvenue à Énigma ! </h3>

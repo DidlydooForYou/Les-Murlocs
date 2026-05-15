@@ -67,6 +67,7 @@ if (isset($idJoueur)) {
                 <option value="potions">Potions</option>
             </select>
 
+<<<<<<< Updated upstream
             <select id="sortAlphabete" name="sortAlphabete" class="search-sort-element form-select sort-element">
                 <option value="" hidden>Trier par ordre alphabétique</option>
                 <option value="alpha_asc">A à Z</option>
@@ -77,6 +78,32 @@ if (isset($idJoueur)) {
 <!---->
         <div class="container text-center">
             <div class="row justify-content-center">
+=======
+        <select id="sortCatego" name="sortCatego" class="search-sort-element form-select sort-element">
+            <option value="" hidden>Filtrer par catégorie</option>
+            <option value="sorts">Sorts</option>
+            <option value="armors">Armures</option>
+            <option value="weapons">Armes</option>
+            <option value="potions">Potions</option>
+        </select>
+
+        <select id="sortAlphabete" name="sortAlphabete" class="search-sort-element form-select sort-element">
+            <option value="" hidden>Trier par ordre alphabétique</option>
+            <option value="alpha_asc">A à Z</option>
+            <option value="alpha_desc">Z à A</option>
+        </select>
+    </form>
+
+    <div class="container text-center">
+        <div id="allItemsContainer" class="row justify-content-center" style="padding: 0 20px;">
+            <?php foreach ($products as $product):
+                if (isset($cartItems[$product['idItem']])) {
+                    $isInCart = true;
+                    $itemQuantite = $cartItems[$product['idItem']];
+                } else {
+                    $isInCart = false;
+                }
+>>>>>>> Stashed changes
 
                 <?php foreach($products as $product) : 
                     if(isset($cartItems[$product['idItem']])){
@@ -89,7 +116,11 @@ if (isset($idJoueur)) {
                         
                 ?>
 
+<<<<<<< Updated upstream
                 <div id="card_<?=$product['idItem']?>" class="col-6 col-lg-3 d-flex align-items-stretch">
+=======
+                <div id="card_<?= $product['idItem'] ?>" class="col-10 col-lg-3 d-flex align-items-stretch" style="flex-driection: row;">
+>>>>>>> Stashed changes
                     <div class="card mt-4 w-100 backgroundImage">
                         <a href="details.php?id=<?= $product['idItem'] ?>" class="image-wrapper">
                             <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid" alt="<?= $product['nomItem'] ?>">
@@ -132,6 +163,7 @@ if (isset($idJoueur)) {
 
                             <br>
                             <!-- Button Section -->
+<<<<<<< Updated upstream
                             <?php if(IS_AUTH) : //  Si connecté?>
 
                                 <?php if($isInCart) :// Si item est dans le cart?>
@@ -140,13 +172,43 @@ if (isset($idJoueur)) {
                                             <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, -1)">-</button>
                                             <input id="input_<?=$product['idItem']?>" class="quantity-element quantity-input" type="number" value="<?=$itemQuantite?>" onblur="changeItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, this.value)">
                                             <button class="quantity-element quantity-button" onclick="addingItemQuantite(<?=$idJoueur?>, <?=$product['idItem']?>, 1)">+</button>
+=======
+                            <?php if (IS_AUTH):  //  Si connecté ?>
+                                <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
+                                    <a href="enigma.php" class="btn btn-boot mt-auto"
+                                        style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                        Devenez mage pour acheter le sort
+                                    </a>
+                                <?php else: ?>
+
+                                    <?php if ($isInCart): // Si item est dans le cart ?>
+                                        <div class="btn btn-boot mt-auto"
+                                            style="background-color: #b3b3b3; display: flex; justify-content: center;">
+                                            <div class="quantity-container">
+                                                <button class="quantity-element quantity-button"
+                                                    onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, -1)">-</button>
+                                                <input id="input_<?= $product['idItem'] ?>" class="quantity-element quantity-input"
+                                                    type="number" value="<?= $itemQuantite ?>"
+                                                    onblur="changeItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, this.value)">
+                                                <button class="quantity-element quantity-button"
+                                                    onclick="addingItemQuantite(<?= $idJoueur ?>, <?= $product['idItem'] ?>, 1)">+</button>
+                                            </div>
+>>>>>>> Stashed changes
                                         </div>
-                                    </div>
 
 
+<<<<<<< Updated upstream
                                 <?php else :         // Si item est pas dans le cart?>
                                     <button onclick="ajouter_panierAJAX(<?=$idJoueur?>,<?= $product['idItem'] ?>)" class="btn btn-boot mt-auto">Ajouter au panier</button>
                                 <?php endif;?>
+=======
+                                    <?php else:          // Si item est pas dans le cart ?>
+                                        <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>,<?= $product['idItem'] ?>)"
+                                            class="btn btn-boot mt-auto">Ajouter au panier</button>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+>>>>>>> Stashed changes
 
                             <?php else :        //  Si pas connecté?>
                                 <a href="connexion.php" class="btn btn-boot mt-auto" style="background-color: #b3b3b3; display: flex; justify-content: center;">

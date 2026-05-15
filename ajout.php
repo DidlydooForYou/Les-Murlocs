@@ -1,5 +1,9 @@
 <?php
+<<<<<<< Updated upstream
 include 'include/html_setup.php';
+=======
+include 'include/php_setup.php';
+>>>>>>> Stashed changes
 
 if (!IS_ADMIN) {
     header('Location:accesRefuse.php');
@@ -40,49 +44,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     ) {
         if (isset($_FILES['url'])) {
             if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-                $chemin = "lorem.png";
-            } else if (
-                $_FILES['url']['type'] == "image/jpeg" ||
-                $_FILES['url']['type'] == "image/png" ||
-                $_FILES['url']['type'] == "image/jpg" ||
-                $_FILES['url']['type'] == "image/webp"
-            ) {
+                $chemin = "public/images/profilBase.webp";
+            } else {
 
                 $repertoire = 'public/images/';
-                $chemin = $repertoire . $_FILES['url']['name'];
-                $extension = $_FILES['url']['type'];
-
-                if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
-
-                    switch ($extension) {
-                        case 'image/jpeg':
-                        case 'image/jpg':
-                            $image = imagecreatefromjpeg($chemin);
-                            break;
-                        case 'image/png':
-                            $image = imagecreatefrompng($chemin);
-                            break;
-                        case 'image/webp':
-                            $image = imagecreatefromwebp($chemin);
-                            break;
+                $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
+                if ($extension != "avif") {
+                    $chemin = "public/images/profilBase.webp";
+                } else {
+                    $chemin = $repertoire . $_FILES['url']['name'];
+                    if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
+                    } else {
+                        $validite = false;
                     }
 
 
-                    $image = imagescale($image, 640);
-                    $cheminAvif = pathinfo($chemin, PATHINFO_DIRNAME) . "/" . pathinfo($chemin, PATHINFO_FILENAME) . ".avif";
-                    imageavif($image, $cheminAvif, 90);
-                    unlink($chemin);
-                    $chemin = $cheminAvif;
-
-
-                } else {
-                    $validite = false;
                 }
-            } else {
-                $validite = false;
+
+
             }
 
         }
+
+
         if (
             strlen($_POST['nom']) <= 80 && strlen($_POST['nom']) >= 1 &&
             $_POST['prix'] <= 5000 && $_POST['prix'] >= 1 &&
@@ -114,17 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
                     if ($validite) {
                         $genre = $_POST['genre'];
-                        $erreur = Database::ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_arme($nom, $prixOr, $prixArgent, $prixBronze, $description, $efficacite, $genre, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
-                        }
+                        } 
                     }
                 }
                 break;
@@ -143,17 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = Database::ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_armure($nom, $prixOr, $prixArgent, $prixBronze, $description, $matiere, $taille, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
-                        }
+                        } 
                     }
                 }
                 break;
@@ -173,16 +145,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = Database::ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_potion($nom, $prixOr, $prixArgent, $prixBronze, $description, $effet, $duree, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
                         }
                     }
 
@@ -204,16 +170,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $validite = false;
                     }
                     if ($validite) {
-                        $erreur = Database::ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $cheminAvif);
+                        $erreur = Database::ajouter_sort($nom, $prixOr, $prixArgent, $prixBronze, $description, $instantane, $dommage, $quantite, $chemin);
                         if ($erreur) {
                             header('Location:index.php');
                             exit;
-                        } else {
-                            if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
-
-                            } else {
-                                unlink($chemin);
-                            }
                         }
                     }
                 } else {
@@ -237,6 +197,7 @@ include 'include/nav.php';
 ?>
 
 <main class="main">
+<<<<<<< Updated upstream
 
     <select name="type" id="type" onchange="Form()" style="margin-top : 4px; margin-left:4px;">
         <option value="" selected>Choisir un type d'objet : </option>
@@ -344,6 +305,116 @@ include 'include/nav.php';
     if (isset($erreur)) {
         if (!$erreur) {
             echo "<span style='color:red'> Erreur dans les données </span>";
+=======
+    <div class="enigmaAjout-container">
+        <select name="type" id="type" onchange="Form()" style="margin-top : 4px; margin-left:4px;">
+            <option value="" selected>Choisir un type d'objet : </option>
+            <option value="arme">Armes</option>
+            <option value="armure">Armure</option>
+            <option value="potion">Potion</option>
+            <option value="sort">Sort</option>
+        </select>
+        <form action="ajout.php" method="POST" id="formArme" enctype="multipart/form-data"
+            style="display: none; padding: 4px;">
+            <input type="hidden" name="type" value="formArme">
+            <h2>Ajouter une arme</h2>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom" minlength="1" maxlength="80" required><br>
+            <label for="prix">Prix : </label> en bronze
+            <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
+            <label for="description">Description : </label> <br>
+            <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
+                minlength="1" maxlength="80"></textarea><br>
+            <label for="efficacite">Efficacité : </label>
+            <input type="number" id="efficacite" name="efficacite" min="1" max="10" value="1" required> <br>
+            <p>Quel est le genre de l'arme ?</p>
+            <input type="radio" id="uneMain" name="genre" value="une main" checked>
+            <label for="uneMain"> Une main</label>
+            <input type="radio" id="deuxMains" name="genre" value="deux mains">
+            <label for="deuxMains">Deux mains</label> <br>
+            <label for="quantite">Quantité à ajouter : </label>
+            <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
+            <label for="image">Image :</label><br>
+            <input type="hidden" name="MAX_FILE_SIZE" value="50000000">
+            <input type="file" id="image" name="url" accept=".avif,image/avif"><br>
+            <input type="submit" value="Ajouter">
+
+        </form>
+        <form action="ajout.php" method="POST" id="formArmure" style="display: none;padding: 4px;"
+            enctype="multipart/form-data">
+            <input type="hidden" name="type" value="formArmure">
+            <h2>Ajouter une armure</h2>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom" minlength="1" maxlength="80" required><br>
+            <label for="prix">Prix : </label> en bronze
+            <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
+            <label for="description">Description : </label> <br>
+            <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
+                minlength="1" maxlength="80"></textarea><br>
+            <label for="matiere">Matière de l'armure : </label>
+            <input type="text" name="matiere" id="matiere" required minlength="1" maxlength="40"> <br>
+            <label for="taille">Taille en cm :</label>
+            <input type="number" name="taille" id="taille" required min="1" max="60"> cm <br>
+            <label for="quantite">Quantité à ajouter : </label>
+            <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
+            <label for="image">Image :</label><br>
+            <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
+            <input type="file" id="image" name="url" accept=".avif,image/avif" required><br>
+            <input type="submit" value="Ajouter">
+        </form>
+        <form action="ajout.php" method="POST" id="formPotion" style="display: none;padding: 4px;"
+            enctype="multipart/form-data">
+            <input type="hidden" name="type" value="formPotion">
+            <h2>Ajouter une potion</h2>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom" required><br>
+            <label for="prix">Prix : </label>
+            <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
+            <label for="description">Description : </label> <br>
+            <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
+                minlength="1" maxlength="80"></textarea><br>
+            <label for="effet">Effet : </label>
+            <input type="text" name="effet" id="effet" required minlength="1" maxlength="60"> <br>
+            <label for="duree">Durée en secondes : </label>
+            <input type="number" id="duree" name="duree" required min="1" max="600"> secondes <br>
+            <label for="quantite">Quantité à ajouter : </label>
+            <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
+            <label for="image">Image :</label><br>
+            <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
+            <input type="file" id="image" name="url" accept=".avif,image/avif" required><br>
+            <input type="submit" value="Ajouter">
+        </form>
+        <form action="ajout.php" method="POST" id="formSort" style="display: none; padding: 4px;"
+            enctype="multipart/form-data">
+            <input type="hidden" name="type" value="formSort">
+            <h2>Ajouter un sort</h2>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom" required><br>
+            <label for="prix">Prix : </label>
+            <input type="number" id="prix" name="prix" required min="1" max="5000" value="1"> <br>
+            <label for="description">Description : </label> <br>
+            <textarea name="description" id="description" autofocus cols="40" rows="10" style="resize : none;" required
+                minlength="1" maxlength="80"></textarea><br>
+            <p>Est-ce que le sort est instantané ?</p>
+            <input type="radio" id="oui" name="instantane" value="1" checked>
+            <label for="oui"> Oui</label>
+            <input type="radio" id="non" name="instantane" value="0">
+            <label for="non">Non</label> <br>
+            <label for="dommage">Dommage du sort : </label>
+            <input type="number" id="dommage" name="dommage" required min="1" max="100"> points de vie<br>
+            <label for="quantite">Quantité à ajouter : </label>
+            <input type="number" min="1" max="20" value="1" name="quantite" id="quantite" required> <br>
+            <label for="image">Image :</label><br>
+            <input type="hidden" name="MAX_FILE_SIZE" value="50000000" required>
+            <input type="file" id="image" name="url" accept=".avif,image/avif" required><br>
+            <input type="submit" value="Ajouter">
+        </form>
+        <?php
+        if (isset($erreur)) {
+            if (!$erreur) {
+                echo "<span style='color:red'> Erreur dans les données </span>";
+            }
+>>>>>>> Stashed changes
         }
     }
     ?>

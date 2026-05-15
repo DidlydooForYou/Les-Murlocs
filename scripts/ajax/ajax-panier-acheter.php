@@ -1,7 +1,12 @@
 <?php
     require_once '../../core/Database.php';
+<<<<<<< Updated upstream
     require_once '../php/initialization.php';
     require_once '../php/Utilitaire.php';
+=======
+    require_once '../../core/initialization.php';
+    require_once '../../core/utilitaire.php';
+>>>>>>> Stashed changes
     require_once '../../DAL/PanierDAL.php';
 
     $connexion = Database::getConnexion();

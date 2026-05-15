@@ -21,6 +21,11 @@
     width:300px;
 }
 
+.almost-out-of-stock{
+    color: #ffbf00;
+    font-weight: bold;
+}
+
 /**/
 .quantity-container{
     display: grid;

@@ -3,56 +3,69 @@ require_once 'core/error-exception.php';
 require_once 'core/initialization.php';
 require_once 'DAL/Page.php';
 require_once 'core/Database.php';
+require_once 'DAL/InventoryDAL.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
-<<<<<<< Updated upstream
-=======
-
-if (isset($_POST['vendre']) && isset($_POST['idItem'])) {
-    $connexion = Database::getConnexion();
-    InventoryDAL::vendreItem($connexion, $_POST['idItem'], $_SESSION['id']);
-    header("Location: inventaire.php");
-    exit;
-}
-
-if (isset($_POST['utiliser']) && isset($_POST['idItem'])) {
-    $connexion = Database::getConnexion();
-    InventoryDAL::utiliserPotion($connexion, $_POST['idItem'], $_SESSION['id']);
-    header("Location: inventaire.php");
-    exit;
-}
->>>>>>> Stashed changes
 ?>
 
 <?php 
-    include "include/html_setup.php";
+    include "include/php_setup.php";
 ?>
 
 <link rel="stylesheet" href="public/css/inventaire.css">
 
 <?php 
+    include "include/html_setup.php";
     include "include/header.php"; 
     include "include/nav.php";
 ?>
 
 <?php
 $inventaire = [];
+$groupes = [];
+$alias = "";
 
-if (isset($_SESSION['id'])) {
-    $inventaire = Database::obtenir_inventaire_joueur($_SESSION['id']);
+if (isset($_GET['id'])) {
+    $idJoueur = $_GET['id'];
+
+    $connexion = Database::getConnexion();
+
+    $sql = "
+        SELECT alias
+        FROM joueursjeu
+        WHERE idJoueur = :idJoueur
+    ";
+
+    $statement = $connexion->prepare($sql);
+    $statement->bindParam(':idJoueur', $idJoueur);
+    $statement->execute();
+
+    $joueur = $statement->fetch();
+
+    if ($joueur) {
+        $alias = $joueur['alias'];
+    }
+
+    $inventaire = Database::obtenir_inventaire_joueur($idJoueur);
 }
 
-$groupes = [];
 foreach ($inventaire as $item) {
-    $groupes[$item['type']][] = $item;
+    if ($item['qtInventaire'] > 0) {
+        $groupes[$item['type']][] = $item;
+    }
 }
 ?>
 
 <main class="main">
-    <h1 class="py-3 mt-3">Inventaire</h1>
+    <h1 class="py-3 mt-3">Inventaire de <?= htmlspecialchars($alias) ?></h1>
 
-    <?php if (!empty($inventaire)) { ?>
+    <?php if (!empty($groupes)) { ?>
+
+
+                        <div style="text-align:center;">
+            <a class="btn btn-boot mt-auto" href="joueurs.php">Revenir</a>
+        </div>
 
         <?php foreach ($groupes as $type => $items) { ?>
 
@@ -72,7 +85,7 @@ foreach ($inventaire as $item) {
 
                             <img src="<?= htmlspecialchars($item['photoItem']) ?>">
 
-                            <p><?= htmlspecialchars($item['description']) ?></p>
+                            <p class="description"><?= htmlspecialchars($item['description']) ?></p>
 
                             <?php if ($type === 'arme') { ?>
                                 <div class="label">Efficacité</div>
@@ -102,29 +115,13 @@ foreach ($inventaire as $item) {
                                 <div class="label">Dommage</div>
                                 <div><?= $item['dommage'] ?? '' ?></div>
                             <?php } ?>
-                        </div>
 
-<<<<<<< Updated upstream
-                        <div class="btn-vendre">Vendre</div>
-=======
-                        <div style="display:flex; gap:10px;">
-
-                            <form method="post">
-                                <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
-                                <button type="submit" name="vendre" class="btn btn-boot mt-auto">Vendre</button>
-                            </form>
-
-                            <?php if ($type === 'potion' || $type === 'sort') { ?>
-                                <form method="post">
-                                    <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
-                                    <button type="submit" name="utiliser" class="btn btn-boot mt-auto">Utiliser</button>
-                                </form>
-                            <?php } ?>
 
                         </div>
->>>>>>> Stashed changes
 
                     </div>
+
+
 
                 <?php } ?>
 
@@ -134,9 +131,9 @@ foreach ($inventaire as $item) {
 
     <?php } else { ?>
 
-        <h3 style="text-align:center;">Votre inventaire est vide.</h3>
+        <h3 style="text-align:center;">Cet inventaire est vide.</h3>
         <div style="text-align:center;">
-            <a class="btn btn-boot mt-auto" href="index.php">Revenir</a>
+            <a class="btn btn-boot mt-auto" href="joueurs.php">Revenir</a>
         </div>
 
     <?php } ?>

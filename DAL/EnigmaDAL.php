@@ -35,8 +35,14 @@ class EnigmaDAL{
         return $stmt->fetch();
             
     }
+<<<<<<< Updated upstream
     public static function devenirMage(PDO $connexion, $idJoueur){
         $sql = "UPDATE joueursJeu set mage = 1 where idJoueur = :idJoueur";
+=======
+    public static function devenirMage(PDO $connexion, $idJoueur)
+    {
+        $sql = "UPDATE joueursjeu set mage = 1 where idJoueur = :idJoueur";
+>>>>>>> Stashed changes
         $stmt = $connexion->prepare($sql);
         $stmt->bindValue('idJoueur',$idJoueur,PDO::PARAM_INT);
         $stmt->execute();
@@ -55,6 +61,68 @@ class EnigmaDAL{
         $stmt->bindValue('difficulte', $difficulte, PDO::PARAM_STR);
         $stmt->execute();
     }
+<<<<<<< Updated upstream
+=======
+    public static function nbrQuestionDifficile(PDO $connexion, $JoueursJeu_idJoueur)
+    {
+        $sql = "SELECT bonneReponseDifficile from statistiques where JoueursJeu_idJoueur = :JoueursJeu_idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('JoueursJeu_idJoueur', $JoueursJeu_idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    public static function ajouterEnigme(PDO $connexion, string $enonce, string $categorie, string $difficulte, array $reponses, int $correct)
+    {
+        // Insert question
+        $sql = "INSERT INTO questions (enonce, categorie, difficulte)
+            VALUES (:enonce, :categorie, :difficulte)";
+        $stmt = $connexion->prepare($sql);
+        $stmt->execute([
+            ':enonce' => $enonce,
+            ':categorie' => $categorie,
+            ':difficulte' => $difficulte
+        ]);
+
+        $idQuestion = $connexion->lastInsertId();
+
+        // Insert responses
+        $sqlRep = "INSERT INTO reponses (reponse, correct)
+               VALUES (:reponse, :correct)";
+        $stmtRep = $connexion->prepare($sqlRep);
+
+        // Link table
+        $sqlLink = "INSERT INTO questions_has_reponses (Questions_idQuestion, Reponses_idReponse)
+                VALUES (:idQuestion, :idReponse)";
+        $stmtLink = $connexion->prepare($sqlLink);
+
+        foreach ($reponses as $index => $rep) {
+
+            $isCorrect = ($index + 1 == $correct) ? 1 : 0;
+
+            // Insert response
+            $stmtRep->execute([
+                ':reponse' => $rep,
+                ':correct' => $isCorrect
+            ]);
+
+            $idReponse = $connexion->lastInsertId();
+
+            // Link question <-> response
+            $stmtLink->execute([
+                ':idQuestion' => $idQuestion,
+                ':idReponse' => $idReponse
+            ]);
+        }
+    }
+
+    public static function getStats(PDO $connexion, $JoueursJeu_idJoueur){
+        $sql = "SELECT * FROM statistiques where JoueursJeu_idJoueur = :JoueursJeu_idJoueur";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindValue('JoueursJeu_idJoueur', $JoueursJeu_idJoueur, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+>>>>>>> Stashed changes
 }
     
 ?>
