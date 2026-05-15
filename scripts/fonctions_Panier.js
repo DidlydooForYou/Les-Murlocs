@@ -69,23 +69,24 @@ function localRefresh (callback) {
 }
 
 // Enlever un item
-function deleteItem (idJoueur, idItem) {
-  console.log('deleteItem function reached')
+function deleteItem(idJoueur, idItem){
+    
+    console.log('deleteItem function reached');
 
-  $.ajax({
-    url: 'scripts/ajax/ajax-panier-effacer.php',
-    type: 'POST',
-    data: {
-      idItem: idItem,
-      idJoueur: idJoueur
-    },
-    success: function (response) {
-      localRefresh()
-    },
-    error: function (xhr, status, error) {
-      console.log('Error :', error)
-    }
-  })
+    $.ajax({
+        url: 'scripts/ajax/ajax-panier-effacer.php',
+        type: 'POST',
+        data: {
+            idItem: idItem,
+            idJoueur: idJoueur
+        },
+        success: function(response) {
+            localRefresh();
+        },
+        error: function(xhr, status, error) {
+            console.log("Error :", error);
+        }
+    });
 }
 
 // Acheter le panier

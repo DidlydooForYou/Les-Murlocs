@@ -40,6 +40,7 @@ class EnigmaDAL
         return $stmt->fetch();
 
     }
+
     public static function devenirMage(PDO $connexion, $idJoueur)
     {
         $sql = "UPDATE joueursjeu set mage = 1 where idJoueur = :idJoueur";
@@ -63,6 +64,7 @@ class EnigmaDAL
         $stmt->bindValue('difficulte', $difficulte, PDO::PARAM_STR);
         $stmt->execute();
     }
+
     public static function nbrQuestionDifficile(PDO $connexion, $JoueursJeu_idJoueur)
     {
         $sql = "SELECT bonneReponseDifficile from statistiques where JoueursJeu_idJoueur = :JoueursJeu_idJoueur";
@@ -122,6 +124,7 @@ class EnigmaDAL
         $stmt->execute();
         return $stmt->fetch();
     }
+
 }
 
 ?>

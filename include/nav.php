@@ -5,9 +5,26 @@
     </span>
 
     <?php if (IS_AUTH): ?>
+
         <?php if (!IS_ADMIN): ?>
+            <span class="navLinkContainer">
+                <a class="navElement navLink" href="inventaire.php">Inventaire</a>
+            </span>
+        <?php else: ?>
+            <div class="navLinkContainer" style="z-index: 9999;" onclick="window.location='inventaire.php'">
+                <div class="dropdown navElement navLink">
+                    Inventaire
+                    <div class="dropdown-content-container">
+                        <a href='joueurs.php' class='dropdown-element navLink'> Gestion </a>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
-
+        
+        <span class="navLinkContainer">
+            <a class="navElement navLink" href="revente.php">Revente</a>
+        </span>
 
             <span class="navLinkContainer">
                 <a class="navElement navLink" href="enigma.php">Énigma</a>

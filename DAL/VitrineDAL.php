@@ -12,6 +12,7 @@ class VitrineDAL{
 
     }
     public static function selectByTitle(PDO $connexion, string $search): array{
+
         $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem where nomItem like :search GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
 
         $statement = $connexion->prepare($sql);
@@ -54,16 +55,20 @@ class VitrineDAL{
     public static function selectByPrice(PDO $connexion, string $sortWay){
     if($sortWay === "price_asc"){
         $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, 
+
                        i.description, i.photoItem,  i.qttItem,
                        AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type
+
                 FROM item i 
                 LEFT JOIN evaluations e ON i.idItem = e.Item_idItem
                 GROUP BY i.idItem, i.nomItem, i.description, i.photoItem, i.prixOr, i.prixArgent, i.prixBronze
                 ORDER BY i.prixOr ASC, i.prixArgent ASC, i.prixBronze ASC";
     } else if($sortWay === "price_desc"){
         $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, 
+
                        i.description, i.photoItem, i.qttItem,
                        AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type
+                       
                 FROM item i 
                 LEFT JOIN evaluations e ON i.idItem = e.Item_idItem
                 GROUP BY i.idItem, i.nomItem, i.description, i.photoItem, i.prixOr, i.prixArgent, i.prixBronze
@@ -77,9 +82,11 @@ class VitrineDAL{
 
     public static function selectByAlphabete(PDO $connexion, string $alphab){
         if($alphab === "alpha_asc"){
+
             $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY nomItem";
         }else if($alphab === "alpha_desc"){
             $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem ORDER BY nomItem DESC";
+
         }
 
         $statement = $connexion->prepare($sql);
@@ -98,7 +105,14 @@ class VitrineDAL{
         }else if($type === "potions"){
             $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i INNER JOIN potions p ON i.idItem = p.Item_idItem LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
         }else if($type === "sorts"){
+            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i INNER JOIN armure a ON i.idItem = a.Item_idItem LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
+        }else if($type === "weapons"){
+            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i INNER JOIN armes ar ON i.idItem = ar.Item_idItem LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
+        }else if($type === "potions"){
+            $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i INNER JOIN potions p ON i.idItem = p.Item_idItem LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
+        }else if($type === "sorts"){
             $sql = "SELECT i.idItem, i.nomItem, i.prixOr, i.prixArgent, i.prixBronze, i.description, i.photoItem, i.qttItem, AVG(etoiles) as moyenne_etoiles, COUNT(etoiles) as nb_reviews, i.type from item i INNER JOIN sorts s ON i.idItem = s.Item_idItem LEFT JOIN evaluations e ON i.idItem = e.Item_idItem GROUP BY i.idItem, i.nomItem, i.description, i.photoItem";
+
         }
 
         $statement = $connexion->prepare($sql);

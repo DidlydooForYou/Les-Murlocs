@@ -32,6 +32,11 @@ class InventoryDAL
 
     }
 
+    public static function utiliserPotion(PDO $connexion, $idItem, $idJoueur) {
+
+        $sql = "CALL UtiliserPotionProcedure(:idItem, :idJoueur)";
+    }
+
     public static function selectById(PDO $connexion, int $idItem, int $idJoueur)
     {
         $sql = "
@@ -122,7 +127,6 @@ class InventoryDAL
         $stmt->bindValue(':idItem', $idItem, PDO::PARAM_INT);
         return $stmt->execute();
     }
-
 }
 
 

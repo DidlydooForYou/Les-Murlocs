@@ -47,6 +47,48 @@ if (!IS_AUTH) {
 
 
 
+if (!IS_AUTH) {
+    include "include/html_setup.php";
+    include "include/header.php";
+    include "include/nav.php";
+    ?>
+    <main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
+        <div class="container" style="display:flex; justify-content:center; padding:60px 0;">
+
+            <div class="connexion-wrapper" style="
+                    width:350px;
+                    background:#517189;
+                    border:3px solid #c9a86a;
+                    border-radius:12px;
+                    padding:30px;
+                    text-align:center;
+                    box-shadow:0 0 6px rgba(0,0,0,0.4);
+                 ">
+
+                <h2 style="color:#c9a86a; margin-bottom:15px; font-size:22px;">
+                    Accès restreint
+                </h2>
+
+                <p style="color:white; font-size:16px; margin-bottom:25px;">
+                    Vous devez être connecté pour voir les avis.
+                </p>
+
+                <a href="connexion.php" class="btn btn-boot" style="width:100%; display:block; padding:10px 0;">
+                    Se connecter
+                </a>
+
+            </div>
+
+        </div>
+    </main>
+    <?php
+    include_once INCLUDE_FILE . '/footer.php';
+    exit;
+}
+
+
+
+
 $connexion = Database::getConnexion();
 
 $idItem = $_GET['id'];

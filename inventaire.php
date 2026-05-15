@@ -8,6 +8,7 @@ require_once 'DAL/ReventeDAL.php';
 
 const ACTIVE_PAGE = Page::Inventaire;
 doitEtreCo();
+?>
 function headerInventaire(){
      header("Location: inventaire.php");
     exit;
@@ -149,6 +150,21 @@ foreach ($inventaire as $item) {
                             <?php endif; ?>
                         </div>
 
+                        <div style="display:flex; gap:10px;">
+
+                            <form method="post">
+                                <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
+                                <button type="submit" name="vendre" class="btn btn-boot mt-auto">Vendre</button>
+                            </form>
+
+                            <?php if ($type === 'potion' || $type === 'sort') { ?>
+                                <form method="post">
+                                    <input type="hidden" name="idItem" value="<?= $item['idItem'] ?>">
+                                    <button type="submit" name="utiliser" class="btn btn-boot mt-auto">Utiliser</button>
+                                </form>
+                            <?php } ?>
+
+                        </div>
                         <?php if ($isInCart): ?>
 
                             <div class="btn btn-boot mt-auto"

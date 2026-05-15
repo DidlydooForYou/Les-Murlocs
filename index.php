@@ -47,16 +47,33 @@ include 'include/nav.php';
 ?>
 
 <main class="main" style="border:5px solid #c9a86a; border-top:none; border-bottom:none;">
-    <form class="search-sort-container searchBarContainer" role="search" action="index.php">
-        <input name="research" id="liveSearch" class="search-sort-element form-control search-bar" type="search"
-            placeholder="Recherche sur DarQuest">
+        <form class="search-sort-container searchBarContainer" role="search" action="index.php">
+            <input name="research" class="search-sort-element form-control search-bar" type="search" placeholder="Recherche sur DarQuest">
+            
+            <select name="sortPrice" id="sortPrice" class="search-sort-element form-select sort-element">
+                <option value="" hidden>Trier par prix</option>
+                <option value="price_asc">Prix ↑</option>
+                <option value="price_desc">Prix ↓</option>
+            </select>
 
-        <select name="sortPrice" id="sortPrice" class="search-sort-element form-select sort-element">
-            <option value="" hidden>Trier par prix</option>
-            <option value="price_asc">Prix ↑</option>
-            <option value="price_desc">Prix ↓</option>
-        </select>
+            <select id="sortCatego" name="sortCatego" class="search-sort-element form-select sort-element">
+                <option value="" hidden>Trier par catégorie</option>
+                <option value="sorts">Sorts</option>
+                <option value="armors">Armures</option>
+                <option value="weapons">Armes</option>
+                <option value="potions">Potions</option>
+            </select>
 
+            <select id="sortAlphabete" name="sortAlphabete" class="search-sort-element form-select sort-element">
+                <option value="" hidden>Trier par ordre alphabétique</option>
+                <option value="alpha_asc">A à Z</option>
+                <option value="alpha_desc">Z à A</option>
+            </select>
+        </form>
+        
+<!---->
+        <div class="container text-center">
+            <div class="row justify-content-center">
         <select id="sortCatego" name="sortCatego" class="search-sort-element form-select sort-element">
             <option value="" hidden>Filtrer par catégorie</option>
             <option value="sorts">Sorts</option>
@@ -82,9 +99,19 @@ include 'include/nav.php';
                     $isInCart = false;
                 }
 
+                <?php foreach($products as $product) : 
+                    if(isset($cartItems[$product['idItem']])){
+                        $isInCart = true;
+                        $itemQuantite = $cartItems[$product['idItem']];
+                    }
+                    else{
+                        $isInCart = false;
+                    }
+                        
                 ?>
 
                 <div id="card_<?= $product['idItem'] ?>" class="col-10 col-lg-3 d-flex align-items-stretch" style="flex-driection: row;">
+                  
                     <div class="card mt-4 w-100 backgroundImage">
                         <a href="details.php?id=<?= $product['idItem'] ?>" class="image-wrapper">
                             <img src="<?= $product['photoItem'] ?>" class="card-img-top img-fluid"
@@ -136,6 +163,7 @@ include 'include/nav.php';
 
                             <br>
                             <!-- Button Section -->
+
                             <?php if (IS_AUTH):  //  Si connecté ?>
                                 <?php if ($product['type'] == 'sort' && !IS_MAGE): ?>
                                     <a href="enigma.php" class="btn btn-boot mt-auto"
@@ -158,14 +186,12 @@ include 'include/nav.php';
                                             </div>
                                         </div>
 
-
                                     <?php else:          // Si item est pas dans le cart ?>
                                         <button onclick="ajouter_panierAJAX(<?= $idJoueur ?>, <?= $product['idItem'] ?>, null,  0)"
                                             class="btn btn-boot mt-auto">Ajouter au panier
                                         </button>
                                     <?php endif; ?>
                                 <?php endif; ?>
-
 
                             <?php else:         //  Si pas connecté ?>
                                 <a href="connexion.php" class="btn btn-boot mt-auto"

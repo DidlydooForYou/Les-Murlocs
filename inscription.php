@@ -55,26 +55,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_FILES['url'])) {
         if ($_FILES['url']['error'] === UPLOAD_ERR_NO_FILE) {
             $chemin = "public/images/profilBase.webp";
-        } else {
+        }
+        else {
 
             $repertoire = 'public/images/';
             $extension = strtolower(pathinfo($_FILES['url']['name'], PATHINFO_EXTENSION));
-            if ($extension != "avif") {
+            if ($extension != "avif"){
                 $chemin = "public/images/profilBase.webp";
+            }
+            else{
+            $chemin = $repertoire . $_FILES['url']['name'];
+            if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
             } else {
-                var_dump(is_dir(__DIR__ . '/public/images'));
-var_dump(is_writable(__DIR__ . '/public/images'));
-                $chemin = $repertoire . $_FILES['url']['name'];
-                $chemin = __DIR__ . '/' . $chemin;
-                if (move_uploaded_file($_FILES['url']['tmp_name'], $chemin)) {
-                } else {
-                    $validite = false;
-                }
-
-
+                $validite = false;
             }
 
 
+            }
+         
+        
         }
 
     }
@@ -96,9 +95,7 @@ if (isset($validite)) {
             $_SESSION['confirEmail'] = true;
             header('Location:connexion.php');
             exit;
-
         }
-
     }
 }
 ?>
